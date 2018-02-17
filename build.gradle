@@ -1,0 +1,40 @@
+buildscript {
+    repositories {
+        jcenter()
+        maven { url "http://repo.spring.io/snapshot" }
+        maven { url "http://repo.spring.io/milestone" }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.7.RELEASE")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'spring-boot'
+
+jar {
+    group 'spring-boot-bestpractice'
+    baseName = 'spring-boot-bestpractice'
+    version =  '0.0.1-SNAPSHOT'
+}
+
+repositories {
+    jcenter()
+    maven { url "http://repo.spring.io/snapshot" }
+    maven { url "http://repo.spring.io/milestone" }
+}
+
+dependencies {
+    compile 'org.springframework.boot:spring-boot-devtools'
+    compile 'org.springframework.boot:spring-boot-starter-web'
+    compile 'org.springframework.boot:spring-boot-starter-data-jpa'
+    compile 'org.springframework.boot:spring-boot-starter-data-mongodb'
+
+    compile 'org.projectlombok:lombok:1.16.4'
+
+    compile 'mysql:mysql-connector-java'
+    compile 'org.postgresql:postgresql'
+    compile 'com.datastax.cassandra:cassandra-driver-core'
+
+    testCompile 'org.springframework.boot:spring-boot-starter-test'
+}
