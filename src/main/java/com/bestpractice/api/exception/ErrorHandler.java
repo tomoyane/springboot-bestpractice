@@ -1,6 +1,6 @@
 package com.bestpractice.api.exception;
 
-import com.bestpractice.api.domain.config.ErrorConfig;
+import com.bestpractice.api.common.config.ErrorConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

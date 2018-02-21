@@ -1,4 +1,4 @@
-package com.bestpractice.api.common;
+package com.bestpractice.api.common.util;
 
 public class Util {
 }
