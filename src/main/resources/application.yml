@@ -1,12 +1,11 @@
 # MySQL info
 spring:
-  profile:
   profiles:
     active: dev
   datasource:
-    url: jdbc:mysql://locahost:3306/test
-    username: test
-    password: test
+    url: jdbc:mysql://${DB_HOST}:3306/${DB_NAME}
+    username: ${DB_USER}
+    password: ${DB_PASS}
     driver-class-name: com.mysql.jdbc.Driver
 
 ## PostgresSQL info

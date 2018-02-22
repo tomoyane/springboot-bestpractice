@@ -7,13 +7,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class MysqlService {
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    public MysqlService(UserRepository userRepository){
+    public MysqlService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
     public Users getUser(Long id) {
-        return userRepository.findOne(id);
+        return userRepository.findUsersById(id);
     }
 }
