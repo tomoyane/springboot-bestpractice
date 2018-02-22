@@ -28,13 +28,12 @@ dependencies {
     compile 'org.springframework.boot:spring-boot-devtools'
     compile 'org.springframework.boot:spring-boot-starter-web'
     compile 'org.springframework.boot:spring-boot-starter-data-jpa'
-    compile 'org.springframework.boot:spring-boot-starter-data-mongodb'
-
-    compile 'org.projectlombok:lombok:1.16.4'
-
+    compile 'org.hibernate:hibernate-entitymanager'
+//    compile 'org.springframework.boot:spring-boot-starter-data-mongodb'
+//    compile 'org.springframework.data:spring-data-cassandra'
     compile 'mysql:mysql-connector-java'
-    compile 'org.postgresql:postgresql'
-    compile 'com.datastax.cassandra:cassandra-driver-core'
+//    compile 'org.postgresql:postgresql'
+    compile 'org.projectlombok:lombok:1.16.4'
 
     testCompile 'org.springframework.boot:spring-boot-starter-test'
 }
