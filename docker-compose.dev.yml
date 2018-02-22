@@ -5,18 +5,23 @@ services:
         image: mysql
         ports:
           - '3306:3306'
-        hostname: localhost
         environment:
           MYSQL_ROOT_PASSWORD: root
-          MYSQL_DATABASE: adocs_db
+          MYSQL_DATABASE: test
           MYSQL_USER: root
           MYSQL_PASSWORD: root
 
     app:
         build: .
         depends_on:
-            - db
+          - db
         ports:
-            - '8080:8080'
+          - '8080:8080'
         volumes:
-            - .:/app
+          - .:/spring-boot-bestpractice
+        environment:
+          DB_HOST: db
+          DB_NAME: test
+          DB_USER: root
+          DB_PASS: root
+        command: mysql -h db -u root -p root -e sql/sample.sql
