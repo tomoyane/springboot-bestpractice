@@ -17,7 +17,6 @@ public class MysqlController {
         this.mysqlService = mysqlService;
     }
 
-    @ResponseBody
     @GetMapping(value="{id}")
     public Map<String, Users> getUser(@PathVariable("id") Long id) {
         Map<String, Users> map = new HashMap<>();
