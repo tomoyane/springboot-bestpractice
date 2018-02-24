@@ -5,10 +5,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.Date;
 
 @Data
 @Entity
-@Table
+@Table(name = "users")
 public class Users {
 
     @Id
@@ -25,5 +26,5 @@ public class Users {
     private String password;
 
     @Column(nullable = false, name = "created_at")
-    private Data createdAt;
+    private Date createdAt;
 }
