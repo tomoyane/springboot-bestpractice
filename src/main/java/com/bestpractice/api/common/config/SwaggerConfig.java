@@ -1,4 +1,4 @@
-package com.bestpractice.api.common;
+package com.bestpractice.api.common.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,15 +22,14 @@ public class SwaggerConfig {
     }
 
     private ApiInfo apiInfo() {
-        ApiInfo apiInfo = new ApiInfo(
-                "HogeHoge System Web API",
-                "HogeHoge System の Web API 仕様書",
+        return new ApiInfo(
+                "Web API",
+                "Web API document",
                 "0.0.1",
                 "",
-                "HogeHoge",
-                "HogeHoge Co. Ltd",
+                "Spring boot best practice",
+                "",
                 ""
         );
-        return apiInfo;
     }
 }
