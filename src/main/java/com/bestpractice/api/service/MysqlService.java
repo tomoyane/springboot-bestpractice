@@ -14,6 +14,6 @@ public class MysqlService {
     }
 
     public Users getUser(Long id) {
-        return userRepository.findUsersById(id);
+        return userRepository.findById(id);
     }
 }

@@ -1,6 +1,6 @@
 package com.bestpractice.api.exception;
 
-import com.bestpractice.api.common.config.ErrorConfig;
+import com.bestpractice.api.common.property.ErrorProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,7 @@ import java.util.Map;
 public class ErrorHandler {
 
     @Autowired
-    ErrorConfig errorConfig;
+    ErrorProperty errorProperty;
 
     private static final Logger logger = LoggerFactory.getLogger(ErrorHandler.class);
 
