@@ -24,4 +24,4 @@ services:
           DB_NAME: test
           DB_USER: root
           DB_PASS: root
-        command: mysql -h db -u root -p root -e sql/sample.sql
+#        command: mysql -h 127.0.0.1 -u root -p <  sql/sample.sql
