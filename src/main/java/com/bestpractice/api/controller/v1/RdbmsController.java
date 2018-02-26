@@ -23,4 +23,12 @@ public class MysqlController {
         map.put("users", mysqlService.getUser(id));
         return map;
     }
+
+    @PostMapping
+    public Map<String, Users> postUser(@RequestBody Users users) {
+        Map<String, Users> map = new HashMap<>();
+        map.put("users", users);
+        return map;
+    }
+
 }
