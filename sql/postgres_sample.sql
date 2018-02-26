@@ -1,28 +1,25 @@
-USE test;
-
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS infos;
 
 -- users table
-CREATE TABLE `users` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(128) NOT NULL,
-  `email` varchar(128) NOT NULL,
-  `password` varchar(128) NOT NULL,
-  `created_at` datetime(6),
-  PRIMARY KEY (`id`),
-  UNIQUE (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE TABLE users (
+  id SERIAL,
+  username varchar,
+  email varchar,
+  password varchar,
+  created_at date,
+  PRIMARY KEY (id),
+  UNIQUE (email)
+);
 
 -- infos table
-CREATE TABLE `infos` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `title` varchar(128) NOT NULL,
-  `description` varchar(128) NOT NULL,
-  `created_at` datetime(6),
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
+CREATE TABLE infos (
+  id SERIAL,
+  title varchar,
+  description varchar,
+  created_at date,
+  PRIMARY KEY (id)
+);
 
 -- users test data
 INSERT INTO users(id, username, email, password, created_at)
