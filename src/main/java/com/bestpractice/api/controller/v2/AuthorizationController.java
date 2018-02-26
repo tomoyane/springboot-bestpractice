@@ -5,5 +5,5 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v1/")
-public class SampleController2 {
+public class AuthorizationController {
 }

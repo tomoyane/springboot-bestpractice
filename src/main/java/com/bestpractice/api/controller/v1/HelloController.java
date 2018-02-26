@@ -10,13 +10,13 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/")
-public class SampleController1 {
+public class HelloController {
 
     @ResponseBody
-    @GetMapping(value="sample")
+    @GetMapping(value="hello")
     public Map<String, String> sample1() {
         Map<String, String> map = new HashMap<>();
-        map.put("key", "sample1");
+        map.put("key", "hello world");
         return map;
     }
 }

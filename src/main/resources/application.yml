@@ -1,20 +1,13 @@
-# MySQL info
 spring:
   profiles:
     active: dev
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/test?useSSL=false
+    url: jdbc:mysql://127.0.0.1:3306/test
     username: root
     password: root
-    driver-class-name: com.mysql.jdbc.Driver
+    driverClassName: com.mysql.jdbc.Driver
 
-## PostgresSQL info
-#postgres:
-#  url:  jdbc:postgresql://localhost/test
-#  username: test
-#  password: test
-#  driverClassName: org.postgresql.Driver
-#
+
 ## MongoDB info
 #mongo:
 #  host: localhost

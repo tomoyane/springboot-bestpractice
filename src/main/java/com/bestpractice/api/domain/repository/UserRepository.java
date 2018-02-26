@@ -1,4 +1,4 @@
-package com.bestpractice.api.domain.repository.mysql;
+package com.bestpractice.api.domain.repository;
 
 import com.bestpractice.api.domain.entity.Users;
 import org.springframework.data.jpa.repository.JpaRepository;

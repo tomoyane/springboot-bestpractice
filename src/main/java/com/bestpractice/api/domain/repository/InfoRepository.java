@@ -1,4 +1,4 @@
-package com.bestpractice.api.domain.repository.postgres;
+package com.bestpractice.api.domain.repository;
 
 import com.bestpractice.api.domain.entity.Infos;
 import org.springframework.data.jpa.repository.JpaRepository;

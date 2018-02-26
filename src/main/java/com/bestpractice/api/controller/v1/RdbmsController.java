@@ -8,12 +8,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/v1/mysql/users/")
-public class MysqlController {
+@RequestMapping("/api/v1/users/")
+public class RdbmsController {
 
     private final MysqlService mysqlService;
 
-    public MysqlController(MysqlService mysqlService) {
+    public RdbmsController(MysqlService mysqlService) {
         this.mysqlService = mysqlService;
     }
 
