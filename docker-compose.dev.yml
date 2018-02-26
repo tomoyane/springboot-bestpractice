@@ -1,7 +1,7 @@
 version: '2'
 
 services:
-    db:
+    mysql_db:
         image: mysql
         ports:
           - '3306:3306'
@@ -14,14 +14,15 @@ services:
     app:
         build: .
         depends_on:
-          - db
+          - mysql_db
         ports:
           - '8080:8080'
         volumes:
           - .:/spring-boot-bestpractice
         environment:
-          DB_HOST: db
-          DB_NAME: test
-          DB_USER: root
-          DB_PASS: root
-#        command: mysql -h 127.0.0.1 -u root -p <  sql/sample.sql
+          MYSQL_DB_HOST: mysql_db
+          MYSQL_DB_NAME: test
+          MYSQL_DB_USER: root
+          MYSQL_DB_PASS: root
+
+# mysql -h 127.0.0.1 -u root -p <  sql/mysql_sample.sql
