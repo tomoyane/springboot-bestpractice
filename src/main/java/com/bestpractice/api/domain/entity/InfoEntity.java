@@ -1,7 +1,5 @@
 package com.bestpractice.api.domain.entity;
 
-import lombok.Data;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -9,7 +7,6 @@ import javax.persistence.Table;
 import java.util.Date;
 
 @Data
-@Entity
 @Table(name = "infos")
 public class Infos {
 
@@ -25,4 +22,6 @@ public class Infos {
 
     @Column(nullable = false, name = "created_at")
     private Date createdAt;
+
+    
 }

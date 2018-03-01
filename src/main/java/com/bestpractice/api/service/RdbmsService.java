@@ -16,4 +16,8 @@ public class MysqlService {
     public Users getUser(Long id) {
         return userRepository.findById(id);
     }
+
+    public void generateUser(Users users) {
+        userRepository.save(users);
+    }
 }
