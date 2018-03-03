@@ -28,7 +28,7 @@ public class RdbmsController {
     public Map<String, UserEntity> postUser(@RequestBody UserEntity userEntity) {
         rdbmsService.generateUser(userEntity);
         Map<String, UserEntity> map = new HashMap<>();
-        map.put("users", userEntity);
+        map.put("user", userEntity);
         return map;
     }
 
@@ -36,7 +36,7 @@ public class RdbmsController {
     public Map<String, UserEntity> putUser(@RequestBody UserEntity userEntity) {
         rdbmsService.generateUser(userEntity);
         Map<String, UserEntity> map = new HashMap<>();
-        map.put("users", userEntity);
+        map.put("user", userEntity);
         return map;
     }
 }

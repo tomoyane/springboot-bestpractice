@@ -1,0 +1,27 @@
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    tomcat:
+      max-active: 10
+      max-idle: 5
+      min-idle: 2
+      initial-size: 5
+      remove-abandoned: true
+
+## MongoDB info
+#mongo:
+#  host: localhost
+#  port: 27017
+#  url: mongodb://localhost/test
+#  database: test
+#  username: test
+#  password: test
+#
+## Cassandra info
+#cassandra:
+#  hosts:
+#    - test
+#    - test
+#    - test
+#  username: test
+#  password: test

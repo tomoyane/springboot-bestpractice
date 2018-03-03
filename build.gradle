@@ -34,6 +34,7 @@ dependencies {
 //    compile 'org.springframework.boot:spring-boot-starter-data-mongodb'
 //    compile 'org.springframework.data:spring-data-cassandra'
     compile 'mysql:mysql-connector-java'
+    compile 'org.postgresql:postgresql'
 
     testCompile 'org.springframework.boot:spring-boot-starter-test'
     testCompile 'junit:junit'
