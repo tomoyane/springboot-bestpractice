@@ -7,7 +7,6 @@ spring:
     password: ${MYSQL_DB_PASS}
     driver-class-name: com.mysql.jdbc.Driver
 
-
 ## MongoDB info
 #mongo:
 #  host: localhost

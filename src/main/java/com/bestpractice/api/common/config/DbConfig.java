@@ -12,6 +12,13 @@ import javax.sql.DataSource;
 @Configuration
 @Profile("dev")
 public class DbConfig {
+
+    /**
+     * Heroku postgres sql
+     * Environment is "dev"
+     *
+     * @return DataSource
+     */
     @Bean
     @Primary
     @ConfigurationProperties(prefix = "spring.datasource")
