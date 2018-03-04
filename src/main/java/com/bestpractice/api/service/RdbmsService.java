@@ -28,6 +28,6 @@ public class RdbmsService {
     }
 
     public void deleteUser(Long id) {
-        userRepository.deleteById(id);
+        userRepository.removeById(id);
     }
 }

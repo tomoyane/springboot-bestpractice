@@ -8,3 +8,5 @@ spring:
       min-idle: 2
       initial-size: 5
       remove-abandoned: true
+  jackson:
+    property-naming-strategy: SNAKE_CASE

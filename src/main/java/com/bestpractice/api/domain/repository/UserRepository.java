@@ -15,5 +15,5 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
     UserEntity save(UserEntity userEntity);
 
-    UserEntity deleteById(Long id);
+    UserEntity removeById(Long id);
 }
