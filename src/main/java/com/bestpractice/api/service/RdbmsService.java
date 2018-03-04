@@ -4,6 +4,8 @@ import com.bestpractice.api.domain.entity.UserEntity;
 import com.bestpractice.api.domain.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class RdbmsService {
 
@@ -13,11 +15,19 @@ public class RdbmsService {
         this.userRepository = userRepository;
     }
 
+    public List<UserEntity> getUserList() {
+        return userRepository.findAll();
+    }
+
     public UserEntity getUser(Long id) {
         return userRepository.findById(id);
     }
 
     public void generateUser(UserEntity userEntity) {
         userRepository.save(userEntity);
+    }
+
+    public void deleteUser(Long id) {
+        userRepository.deleteById(id);
     }
 }

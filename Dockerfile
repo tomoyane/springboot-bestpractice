@@ -11,6 +11,8 @@ USER sboot
 
 ENV JAVA_OPTS=""
 
+ENV SPRING_PROFILES_ACTIVE=loc
+
 ENTRYPOINT [ "sh", "-c", "java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -jar build/libs/spring-boot-bestpractice-0.0.1-SNAPSHOT.jar" ]
 
 COPY . /spring-boot-bestpractice

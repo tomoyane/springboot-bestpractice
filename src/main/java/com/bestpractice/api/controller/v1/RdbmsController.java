@@ -5,6 +5,7 @@ import com.bestpractice.api.service.RdbmsService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -15,6 +16,13 @@ public class RdbmsController {
 
     public RdbmsController(RdbmsService rdbmsService) {
         this.rdbmsService = rdbmsService;
+    }
+
+    @GetMapping()
+    public Map<String, List<UserEntity>> getUserList() {
+        Map<String, List<UserEntity>> map = new HashMap<>();
+        map.put("users", rdbmsService.getUserList());
+        return map;
     }
 
     @GetMapping(value="{id}")
@@ -37,6 +45,14 @@ public class RdbmsController {
         rdbmsService.generateUser(userEntity);
         Map<String, UserEntity> map = new HashMap<>();
         map.put("user", userEntity);
+        return map;
+    }
+
+    @DeleteMapping(value = "{id}")
+    public Map<String, String> deleteUser(@PathVariable("id") Long id) {
+        rdbmsService.deleteUser(id);
+        Map<String, String> map = new HashMap<>();
+        map.put("user", "success.");
         return map;
     }
 }
