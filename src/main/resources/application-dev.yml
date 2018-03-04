@@ -1,6 +1,7 @@
 # Heroku postgres
 spring:
   datasource:
+    sql-script-encoding: UTF-8
     driver-class-name: org.postgresql.Driver
     tomcat:
       max-active: 10

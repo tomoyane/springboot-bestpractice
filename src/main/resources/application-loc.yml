@@ -6,6 +6,7 @@ spring:
     username: ${MYSQL_DB_USER}
     password: ${MYSQL_DB_PASS}
     driver-class-name: com.mysql.jdbc.Driver
+    sql-script-encoding: UTF-8
   jackson:
     property-naming-strategy: SNAKE_CASE
 
