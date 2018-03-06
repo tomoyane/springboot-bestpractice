@@ -3,8 +3,8 @@ Write to about Spring Boot best practice architecture
 
 ## Environment
 * application-loc.yml
-  * Working on docker image
-    * MySQL container
+  * Working on docker container
+    * MySQL image
     * openjdk:8-jdk image
 * application-dev.yml
   * Working on Heroku
