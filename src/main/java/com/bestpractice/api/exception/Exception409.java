@@ -1,4 +1,4 @@
 package com.bestpractice.api.exception;
 
-public class Exception408 extends RuntimeException {
+public class Exception409 extends RuntimeException {
 }

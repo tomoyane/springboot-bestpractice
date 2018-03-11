@@ -1,33 +1,33 @@
 package com.bestpractice.api.service;
 
-import com.bestpractice.api.domain.entity.UserEntity;
-import com.bestpractice.api.domain.repository.UserRepository;
+import com.bestpractice.api.domain.entity.InfoEntity;
+import com.bestpractice.api.domain.repository.InfoRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class RdbmsService {
+public class InfoService {
 
-    private final UserRepository userRepository;
+    private final InfoRepository infoRepository;
 
-    public RdbmsService(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public InfoService(InfoRepository infoRepository) {
+        this.infoRepository = infoRepository;
     }
 
-    public List<UserEntity> getUserList() {
-        return userRepository.findAll();
+    public List<InfoEntity> getInfoList() {
+        return infoRepository.findAll();
     }
 
-    public UserEntity getUser(Long id) {
-        return userRepository.findById(id);
+    public InfoEntity getInfo(Long id) {
+        return infoRepository.findById(id);
     }
 
-    public void generateUser(UserEntity userEntity) {
-        userRepository.save(userEntity);
+    public void generateInfo(InfoEntity infoEntity) {
+        infoRepository.save(infoEntity);
     }
 
-    public void deleteUser(Long id) {
-        userRepository.removeById(id);
+    public void deleteInfo(Long id) {
+        infoRepository.removeById(id);
     }
 }
