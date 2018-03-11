@@ -1,7 +1,8 @@
 USE test;
 
-DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS user_keys;
 DROP TABLE IF EXISTS infos;
+DROP TABLE IF EXISTS users;
 
 -- users table
 CREATE TABLE users (
@@ -14,6 +15,18 @@ CREATE TABLE users (
   UNIQUE (email)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- user_keys table
+CREATE TABLE user_keys (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  token varchar(128) NOT NULL,
+  refresh_token varchar(128) NOT NULL,
+  user_id int(11) NOT NULL,
+  created_at datetime(6),
+  PRIMARY KEY (id),
+  UNIQUE (token),
+  FOREIGN KEY (user_id) REFERENCES users(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 -- infos table
 CREATE TABLE infos (
   id int(11) NOT NULL AUTO_INCREMENT,
@@ -22,29 +35,6 @@ CREATE TABLE infos (
   created_at datetime(6),
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
--- users test data
-INSERT INTO users(id, username, email, password, created_at)
-VALUES (1, 'hoge01', 'aaa@gmail.com', 'test01', '1970-01-01 00:00:01');
-
-INSERT INTO users(id, username, email, password, created_at)
-VALUES (2, 'hoge02', 'aaa+2@gmail.com', 'test02', '1971-01-02 00:00:01');
-
-INSERT INTO users(id, username, email, password, created_at)
-VALUES (3, 'hoge03', 'aaa+3@gmail.com', 'test03', '1972-01-03 00:00:01');
-
-INSERT INTO users(id, username, email, password, created_at)
-VALUES (4, 'hoge04', 'aaa+4@gmail.com', 'test04', '1973-01-01 00:00:01');
-
-INSERT INTO users(id, username, email, password, created_at)
-VALUES (5, 'hoge05', 'aaa+5@gmail.com', 'test05', '1972-01-01 00:00:01');
-
-INSERT INTO users(id, username, email, password, created_at)
-VALUES (6, 'hoge06', 'aaa+6@gmail.com', 'test06', '1969-01-01 00:00:01');
-
-INSERT INTO users(id, username, email, password, created_at)
-VALUES (7, 'hoge07', 'aaa+7@gmail.com', 'test07', '1933-01-01 00:00:01');
 
 -- infos test data
 INSERT INTO infos(id, title, description, created_at)
