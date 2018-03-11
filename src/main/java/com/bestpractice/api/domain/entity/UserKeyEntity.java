@@ -4,10 +4,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 @Entity
-@Table(name = "users")
-public class UserEntity extends AbstractEntity {
+@Table(name = "user_keys")
+public class UserKeyEntity extends AbstractEntity {
 
     @Id
     @Column(name = "id")
@@ -16,16 +17,17 @@ public class UserEntity extends AbstractEntity {
     private Long id;
 
     @NotNull
-    @Column(nullable = false, name = "username")
-    private String username;
+    @Column(nullable = false, name = "token")
+    private String token;
 
     @NotNull
-    @Column(nullable = false, name = "email")
-    private String email;
+    @Column(nullable = false, name = "refresh_token")
+    private String refreshToken;
 
     @NotNull
-    @Column(nullable = false, name = "password")
-    private String password;
+    @JsonIgnore
+    @Column(nullable = false, name = "user_id")
+    private Long userId;
 
     public Long getId() {
         return id;
@@ -35,27 +37,27 @@ public class UserEntity extends AbstractEntity {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getToken() {
+        return token;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setToken(String token) {
+        this.token = token;
     }
 
-    public String getEmail() {
-        return email;
+    public String getRefreshToken() {
+        return refreshToken;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
     }
 
-    public String getPassword() {
-        return password;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 }

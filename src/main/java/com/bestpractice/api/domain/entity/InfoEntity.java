@@ -1,15 +1,13 @@
 package com.bestpractice.api.domain.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
 
 @Entity
 @Table(name = "infos")
-public class InfoEntity {
+public class InfoEntity extends AbstractEntity {
 
     @Id
     @Column(name = "id")
@@ -24,11 +22,6 @@ public class InfoEntity {
     @NotNull
     @Column(nullable = false, name = "description")
     private String description;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @Column(nullable = false, name = "created_at")
-    private Date createdAt;
 
     public Long getId() {
         return id;
@@ -52,13 +45,5 @@ public class InfoEntity {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
     }
 }
