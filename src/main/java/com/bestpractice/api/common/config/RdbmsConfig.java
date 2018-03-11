@@ -11,7 +11,7 @@ import javax.sql.DataSource;
 
 @Configuration
 @Profile("dev")
-public class DbConfig {
+public class RdbmsConfig {
 
     /**
      * Heroku postgres sql
