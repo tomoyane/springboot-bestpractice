@@ -26,7 +26,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public PreAuthenticatedAuthenticationProvider preAuthenticatedAuthenticationProvider() {
-        System.out.print("=====provider====");
         PreAuthenticatedAuthenticationProvider provider = new PreAuthenticatedAuthenticationProvider();
         provider.setPreAuthenticatedUserDetailsService(authenticationUserDetailsService());
         provider.setUserDetailsChecker(new AccountStatusUserDetailsChecker());
@@ -35,13 +34,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) {
-        System.out.print("=====asasasa====");
         auth.authenticationProvider(preAuthenticatedAuthenticationProvider());
     }
 
     @Bean
     public AbstractPreAuthenticatedProcessingFilter preAuthenticatedProcessingFilter() throws Exception {
-        System.out.print("=====sa====");
         PreAuthenticatedProcessingFilter filter = new PreAuthenticatedProcessingFilter();
         filter.setAuthenticationManager(authenticationManager());
         return filter;
