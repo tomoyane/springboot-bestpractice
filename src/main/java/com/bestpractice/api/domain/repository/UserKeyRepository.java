@@ -1,14 +1,14 @@
 package com.bestpractice.api.domain.repository;
 
-import com.bestpractice.api.domain.entity.UserEntity;
+import com.bestpractice.api.domain.entity.UserKeyEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserRepository extends JpaRepository<UserEntity, Long> {
-    UserEntity findById(Long id);
+public interface UserKeyRepository extends JpaRepository<UserKeyEntity, Long> {
 
-    UserEntity save(UserEntity userEntity);
+    UserKeyEntity findByToken(String token);
 
-    UserEntity removeById(Long id);
+    UserKeyEntity save(UserKeyEntity userKeyEntity);
+
 }
