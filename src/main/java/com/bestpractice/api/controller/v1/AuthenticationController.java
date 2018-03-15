@@ -6,6 +6,7 @@ import com.bestpractice.api.exception.Exception400;
 import com.bestpractice.api.exception.Exception409;
 import com.bestpractice.api.service.JsonWebTokenService;
 import com.bestpractice.api.service.UserService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,6 +30,7 @@ public class AuthenticationController {
     }
 
     @PostMapping
+    @PreAuthorize("permitAll")
     public Map<String, UserKeyEntity> postUser(@Validated @RequestBody UserEntity userEntity, BindingResult result) {
 
         if (result.hasErrors()) {

@@ -1,12 +1,14 @@
 package com.bestpractice.api.service;
 
 import com.bestpractice.api.domain.repository.UserKeyRepository;
+import com.bestpractice.api.domain.role.AdminAuthority;
 import com.bestpractice.api.domain.role.UserAuthority;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.AuthenticationUserDetailsService;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 import org.springframework.stereotype.Service;
 
@@ -20,8 +22,7 @@ public class AuthenticationService implements AuthenticationUserDetailsService<P
     UserKeyRepository userKeyRepository;
 
     @Override
-    public UserDetails loadUserDetails(PreAuthenticatedAuthenticationToken token) {
-
+    public UserDetails loadUserDetails(PreAuthenticatedAuthenticationToken token) throws UsernameNotFoundException {
         Object credentials = token.getCredentials();
 
         if(credentials.toString().equals("")) {
@@ -34,10 +35,8 @@ public class AuthenticationService implements AuthenticationUserDetailsService<P
 
         Collection<GrantedAuthority> authorities = new HashSet<GrantedAuthority>() ;
         authorities.add(new UserAuthority());
-//        authorities.add(new AdminAuthority());
+        authorities.add(new AdminAuthority());
 
-        //org.springframework.security.core.userdetails.Userを利用。
-        //UserNameは都度適切に設定し,Passwordなどはないので常にブランクにした。
         return new User("","", authorities);
     }
 }
