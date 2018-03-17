@@ -1,9 +1,7 @@
 package com.bestpractice.api.common.config;
 
-import com.bestpractice.api.domain.filter.JwtAuthenticationEntryPoint;
 import com.bestpractice.api.domain.filter.PreAuthenticatedProcessingFilter;
 import com.bestpractice.api.service.AuthenticationService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AccountStatusUserDetailsChecker;
@@ -19,9 +17,6 @@ import org.springframework.security.web.authentication.preauth.PreAuthenticatedA
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
-    @Autowired
-    private JwtAuthenticationEntryPoint unauthorizedHandler;
 
     @Bean
     public AuthenticationUserDetailsService<PreAuthenticatedAuthenticationToken> authenticationUserDetailsService() {
@@ -50,15 +45,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable()
-                .authorizeRequests()
-                .antMatchers("/api/v1/auth**", "/api/v1/hello**")
+        http.authorizeRequests()
+                .antMatchers("/api/v1/hello", "/api/v1/auth")
                 .permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
                 .addFilter(preAuthenticatedProcessingFilter())
-                .exceptionHandling()
-                .authenticationEntryPoint(unauthorizedHandler);
+                .exceptionHandling();
     }
 }
