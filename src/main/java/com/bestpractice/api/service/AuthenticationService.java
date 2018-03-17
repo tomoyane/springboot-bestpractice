@@ -26,7 +26,7 @@ public class AuthenticationService implements AuthenticationUserDetailsService<P
         Object credentials = token.getCredentials();
 
         if(credentials.toString().equals("")) {
-            throw new RuntimeException();
+            throw new UsernameNotFoundException("Not found user");
         }
 
         if (userKeyRepository.findByToken(credentials.toString()) == null) {
