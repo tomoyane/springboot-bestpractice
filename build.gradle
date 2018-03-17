@@ -9,13 +9,13 @@ buildscript {
     }
 }
 
-apply plugin: 'java'
-apply plugin: 'org.springframework.boot'
+apply plugin: "java"
+apply plugin: "org.springframework.boot"
 
 jar {
-    group 'spring-boot-bestpractice'
-    baseName = 'spring-boot-bestpractice'
-    version =  '0.0.1-SNAPSHOT'
+    group "spring-boot-bestpractice"
+    baseName = "spring-boot-bestpractice"
+    version =  "0.0.1-SNAPSHOT"
 }
 
 repositories {
@@ -25,18 +25,18 @@ repositories {
 }
 
 dependencies {
-    compile 'org.springframework.boot:spring-boot-starter-web'
-    compile 'org.springframework.boot:spring-boot-starter-data-jpa'
-    compile 'org.springframework.boot:spring-boot-configuration-processor'
-    compile('org.springframework.boot:spring-boot-starter-security')
-    compile 'io.springfox:springfox-swagger2:2.8.0'
-    compile 'io.springfox:springfox-swagger-ui:2.8.0'
-    compile('io.jsonwebtoken:jjwt:0.9.0')
+    compile "org.springframework.boot:spring-boot-starter-web"
+    compile "org.springframework.boot:spring-boot-starter-data-jpa"
+    compile "org.springframework.boot:spring-boot-configuration-processor"
+    compile("org.springframework.boot:spring-boot-starter-security")
+    compile "io.springfox:springfox-swagger2:2.8.0"
+    compile "io.springfox:springfox-swagger-ui:2.8.0"
+    compile("io.jsonwebtoken:jjwt:0.9.0")
 
-//    compile 'org.springframework.boot:spring-boot-starter-data-mongodb'
-//    compile 'org.springframework.data:spring-data-cassandra'
-    compile 'mysql:mysql-connector-java'
-    compile 'org.postgresql:postgresql'
-    testCompile 'org.springframework.boot:spring-boot-starter-test'
-    testCompile 'junit:junit'
+//    compile "org.springframework.boot:spring-boot-starter-data-mongodb"
+//    compile "org.springframework.data:spring-data-cassandra"
+    compile "mysql:mysql-connector-java"
+    compile "org.postgresql:postgresql"
+    testCompile "org.springframework.boot:spring-boot-starter-test"
+    testCompile "junit:junit"
 }
