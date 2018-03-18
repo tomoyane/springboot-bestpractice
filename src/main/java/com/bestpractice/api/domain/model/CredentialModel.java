@@ -1,22 +1,51 @@
 package com.bestpractice.api.domain.model;
 
-public class ExceptionModel {
-    private int status;
-    private String message;
+import java.util.Date;
 
-    public int getStatus() {
-        return status;
+public class CredentialModel {
+    private String iss;
+    private Long sub;
+    private String aud;
+    private String jti;
+    private Date exp;
+
+    public String getIss() {
+        return iss;
     }
 
-    public void setStatus(int status) {
-        this.status = status;
+    public void setIss(String iss) {
+        this.iss = iss;
     }
 
-    public String getMessage() {
-        return message;
+    public Long getSub() {
+        return sub;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setSub(Long sub) {
+        this.sub = sub;
+    }
+
+    public String getAud() {
+        return aud;
+    }
+
+    public void setAud(String aud) {
+        this.aud = aud;
+    }
+
+    public String getJti() {
+        return jti;
+    }
+
+    public void setJti(String jti) {
+        this.jti = jti;
+    }
+
+    public Date getExp() {
+        return exp;
+    }
+
+    public void setExp(Date exp) {
+        this.exp = exp;
     }
 }
