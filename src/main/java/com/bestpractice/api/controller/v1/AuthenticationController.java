@@ -29,21 +29,24 @@ public class AuthenticationController {
     }
 
     @PostMapping
-    public Map<String, UserKeyEntity> postUser(@Validated @RequestBody UserEntity userEntity, BindingResult result) {
+    public Map<String, UserKeyEntity> postUser(@RequestBody UserEntity userEntity) {
 
-        if (result.hasErrors()) {
-            throw new Exception400();
-        }
+//        if (result.hasErrors()) {
+//            throw new Exception400();
+//        }
 
-        if (!userService.checkUserByEmail(userEntity.getEmail())) {
+        if (userService.checkUserByEmail(userEntity.getEmail()) != null) {
             throw new Exception409();
         }
 
         Long userId = userService.generateUser(userEntity).getId();
-        String token = jwtService.generateJwt(userId, 100);
-        String refreshToken = jwtService.generateJwt(userId, 200);
 
-        UserKeyEntity userKeyEntity = userService.generateUserKey(userId, token, refreshToken);
+        UserKeyEntity userKeyEntity = new UserKeyEntity();
+        userKeyEntity.setToken(jwtService.generateJwt(userId, 100));
+        userKeyEntity.setRefreshToken(jwtService.generateJwt(userId, 200));
+        userKeyEntity.setUserId(userId);
+        userService.generateUserKey(userKeyEntity);
+
         Map<String, UserKeyEntity> map = new HashMap<>();
         map.put("key", userKeyEntity);
 
