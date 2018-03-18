@@ -1,6 +1,6 @@
 package com.bestpractice.api.service;
 
-import com.bestpractice.api.domain.repository.UserKeyRepository;
+import com.bestpractice.api.domain.repository.UserRepository;
 import com.bestpractice.api.domain.role.AdminAuthority;
 import com.bestpractice.api.domain.role.UserAuthority;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,9 @@ import java.util.HashSet;
 public class AuthenticationService implements AuthenticationUserDetailsService<PreAuthenticatedAuthenticationToken> {
 
     @Autowired
-    UserKeyRepository userKeyRepository;
+    UserRepository userRepository;
+    @Autowired
+    JsonWebTokenService jsonWebTokenService;
 
     @Override
     public UserDetails loadUserDetails(PreAuthenticatedAuthenticationToken token) throws UsernameNotFoundException {
@@ -29,7 +31,8 @@ public class AuthenticationService implements AuthenticationUserDetailsService<P
             throw new UsernameNotFoundException("Not found user");
         }
 
-        if (userKeyRepository.findByToken(credentials.toString()) == null) {
+        Long userId = jsonWebTokenService.decodeJwt(credentials.toString());
+        if (userRepository.findById(userId) == null) {
             throw new RuntimeException();
         }
 
