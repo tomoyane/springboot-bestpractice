@@ -16,6 +16,10 @@ public class UserEntity extends AbstractEntity {
     private Long id;
 
     @NotNull
+    @Column(nullable = false, name = "uuid")
+    private String uuid;
+
+    @NotNull
     @Column(nullable = false, name = "username")
     private String username;
 
@@ -33,6 +37,14 @@ public class UserEntity extends AbstractEntity {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 
     public String getUsername() {
