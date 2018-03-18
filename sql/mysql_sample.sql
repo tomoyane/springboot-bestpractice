@@ -1,6 +1,7 @@
 USE test;
 
 DROP TABLE IF EXISTS user_keys;
+DROP TABLE IF EXISTS signature_keys;
 DROP TABLE IF EXISTS infos;
 DROP TABLE IF EXISTS users;
 
@@ -18,12 +19,22 @@ CREATE TABLE users (
 -- user_keys table
 CREATE TABLE user_keys (
   id int(11) NOT NULL AUTO_INCREMENT,
-  token varchar(128) NOT NULL,
-  refresh_token varchar(128) NOT NULL,
+  token varchar(256) NOT NULL,
+  refresh_token varchar(256) NOT NULL,
   user_id int(11) NOT NULL,
   created_at datetime(6),
   PRIMARY KEY (id),
   UNIQUE (token),
+  FOREIGN KEY (user_id) REFERENCES users(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- signature_keys table
+CREATE TABLE signature_keys (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  signature_key varchar(128) NOT NULL,
+  user_id int(11) NOT NULL,
+  created_at datetime(6),
+  PRIMARY KEY (id),
   FOREIGN KEY (user_id) REFERENCES users(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
