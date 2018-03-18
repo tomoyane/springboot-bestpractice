@@ -17,20 +17,15 @@ public class UserService {
         this.userKeyRepository = userKeyRepository;
     }
 
-    public boolean checkUserByEmail(String email) {
-        return userRepository.findByEmail(email) != null;
+    public UserEntity checkUserByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 
     public UserEntity generateUser(UserEntity userEntity) {
         return userRepository.save(userEntity);
     }
 
-    public UserKeyEntity generateUserKey(Long userId, String token, String refreshToken) {
-        UserKeyEntity userKeyEntity = new UserKeyEntity();
-        userKeyEntity.setToken(token);
-        userKeyEntity.setRefreshToken(refreshToken);
-        userKeyEntity.setUserId(userId);
-
+    public UserKeyEntity generateUserKey(UserKeyEntity userKeyEntity) {
         return userKeyRepository.save(userKeyEntity);
     }
 }
