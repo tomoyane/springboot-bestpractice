@@ -8,6 +8,7 @@ DROP TABLE IF EXISTS users;
 -- users table
 CREATE TABLE users (
   id int(11) NOT NULL AUTO_INCREMENT,
+  uuid varchar(128) NOT NULL,
   username varchar(128) NOT NULL,
   email varchar(128) NOT NULL,
   password varchar(128) NOT NULL,
