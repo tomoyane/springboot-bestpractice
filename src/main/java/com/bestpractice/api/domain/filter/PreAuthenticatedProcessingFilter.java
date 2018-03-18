@@ -12,7 +12,7 @@ public class PreAuthenticatedProcessingFilter extends AbstractPreAuthenticatedPr
 
     @Override
     protected Object getPreAuthenticatedCredentials(HttpServletRequest httpServletRequest) {
-        String credentials = httpServletRequest.getHeader("Authorization: Bearer");
+        String credentials = httpServletRequest.getHeader("Authorization");
         return credentials == null ? "" : credentials;
     }
 }
