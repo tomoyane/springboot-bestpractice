@@ -10,6 +10,11 @@ spring:
   jackson:
     property-naming-strategy: SNAKE_CASE
 
+settings:
+  provider: best-practice
+  subject: localhost
+
+
 ## MongoDB info
 #mongo:
 #  host: localhost

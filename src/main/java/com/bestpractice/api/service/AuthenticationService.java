@@ -1,8 +1,10 @@
 package com.bestpractice.api.service;
 
+import com.bestpractice.api.domain.entity.UserEntity;
+import com.bestpractice.api.domain.model.CredentialModel;
 import com.bestpractice.api.domain.repository.UserRepository;
-import com.bestpractice.api.domain.role.AdminAuthority;
 import com.bestpractice.api.domain.role.UserAuthority;
+import com.bestpractice.api.exception.Exception401;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.AuthenticationUserDetailsService;
@@ -27,19 +29,26 @@ public class AuthenticationService implements AuthenticationUserDetailsService<P
     public UserDetails loadUserDetails(PreAuthenticatedAuthenticationToken token) throws UsernameNotFoundException {
         Object credentials = token.getCredentials();
 
-        if(credentials.toString().equals("")) {
+        if (credentials.toString().equals("")) {
             throw new UsernameNotFoundException("Not found user");
         }
 
-        Long userId = jsonWebTokenService.decodeJwt(credentials.toString());
-        if (userRepository.findById(userId) == null) {
-            throw new RuntimeException();
+        CredentialModel credentialModel = jsonWebTokenService.decodeJwt(credentials.toString());
+        if (credentialModel.getSub() == null || credentialModel.getJti() == null) {
+            throw new UsernameNotFoundException("Not found user");
+        }
+
+        Long userId = credentialModel.getSub();
+        String userUuid = credentialModel.getJti();
+
+        UserEntity userEntity = userRepository.findByIdAndUuid(userId, userUuid);
+        if (userEntity == null) {
+            throw new UsernameNotFoundException("Not found user");
         }
 
         Collection<GrantedAuthority> authorities = new HashSet<GrantedAuthority>() ;
         authorities.add(new UserAuthority());
-        authorities.add(new AdminAuthority());
 
-        return new User("","", authorities);
+        return new User(userEntity.getUsername(),"", authorities);
     }
 }
