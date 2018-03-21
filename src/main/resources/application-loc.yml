@@ -13,7 +13,7 @@ spring:
 settings:
   provider: best-practice
   subject: localhost
-
+  token_type: Bearer
 
 ## MongoDB info
 #mongo:
