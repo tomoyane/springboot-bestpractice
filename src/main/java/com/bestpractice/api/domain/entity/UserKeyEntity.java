@@ -17,6 +17,10 @@ public class UserKeyEntity extends AbstractEntity {
     private Long id;
 
     @NotNull
+    @Column(nullable = false, name = "token_type")
+    private String tokenType;
+
+    @NotNull
     @Column(nullable = false, name = "token")
     private String token;
 
@@ -28,6 +32,9 @@ public class UserKeyEntity extends AbstractEntity {
     @JsonIgnore
     @Column(nullable = false, name = "user_id")
     private Long userId;
+
+    @Column(nullable = false, name = "expires_at")
+    private Date expiresAt;
 
     public Long getId() {
         return id;
@@ -59,5 +66,21 @@ public class UserKeyEntity extends AbstractEntity {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public String getTokenType() {
+        return tokenType;
+    }
+
+    public void setTokenType(String tokenType) {
+        this.tokenType = tokenType;
+    }
+
+    public Date getExpiresAt() {
+        return expiresAt;
+    }
+
+    public void setExpiresAt(Date expiresAt) {
+        this.expiresAt = expiresAt;
     }
 }
