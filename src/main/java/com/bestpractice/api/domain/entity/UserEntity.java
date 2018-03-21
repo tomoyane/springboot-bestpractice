@@ -16,6 +16,7 @@ public class UserEntity extends AbstractEntity {
     private Long id;
 
     @NotNull
+    @JsonIgnore
     @Column(nullable = false, name = "uuid")
     private String uuid;
 
