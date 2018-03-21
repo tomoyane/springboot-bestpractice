@@ -2,6 +2,7 @@ package com.bestpractice.api.domain.model;
 
 public class ExceptionModel {
     private int status;
+    private String error;
     private String message;
 
     public int getStatus() {
@@ -10,6 +11,14 @@ public class ExceptionModel {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
     }
 
     public String getMessage() {
