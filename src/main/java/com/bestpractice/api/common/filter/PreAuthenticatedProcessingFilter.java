@@ -1,4 +1,4 @@
-package com.bestpractice.api.domain.filter;
+package com.bestpractice.api.common.filter;
 
 import org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter;
 import javax.servlet.http.HttpServletRequest;
