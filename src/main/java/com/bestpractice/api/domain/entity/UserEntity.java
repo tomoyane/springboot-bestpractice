@@ -1,6 +1,7 @@
 package com.bestpractice.api.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.validator.constraints.Email;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -15,7 +16,6 @@ public class UserEntity extends AbstractEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotNull
     @JsonIgnore
     @Column(nullable = false, name = "uuid")
     private String uuid;
@@ -25,6 +25,7 @@ public class UserEntity extends AbstractEntity {
     private String username;
 
     @NotNull
+    @Email
     @Column(nullable = false, name = "email")
     private String email;
 

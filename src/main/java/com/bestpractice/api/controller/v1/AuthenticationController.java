@@ -4,9 +4,12 @@ import com.bestpractice.api.common.config.PwEncoderConfig;
 import com.bestpractice.api.common.util.Util;
 import com.bestpractice.api.domain.entity.UserEntity;
 import com.bestpractice.api.domain.entity.UserKeyEntity;
+import com.bestpractice.api.exception.Exception400;
 import com.bestpractice.api.exception.Exception409;
 import com.bestpractice.api.service.JsonWebTokenService;
 import com.bestpractice.api.service.UserService;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,11 +35,11 @@ public class AuthenticationController {
     }
 
     @PostMapping
-    public Map<String, UserKeyEntity> generateUser(@RequestBody UserEntity userEntity) {
+    public Map<String, UserKeyEntity> generateUser(@RequestBody @Validated UserEntity userEntity, BindingResult bdResult) {
 
-//        if (userEntity) {
-//            throw new Exception400();
-//        }
+        if (bdResult.hasErrors()) {
+            throw new Exception400();
+        }
 
         if (userService.checkUserByEmail(userEntity.getEmail()) != null) {
             throw new Exception409();
