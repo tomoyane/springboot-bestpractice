@@ -5,11 +5,11 @@ import com.bestpractice.api.exception.Exception400;
 import com.bestpractice.api.exception.Exception401;
 import com.bestpractice.api.exception.Exception403;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 @ControllerAdvice
 public class Advice {
@@ -20,7 +20,8 @@ public class Advice {
     public ExceptionModel badRequest() {
         ExceptionModel exceptionModel = new ExceptionModel();
         exceptionModel.setStatus(400);
-        exceptionModel.setMessage("Bad request");
+        exceptionModel.setError("Bad request");
+        exceptionModel.setMessage("Bad request parameter");
         return exceptionModel;
     }
 
@@ -30,17 +31,8 @@ public class Advice {
     public ExceptionModel unAuthorized() {
         ExceptionModel exceptionModel = new ExceptionModel();
         exceptionModel.setStatus(401);
-        exceptionModel.setMessage("Unauthorized");
-        return exceptionModel;
-    }
-
-    @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    @ExceptionHandler(AuthenticationException.class)
-    @ResponseBody
-    public ExceptionModel handleAuthenticationException() {
-        ExceptionModel exceptionModel = new ExceptionModel();
-        exceptionModel.setStatus(401);
-        exceptionModel.setMessage("Unauthorized");
+        exceptionModel.setError("Unauthorized");
+        exceptionModel.setMessage("Incorrect authentication info");
         return exceptionModel;
     }
 
@@ -50,7 +42,19 @@ public class Advice {
     public ExceptionModel forbidden() {
         ExceptionModel exceptionModel = new ExceptionModel();
         exceptionModel.setStatus(403);
-        exceptionModel.setMessage("Forbidden");
+        exceptionModel.setError("Forbidden");
+        exceptionModel.setMessage("Not allowed");
+        return exceptionModel;
+    }
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(NoHandlerFoundException.class)
+    @ResponseBody
+    public ExceptionModel notFound() {
+        ExceptionModel exceptionModel = new ExceptionModel();
+        exceptionModel.setStatus(404);
+        exceptionModel.setError("Not found");
+        exceptionModel.setMessage("");
         return exceptionModel;
     }
 }
