@@ -1,5 +1,7 @@
 package com.bestpractice.api.controller.v1;
 
+import com.bestpractice.api.common.config.PwEncoderConfig;
+import com.bestpractice.api.common.util.Util;
 import com.bestpractice.api.domain.entity.UserEntity;
 import com.bestpractice.api.domain.entity.UserKeyEntity;
 import com.bestpractice.api.exception.Exception409;
@@ -21,16 +23,18 @@ public class AuthenticationController {
 
     private final UserService userService;
     private final JsonWebTokenService jwtService;
+    private final PwEncoderConfig pwEncoderConfig;
 
-    public AuthenticationController(UserService userService, JsonWebTokenService jwtService) {
+    public AuthenticationController(UserService userService, JsonWebTokenService jwtService, PwEncoderConfig pwEncoderConfig) {
         this.userService = userService;
         this.jwtService = jwtService;
+        this.pwEncoderConfig = pwEncoderConfig;
     }
 
     @PostMapping
-    public Map<String, UserKeyEntity> postUser(@RequestBody UserEntity userEntity) {
+    public Map<String, UserKeyEntity> generateUser(@RequestBody UserEntity userEntity) {
 
-//        if (result.hasErrors()) {
+//        if (userEntity) {
 //            throw new Exception400();
 //        }
 
@@ -40,14 +44,19 @@ public class AuthenticationController {
 
         String userUuid = UUID.randomUUID().toString();
 
+        userEntity.setPassword(pwEncoderConfig.passwordEncoder().encode(userEntity.getPassword()));
         userEntity.setUuid(userUuid);
+
         Long userId = userService.generateUser(userEntity).getId();
 
         Key key = jwtService.generateSignature();
         UserKeyEntity userKeyEntity = new UserKeyEntity();
-        userKeyEntity.setToken(jwtService.generateJwt(key, userId, 100, userUuid));
-        userKeyEntity.setRefreshToken(jwtService.generateJwt(key, userId, 200, userUuid));
+        userKeyEntity.setTokenType("Bearer");
+        userKeyEntity.setToken(jwtService.generateJwt(key, userId, 365, userUuid));
+        userKeyEntity.setRefreshToken(jwtService.generateJwt(key, userId, 365, userUuid));
+        userKeyEntity.setExpiresAt(Util.calculateDate());
         userKeyEntity.setUserId(userId);
+
         userService.generateUserKey(userKeyEntity);
 
         Map<String, UserKeyEntity> map = new HashMap<>();
