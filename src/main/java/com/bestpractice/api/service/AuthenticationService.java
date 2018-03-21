@@ -4,8 +4,8 @@ import com.bestpractice.api.domain.entity.UserEntity;
 import com.bestpractice.api.domain.model.CredentialModel;
 import com.bestpractice.api.domain.repository.UserRepository;
 import com.bestpractice.api.domain.role.UserAuthority;
-import com.bestpractice.api.exception.Exception401;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.AuthenticationUserDetailsService;
 import org.springframework.security.core.userdetails.User;
@@ -30,12 +30,12 @@ public class AuthenticationService implements AuthenticationUserDetailsService<P
         Object credentials = token.getCredentials();
 
         if (credentials.toString().equals("")) {
-            throw new UsernameNotFoundException("Not found user");
+            throw new BadCredentialsException("Bad credential");
         }
 
         CredentialModel credentialModel = jsonWebTokenService.decodeJwt(credentials.toString());
         if (credentialModel.getSub() == null || credentialModel.getJti() == null) {
-            throw new UsernameNotFoundException("Not found user");
+            throw new BadCredentialsException("Bad credential");
         }
 
         Long userId = credentialModel.getSub();
