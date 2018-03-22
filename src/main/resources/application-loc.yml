@@ -10,10 +10,12 @@ spring:
   jackson:
     property-naming-strategy: SNAKE_CASE
 
-settings:
+credentials:
   provider: best-practice
   subject: localhost
-  token_type: Bearer
+  alg: HS512
+  key: apikey
+
 
 ## MongoDB info
 #mongo:
