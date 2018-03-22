@@ -8,14 +8,11 @@ import com.bestpractice.api.exception.Exception400;
 import com.bestpractice.api.exception.Exception409;
 import com.bestpractice.api.service.JsonWebTokenService;
 import com.bestpractice.api.service.UserService;
+import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.security.Key;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -35,6 +32,7 @@ public class AuthenticationController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public Map<String, UserKeyEntity> generateUser(@RequestBody @Validated UserEntity userEntity, BindingResult bdResult) {
 
         if (bdResult.hasErrors()) {
@@ -52,11 +50,10 @@ public class AuthenticationController {
 
         Long userId = userService.generateUser(userEntity).getId();
 
-        Key key = jwtService.generateSignature();
         UserKeyEntity userKeyEntity = new UserKeyEntity();
         userKeyEntity.setTokenType("Bearer");
-        userKeyEntity.setToken(jwtService.generateJwt(key, userId, 365, userUuid));
-        userKeyEntity.setRefreshToken(jwtService.generateJwt(key, userId, 365, userUuid));
+        userKeyEntity.setToken(jwtService.generateJwt(userId, 365, userUuid));
+        userKeyEntity.setRefreshToken(jwtService.generateJwt(userId, 365, userUuid));
         userKeyEntity.setExpiresAt(Util.calculateDate());
         userKeyEntity.setUserId(userId);
 
