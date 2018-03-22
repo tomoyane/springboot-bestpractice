@@ -21,8 +21,8 @@ CREATE TABLE users (
 CREATE TABLE user_keys (
   id int(11) NOT NULL AUTO_INCREMENT,
   token_type varchar(128) NOT NULL,
-  token varchar(256) NOT NULL,
-  refresh_token varchar(256) NOT NULL,
+  token varchar(512) NOT NULL,
+  refresh_token varchar(512) NOT NULL,
   user_id int(11) NOT NULL,
   expires_at datetime(6),
   created_at datetime(6),
