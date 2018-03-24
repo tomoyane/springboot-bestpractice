@@ -9,14 +9,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/v1/")
+@RequestMapping("/api/v1")
 public class HelloController {
 
     @ResponseBody
-    @GetMapping(value="hello")
+    @GetMapping(value="/hello")
     public Map<String, String> sample1() {
         Map<String, String> map = new HashMap<>();
-        map.put("key", "hello world");
+        map.put("key", "Hello world");
         return map;
     }
 }
