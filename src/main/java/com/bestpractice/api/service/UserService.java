@@ -17,7 +17,7 @@ public class UserService {
         this.userKeyRepository = userKeyRepository;
     }
 
-    public UserEntity checkUserByEmail(String email) {
+    public UserEntity getUserByEmail(String email) {
         return userRepository.findByEmail(email);
     }
 
@@ -25,7 +25,11 @@ public class UserService {
         return userRepository.save(userEntity);
     }
 
-    public UserKeyEntity generateUserKey(UserKeyEntity userKeyEntity) {
-        return userKeyRepository.save(userKeyEntity);
+    public void generateUserKey(UserKeyEntity userKeyEntity) {
+        userKeyRepository.save(userKeyEntity);
+    }
+
+    public UserKeyEntity getUserKey(Long userId) {
+        return userKeyRepository.findByUserId(userId);
     }
 }
