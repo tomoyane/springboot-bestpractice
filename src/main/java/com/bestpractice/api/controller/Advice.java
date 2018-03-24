@@ -1,10 +1,7 @@
 package com.bestpractice.api.controller;
 
 import com.bestpractice.api.domain.model.ExceptionModel;
-import com.bestpractice.api.exception.Exception400;
-import com.bestpractice.api.exception.Exception401;
-import com.bestpractice.api.exception.Exception403;
-import com.bestpractice.api.exception.Exception409;
+import com.bestpractice.api.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -48,12 +45,14 @@ public class Advice {
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(NoHandlerFoundException.class)
-    public ExceptionModel notFound() {
-        ExceptionModel exceptionModel = new ExceptionModel();
-        exceptionModel.setStatus(404);
-        exceptionModel.setError("Not found");
-        exceptionModel.setMessage("Not found path");
-        return exceptionModel;
+    public ExceptionModel notFound01() {
+        return shareNotFound();
+    }
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(Exception404.class)
+    public ExceptionModel notFound02() {
+        return shareNotFound();
     }
 
     @ResponseStatus(HttpStatus.CONFLICT)
@@ -63,6 +62,24 @@ public class Advice {
         exceptionModel.setStatus(409);
         exceptionModel.setError("Conflict");
         exceptionModel.setMessage("Already exist email");
+        return exceptionModel;
+    }
+
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(Exception.class)
+    public ExceptionModel serverError()   {
+        ExceptionModel exceptionModel = new ExceptionModel();
+        exceptionModel.setStatus(500);
+        exceptionModel.setError("Internal server error");
+        exceptionModel.setMessage("Internal server error");
+        return exceptionModel;
+    }
+
+    private ExceptionModel shareNotFound() {
+        ExceptionModel exceptionModel = new ExceptionModel();
+        exceptionModel.setStatus(404);
+        exceptionModel.setError("Not found");
+        exceptionModel.setMessage("Not found path");
         return exceptionModel;
     }
 }
