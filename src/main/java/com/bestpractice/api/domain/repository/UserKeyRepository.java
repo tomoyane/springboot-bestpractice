@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserKeyRepository extends JpaRepository<UserKeyEntity, Long> {
 
-    UserKeyEntity findByToken(String token);
+    UserKeyEntity findByUserId(Long userId);
 
     UserKeyEntity save(UserKeyEntity userKeyEntity);
 
