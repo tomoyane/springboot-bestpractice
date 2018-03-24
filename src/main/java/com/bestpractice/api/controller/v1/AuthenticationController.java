@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/v1/auth/")
+@RequestMapping("/api/v1/auth")
 public class AuthenticationController {
 
     private final UserService userService;
@@ -31,15 +31,15 @@ public class AuthenticationController {
         this.pwEncoderConfig = pwEncoderConfig;
     }
 
-    @PostMapping
+    @PostMapping(value = "/registration")
     @ResponseStatus(HttpStatus.CREATED)
-    public Map<String, UserKeyEntity> generateUser(@RequestBody @Validated UserEntity userEntity, BindingResult bdResult) {
+    public Map<String, String> generateUser(@RequestBody @Validated UserEntity userEntity, BindingResult bdResult) {
 
         if (bdResult.hasErrors()) {
             throw new Exception400();
         }
 
-        if (userService.checkUserByEmail(userEntity.getEmail()) != null) {
+        if (userService.getUserByEmail(userEntity.getEmail()) != null) {
             throw new Exception409();
         }
 
@@ -58,6 +58,31 @@ public class AuthenticationController {
         userKeyEntity.setUserId(userId);
 
         userService.generateUserKey(userKeyEntity);
+
+        Map<String, String> map = new HashMap<>();
+        map.put("message", "OK");
+
+        return map;
+    }
+
+    @PostMapping(value = "/token")
+    @ResponseStatus(HttpStatus.OK)
+    public Map<String, UserKeyEntity> issueToken(@RequestBody @Validated UserEntity userEntity, BindingResult bdResult) {
+
+        if (bdResult.hasErrors()) {
+            throw new Exception400();
+        }
+
+        UserEntity user = userService.getUserByEmail(userEntity.getEmail());
+        if (user == null) {
+            throw new Exception400();
+        }
+
+        if (!pwEncoderConfig.passwordEncoder().matches(userEntity.getPassword(), user.getPassword())) {
+            throw new Exception400();
+        }
+
+        UserKeyEntity userKeyEntity = userService.getUserKey(user.getId());
 
         Map<String, UserKeyEntity> map = new HashMap<>();
         map.put("key", userKeyEntity);
