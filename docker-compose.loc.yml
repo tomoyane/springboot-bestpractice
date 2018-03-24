@@ -26,4 +26,4 @@ services:
           MYSQL_DB_USER: root
           MYSQL_DB_PASS: root
 
-# mysql -h 127.0.0.1 -u root -p <  sql/mysql_sample.sql
+# mysql -h 127.0.0.1 -u root -p < sql/mysql_sample.sql
