@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/v1/infos/")
+@RequestMapping("/api/v1/infos")
 public class RdbmsController {
 
     private final InfoService infoService;
@@ -25,7 +25,7 @@ public class RdbmsController {
         return map;
     }
 
-    @GetMapping(value="{id}")
+    @GetMapping(value="/{id}")
     public Map<String, InfoEntity> getInfo(@PathVariable("id") Long id) {
         Map<String, InfoEntity> map = new HashMap<>();
         map.put("info", infoService.getInfo(id));
@@ -48,7 +48,7 @@ public class RdbmsController {
         return map;
     }
 
-    @DeleteMapping(value = "{id}")
+    @DeleteMapping(value = "/{id}")
     public Map<String, String> deleteInfo(@PathVariable("id") Long id) {
         infoService.deleteInfo(id);
         Map<String, String> map = new HashMap<>();
