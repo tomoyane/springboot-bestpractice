@@ -1,4 +1,4 @@
 package com.bestpractice.api.repository;
 
-public class UserRepositoryTest {
+public class UserKeyRepositoryTest {
 }
