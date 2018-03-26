@@ -1,0 +1,18 @@
+spring:
+  profiles:
+    active: loc
+  datasource:
+    url: jdbc:mysql://${MYSQL_DB_HOST}:3306/${MYSQL_DB_NAME}?useSSL=false
+    username: ${MYSQL_DB_USER}
+    password: ${MYSQL_DB_PASS}
+    driver-class-name: com.mysql.jdbc.Driver
+    sql-script-encoding: UTF-8
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+
+credentials:
+  provider: best-practice
+  subject: localhost
+  alg: HS512
+  key: apikey
+
