@@ -33,6 +33,10 @@ public class AuthenticationService implements AuthenticationUserDetailsService<P
             throw new BadCredentialsException("Bad credential");
         }
 
+        if (!jsonWebTokenService.verifyJwt(credentials.toString())) {
+            throw new BadCredentialsException("Bad credential");
+        }
+
         CredentialModel credentialModel = jsonWebTokenService.decodeJwt(credentials.toString());
         if (credentialModel.getSub() == null || credentialModel.getJti() == null) {
             throw new BadCredentialsException("Bad credential");

@@ -1,9 +1,11 @@
 package com.bestpractice.api.controller.v1;
 
 import org.junit.Test;
+import org.springframework.test.context.ActiveProfiles;
 
 import static org.junit.Assert.*;
 
+@ActiveProfiles("test")
 public class RdbmsControllerTest {
 
     @Test

@@ -7,10 +7,12 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.UUID;
 
+@ActiveProfiles("test")
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class JsonWebTokenServiceTest {
@@ -32,6 +34,20 @@ public class JsonWebTokenServiceTest {
     }
 
     @Test
+    public void testVerifyJwt_Ok() {
+        String jwt = jsonWebTokenService.generateJwt(userId, period, userUuid);
+        String invalidJwt = jwt + "NG";
+
+        assertThat(jsonWebTokenService.verifyJwt(invalidJwt)).isFalse();
+    }
+
+    @Test
+    public void testVerifyJwt_Unauthorized() {
+        String jwt = jsonWebTokenService.generateJwt(userId, period, userUuid);
+        assertThat(jsonWebTokenService.verifyJwt(jwt)).isTrue();
+    }
+
+    @Test
     public void testDecodeJwt_Ok() {
         String jwt = jsonWebTokenService.generateJwt(userId, period, userUuid);
 
@@ -39,17 +55,5 @@ public class JsonWebTokenServiceTest {
 
         assertThat(credentialModel.getSub()).isEqualTo(userId);
         assertThat(credentialModel.getJti()).isEqualTo(userUuid);
-    }
-
-    @Test
-    public void testDecodeJwt_Unauthorized() {
-        String jwt = jsonWebTokenService.generateJwt(userId, period, userUuid);
-        String invalidJwt = jwt + "NG";
-
-        CredentialModel credentialModel = jsonWebTokenService.decodeJwt(invalidJwt);
-
-        assertThat(credentialModel.getSub()).isNull();
-        assertThat(credentialModel.getExp()).isNull();
-        assertThat(credentialModel.getJti()).isNull();
     }
 }

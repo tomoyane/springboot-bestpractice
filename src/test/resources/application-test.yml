@@ -1,6 +1,19 @@
+spring:
+  jpa:
+    database: HSQL
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.HSQLDialect
+  datasource:
+    driver-class-name: org.hsqldb.jdbcDriver
+    url: jdbc:hsqldb:mem:scratchdb
+    username: test
+    password: test
+
 credentials:
   provider: best-practice
   subject: localhost
   alg: HS512
   key: apikey
-

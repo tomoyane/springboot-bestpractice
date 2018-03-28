@@ -36,21 +36,25 @@ public class JsonWebTokenService {
                 .compact();
     }
 
+    public boolean verifyJwt(String jwt) {
+        try {
+            Jwts.parser().setSigningKey(credentialProperty.getKey().getBytes()).parseClaimsJws(jwt);
+
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     public CredentialModel decodeJwt(String jwt) {
         try {
             ObjectMapper mapper = new ObjectMapper();
 
             String[] jwtSections = jwt.split("\\.");
-            String header = new String(Base64.getDecoder().decode(jwtSections[0]));
+            String claim = new String(Base64.getDecoder().decode(jwtSections[1]));
 
-            if (mapper.readTree(header).get("alg").asText().equals(credentialProperty.getAlg())) {
-                String claim = new String(Base64.getDecoder().decode(jwtSections[1]));
-
-                Jwts.parser().setSigningKey(credentialProperty.getKey().getBytes()).parseClaimsJws(jwt);
-
-                return mapper.<CredentialModel>readValue(claim, CredentialModel.class);
-            }
-
+            return mapper.<CredentialModel>readValue(claim, CredentialModel.class);
         } catch (Exception e) {
             e.printStackTrace();
         }
