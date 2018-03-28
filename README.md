@@ -20,48 +20,51 @@ Working on Heroku
 ## Architecture
 ```
 spring-boot-bestpracite
-|- main
-|    |-java
-|    |    |-com.bestpractice.api
-|    |    |    |
-|    |    |    |- common
-|    |    |    |    |- config
-|    |    |    |    |- filter
-|    |    |    |    |- property 
-|    |    |    |    |- util
-|    |    |    |
-|    |    |    |- controller
-|    |    |    |    |- v1
-|    |    |    |    |- v2
-|    |    |    |    |- Advice
-|    |    |    |    
-|    |    |    |- domain
-|    |    |    |    |- entity
-|    |    |    |    |- model
-|    |    |    |    |- repository
-|    |    |    |    |- role
-|    |    |    |
-|    |    |    |- exception
-|    |    |    |
-|    |    |    |- service
-|    |    |    |
-|    |    |    |- App
-|    |    |    
-|    |-resource
-|    |    |- application-dev01.yml
-|    |    |- application-dev02.yml
-|    |    |- application-loc.yml
-|           
-|- test
-|    |-java
-|    |    |-com.bestpractice.api
-|    |    |    |- controller
-|    |    |    |    |- v1
-|    |    |    |    |- v2
-|    |    |    |
-|    |    |    |- repository
-|    |    |    |  
-|    |    |    |- service
-|    |    |    |
-|    |    |    |- MySqlContainerTest
+├── main
+│   ├── java
+│   │   └── com
+│   │       └── bestpractice
+│   │           └── api
+│   │               ├── App.java
+│   │               ├── common
+│   │               │   ├── config
+│   │               │   ├── filter
+│   │               │   ├── property
+│   │               │   └── util
+│   │               │
+│   │               ├── controller
+│   │               │   ├── Advice.java
+│   │               │   ├── v1
+│   │               │   └── v2
+│   │               │
+│   │               ├── domain
+│   │               │   ├── entity
+│   │               │   ├── model
+│   │               │   ├── repository
+│   │               │   └── role
+│   │               │
+│   │               ├── exception
+│   │               │
+│   │               └── service
+│   │
+│   └── resources
+│       ├── application-dev.yml
+│       └── application-local.yml
+└── test
+    ├── java
+    │   └── com
+    │       └── bestpractice
+    │           └── api
+    │               ├── AppTests.java
+    │               │
+    │               ├── common
+    │               │
+    │               ├── controller
+    │               │
+    │               ├── repository
+    │               │
+    │               └── service
+    │
+    └── resources
+        └── application-test.yml
 ```
