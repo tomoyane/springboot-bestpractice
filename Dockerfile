@@ -9,8 +9,4 @@ RUN adduser -S sboot
 
 USER sboot
 
-ENV JAVA_OPTS=""
-
-ENV SPRING_PROFILES_ACTIVE=loc
-
 COPY . /spring-boot-bestpractice

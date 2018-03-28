@@ -1,0 +1,6 @@
+credentials:
+  provider: best-practice
+  subject: localhost
+  alg: HS512
+  key: apikey
+
