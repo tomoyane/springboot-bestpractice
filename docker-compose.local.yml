@@ -21,6 +21,7 @@ services:
         volumes:
           - .:/spring-boot-bestpractice
         environment:
+          SPRING_PROFILES_ACTIVE: local
           MYSQL_DB_HOST: mysql_db
           MYSQL_DB_NAME: test
           MYSQL_DB_USER: root
@@ -28,3 +29,4 @@ services:
         command: java -Djava.security.egd=file:/dev/./urandom -jar build/libs/spring-boot-bestpractice-0.0.1-SNAPSHOT.jar
 
 # mysql -h 127.0.0.1 -u root -p < sql/mysql_sample.sql
+# ./gradlew build && docker-compose -f docker-compose.local.yml up
