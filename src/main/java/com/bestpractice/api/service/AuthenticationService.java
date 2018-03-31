@@ -2,7 +2,6 @@ package com.bestpractice.api.service;
 
 import com.bestpractice.api.domain.entity.UserEntity;
 import com.bestpractice.api.domain.model.CredentialModel;
-import com.bestpractice.api.domain.repository.UserRepository;
 import com.bestpractice.api.domain.role.UserAuthority;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -21,7 +20,7 @@ import java.util.HashSet;
 public class AuthenticationService implements AuthenticationUserDetailsService<PreAuthenticatedAuthenticationToken> {
 
     @Autowired
-    UserRepository userRepository;
+    UserService userService;
     @Autowired
     JsonWebTokenService jsonWebTokenService;
 
@@ -45,7 +44,7 @@ public class AuthenticationService implements AuthenticationUserDetailsService<P
         Long userId = credentialModel.getSub();
         String userUuid = credentialModel.getJti();
 
-        UserEntity userEntity = userRepository.findByIdAndUuid(userId, userUuid);
+        UserEntity userEntity = userService.getUserByIdAndUserUuid(userId, userUuid);
         if (userEntity == null) {
             throw new UsernameNotFoundException("Not found user");
         }
@@ -53,6 +52,6 @@ public class AuthenticationService implements AuthenticationUserDetailsService<P
         Collection<GrantedAuthority> authorities = new HashSet<GrantedAuthority>() ;
         authorities.add(new UserAuthority());
 
-        return new User(userEntity.getUsername(),"", authorities);
+        return new User(userUuid,"", authorities);
     }
 }
