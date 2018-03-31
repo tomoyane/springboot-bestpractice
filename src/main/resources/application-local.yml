@@ -7,6 +7,10 @@ spring:
     password: ${MYSQL_DB_PASS}
     driver-class-name: com.mysql.jdbc.Driver
     sql-script-encoding: UTF-8
+  redis:
+    host: ${REDIS_DB_HOST}
+    port: ${REDIS_DB_PORT}
+    password: ${REDIS_DB_PASS}
   jackson:
     property-naming-strategy: SNAKE_CASE
 
