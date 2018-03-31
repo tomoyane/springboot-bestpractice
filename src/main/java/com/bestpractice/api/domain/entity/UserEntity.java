@@ -5,10 +5,11 @@ import org.hibernate.validator.constraints.Email;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "users")
-public class UserEntity extends AbstractEntity {
+public class UserEntity extends AbstractEntity implements Serializable {
 
     @Id
     @Column(name = "id")
