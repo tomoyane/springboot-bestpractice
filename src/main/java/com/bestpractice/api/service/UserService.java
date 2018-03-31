@@ -4,6 +4,7 @@ import com.bestpractice.api.domain.entity.UserEntity;
 import com.bestpractice.api.domain.entity.UserKeyEntity;
 import com.bestpractice.api.domain.repository.UserKeyRepository;
 import com.bestpractice.api.domain.repository.UserRepository;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,6 +16,15 @@ public class UserService {
     public UserService(UserRepository userRepository, UserKeyRepository userKeyRepository) {
         this.userRepository = userRepository;
         this.userKeyRepository = userKeyRepository;
+    }
+
+    @Cacheable(cacheNames = "users",  key = "'users:' + #id")
+    public UserEntity getUserByIdAndUserUuid(Long id, String userUuid) {
+        UserEntity userEntity = userRepository.findByIdAndUuid(id, userUuid);
+        userEntity.setUsername("");
+        userEntity.setEmail("");
+        userEntity.setPassword("");
+        return userEntity;
     }
 
     public UserEntity getUserByEmail(String email) {
