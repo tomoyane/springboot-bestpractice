@@ -1,17 +1,44 @@
+resources:
+  - name: springboot-bestpractice
+    type: git
+    source:
+      uri: https://github.com/tomo0111/springboot-bestpractice.git
+      branch: master
+
+  - name: repo
+    type: git
+    source:
+      uri: https://github.com/tomo0111/springboot-bestpractice.git
+
 jobs:
-- name: hello-world
-  public: true
+- name: unit-test
   plan:
-  - task: say-hello
+  - get: repo
+    trigger: true
+  - task: unit-test
     config:
       platform: linux
       image_resource:
         type: docker-image
         source:
-          repository: ubuntu
+          repository: maven
+      inputs:
+      - name: repo
       run:
         path: bash
         args:
         - -c
         - |
-          echo "Hello, world!"
+          set -e
+          cd repo
+          mvn test
+
+#- name: build
+#  public: true
+#  plan:
+#  - get: springboot-bestpractice
+#    trigger: true
+#  - task: Build project
+#    file: spring-boot-concourse/concourse/tasks/build.yml
+#  - task: Deploy artifact
+#    file: spring-boot-concourse/concourse/tasks/deploy.yml
