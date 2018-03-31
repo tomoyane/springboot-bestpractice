@@ -12,10 +12,16 @@ services:
           MYSQL_PASSWORD: root
         command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci --skip-character-set-client-handshake
 
+    redis_db:
+        image: redis
+        ports:
+          - '6379:6379'
+
     app:
         build: .
         depends_on:
           - mysql_db
+          - redis_db
         ports:
           - '8080:8080'
         volumes:
@@ -26,6 +32,9 @@ services:
           MYSQL_DB_NAME: test
           MYSQL_DB_USER: root
           MYSQL_DB_PASS: root
+          REDIS_DB_HOST: redis_db
+          REDIS_DB_PORT: 6379
+          REDIS_DB_PASS: root
         command: java -Djava.security.egd=file:/dev/./urandom -jar build/libs/spring-boot-bestpractice-0.0.1-SNAPSHOT.jar
 
 # mysql -h 127.0.0.1 -u root -p < sql/mysql_sample.sql
