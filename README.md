@@ -1,21 +1,73 @@
 ## SpringBoot best practice
-Write to about Spring Boot best practice architecture
+Write to about Spring Boot best practice architecture.
+
+## Build
+Git clone
+```bash
+git clone https://github.com/tomo0111/springboot-bestpractice.git
+```
+
+Run test
+```bash
+./gradlew test
+```
+
+Docker image build
+ * Build SpringBoot best practice application.
+ * Use docker for local development.
+   * MySQL
+   * Mongo
+   * Redis
+   * OpenJDK 
+```bash
+docker-compose -f docker-compose-local.yml
+
+```
 
 ## Environment
 ### Local environment
 
 Local development property file is application-loc.yml.
 
-Working on docker container
-  * MySQL image
-  * openjdk:8-jdk image
+Working on docker container.
+ * Docker Image
+   * MySQL
+   * Mongo
+   * Redis
+   * OpenJDK
+
+#### MySQL
+Sample query is sql/mysql_sample.sql file.
+
+Sample Class
+ * UserEntity.java
+ * UserService.java
+ * UserRepository.java
+ * InfoEntity.java
+ * InfoService.java
+ * InfoRepository.java
+   
+#### Redis
+Sample Class
+ * UserService
+
+#### Mongo
+Sample Class
+ * TaskEntity
+ * TaskService
+ * TaskRepository
 
 ### Develop environment
 Develop development property file is application-dev.yml.
 
 Working on Heroku
+  * Gradle build pack
   * Postgres SQL
-  * gradle buldpack
+
+## Authentication and Authorization
+Spring security.
+
+JWT.
 
 ## Architecture
 ```
