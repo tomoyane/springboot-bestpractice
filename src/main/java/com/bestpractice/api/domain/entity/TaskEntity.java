@@ -1,27 +1,19 @@
 package com.bestpractice.api.domain.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.data.annotation.Id;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import java.util.Date;
 
-@Entity
-@Table(name = "infos")
-public class InfoEntity extends AbstractEntity {
+public class TaskEntity {
 
     @Id
-    @Column(name = "id")
-    @JsonIgnore
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotNull
-    @Column(nullable = false, name = "title")
-    private String title;
+    private String name;
 
-    @NotNull
-    @Column(nullable = false, name = "description")
-    private String description;
+    private String memo;
+
+    private Date createdAt;
 
     public Long getId() {
         return id;
@@ -31,19 +23,27 @@ public class InfoEntity extends AbstractEntity {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getDescription() {
-        return description;
+    public String getMemo() {
+        return memo;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setMemo(String memo) {
+        this.memo = memo;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 }
