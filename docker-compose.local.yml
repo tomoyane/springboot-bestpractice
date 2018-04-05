@@ -3,6 +3,7 @@ version: '2'
 services:
     mysql_db:
         image: mysql
+        container_name: 'mysql'
         ports:
           - '3306:3306'
         environment:
@@ -12,15 +13,24 @@ services:
           MYSQL_PASSWORD: root
         command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci --skip-character-set-client-handshake
 
+    mongo_db:
+        image: mongo
+        container_name: 'mongo'
+        ports:
+          - 27017:27017
+
     redis_db:
         image: redis
+        container_name: 'redis'
         ports:
           - '6379:6379'
 
     app:
         build: .
+        container_name: 'spring-app'
         depends_on:
           - mysql_db
+          - mongo_db
           - redis_db
         ports:
           - '8080:8080'
@@ -35,7 +45,6 @@ services:
           REDIS_DB_HOST: redis_db
           REDIS_DB_PORT: 6379
           REDIS_DB_PASS: root
-        command: java -Djava.security.egd=file:/dev/./urandom -jar build/libs/spring-boot-bestpractice-0.0.1-SNAPSHOT.jar
 
 # mysql -h 127.0.0.1 -u root -p < sql/mysql_sample.sql
 # ./gradlew build && docker-compose -f docker-compose.local.yml up
