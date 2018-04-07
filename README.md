@@ -16,9 +16,9 @@ Docker image build
  * Build SpringBoot best practice application.
  * Use docker for local development.
    * MySQL
-   * Mongo
    * Redis
    * OpenJDK 
+
 ```bash
 docker-compose -f docker-compose-local.yml
 
@@ -32,9 +32,12 @@ Local development property file is application-loc.yml.
 Working on docker container.
  * Docker Image
    * MySQL
-   * Mongo
    * Redis
    * OpenJDK
+
+Cassandra cluster.
+ * CentOS7 virtual machine 
+ * 3 nodes
 
 #### MySQL
 Sample query is sql/mysql_sample.sql file.
@@ -51,11 +54,8 @@ Sample Class
 Sample Class
  * UserService
 
-#### Mongo
+#### Cassandra
 Sample Class
- * TaskEntity
- * TaskService
- * TaskRepository
 
 ### Develop environment
 Develop development property file is application-dev.yml.
