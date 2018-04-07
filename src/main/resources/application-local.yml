@@ -1,40 +1,21 @@
 spring:
   profiles:
-    active: local
+      active: local
   datasource:
-    url: jdbc:mysql://${MYSQL_DB_HOST}:3306/${MYSQL_DB_NAME}?useSSL=false
-    username: ${MYSQL_DB_USER}
-    password: ${MYSQL_DB_PASS}
-    driver-class-name: com.mysql.jdbc.Driver
-    sql-script-encoding: UTF-8
+      url: jdbc:mysql://${MYSQL_DB_HOST}:3306/${MYSQL_DB_NAME}?useSSL=false
+      username: ${MYSQL_DB_USER}
+      password: ${MYSQL_DB_PASS}
+      driver-class-name: com.mysql.jdbc.Driver
+      sql-script-encoding: UTF-8
   redis:
-    host: ${REDIS_DB_HOST}
-    port: ${REDIS_DB_PORT}
-    password: ${REDIS_DB_PASS}
+      host: ${REDIS_DB_HOST}
+      port: ${REDIS_DB_PORT}
+      password: ${REDIS_DB_PASS}
   jackson:
     property-naming-strategy: SNAKE_CASE
 
 credentials:
-  provider: best-practice
-  subject: localhost
-  alg: HS512
-  key: apikey
-
-
-## MongoDB info
-#mongo:
-#  host: localhost
-#  port: 27017
-#  url: mongodb://localhost/test
-#  database: test
-#  username: test
-#  password: test
-#
-## Cassandra info
-#cassandra:
-#  hosts:
-#    - test
-#    - test
-#    - test
-#  username: test
-#  password: test
+    provider: best-practice
+    subject: localhost
+    alg: HS512
+    key: apikey
