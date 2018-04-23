@@ -4,6 +4,7 @@ DROP TABLE IF EXISTS user_keys;
 DROP TABLE IF EXISTS signature_keys;
 DROP TABLE IF EXISTS infos;
 DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS items;
 
 -- users table
 CREATE TABLE users (
@@ -50,6 +51,16 @@ CREATE TABLE infos (
   PRIMARY KEY (id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- items table
+CREATE TABLE items (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  name varchar(128) NOT NULL,
+  category varchar(128) NOT NULL,
+  created_at datetime(6),
+  PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
 -- infos test data
 INSERT INTO infos(id, title, description, created_at)
 VALUES (1, 'test_title01', 'Im fine', '1970-01-01 00:00:01');
@@ -71,3 +82,10 @@ VALUES (6, 'test_title06', 'sleep', '1968-01-01 00:00:01');
 
 INSERT INTO infos(id, title, description, created_at)
 VALUES (7, 'test_title07', 'xxxxxxx', '1977-01-01 00:00:01');
+
+-- items test data
+INSERT INTO items(id, name, category, created_at)
+VALUES (1, 'test_title01', 'Im fine', '1970-01-01 00:00:01');
+
+INSERT INTO items(id, name, category, created_at)
+VALUES (2, 'hoge', 'hoge', '1970-01-01 00:00:01');
