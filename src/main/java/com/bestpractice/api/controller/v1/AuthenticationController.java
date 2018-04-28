@@ -4,8 +4,8 @@ import com.bestpractice.api.common.config.PwEncoderConfig;
 import com.bestpractice.api.common.util.Util;
 import com.bestpractice.api.domain.entity.UserEntity;
 import com.bestpractice.api.domain.entity.UserKeyEntity;
-import com.bestpractice.api.exception.Exception400;
-import com.bestpractice.api.exception.Exception409;
+import com.bestpractice.api.exception.BadRequest;
+import com.bestpractice.api.exception.Conflict;
 import com.bestpractice.api.service.JsonWebTokenService;
 import com.bestpractice.api.service.UserService;
 import org.springframework.http.HttpStatus;
@@ -36,11 +36,11 @@ public class AuthenticationController {
     public Map<String, String> generateUser(@RequestBody @Validated UserEntity userEntity, BindingResult bdResult) {
 
         if (bdResult.hasErrors()) {
-            throw new Exception400();
+            throw new BadRequest();
         }
 
         if (userService.getUserByEmail(userEntity.getEmail()) != null) {
-            throw new Exception409();
+            throw new Conflict();
         }
 
         String userUuid = UUID.randomUUID().toString();
@@ -70,16 +70,16 @@ public class AuthenticationController {
     public Map<String, UserKeyEntity> issueToken(@RequestBody @Validated UserEntity userEntity, BindingResult bdResult) {
 
         if (bdResult.hasErrors()) {
-            throw new Exception400();
+            throw new BadRequest();
         }
 
         UserEntity user = userService.getUserByEmail(userEntity.getEmail());
         if (user == null) {
-            throw new Exception400();
+            throw new BadRequest();
         }
 
         if (!pwEncoderConfig.passwordEncoder().matches(userEntity.getPassword(), user.getPassword())) {
-            throw new Exception400();
+            throw new BadRequest();
         }
 
         UserKeyEntity userKeyEntity = userService.getUserKey(user.getId());
