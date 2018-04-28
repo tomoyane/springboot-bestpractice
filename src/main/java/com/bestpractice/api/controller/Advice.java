@@ -14,7 +14,7 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 public class Advice {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(Exception400.class)
+    @ExceptionHandler(BadRequest.class)
     public ExceptionModel badRequest() {
         ExceptionModel exceptionModel = new ExceptionModel();
         exceptionModel.setStatus(400);
@@ -24,7 +24,7 @@ public class Advice {
     }
 
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    @ExceptionHandler(Exception401.class)
+    @ExceptionHandler(UnAuthorized.class)
     public ExceptionModel unAuthorized() {
         ExceptionModel exceptionModel = new ExceptionModel();
         exceptionModel.setStatus(401);
@@ -34,7 +34,7 @@ public class Advice {
     }
 
     @ResponseStatus(HttpStatus.FORBIDDEN)
-    @ExceptionHandler(Exception403.class)
+    @ExceptionHandler(Forbidden.class)
     public ExceptionModel forbidden() {
         ExceptionModel exceptionModel = new ExceptionModel();
         exceptionModel.setStatus(403);
@@ -50,13 +50,13 @@ public class Advice {
     }
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ExceptionHandler(Exception404.class)
+    @ExceptionHandler(NotFound.class)
     public ExceptionModel notFound02() {
         return shareNotFound();
     }
 
     @ResponseStatus(HttpStatus.CONFLICT)
-    @ExceptionHandler(Exception409.class)
+    @ExceptionHandler(Conflict.class)
     public ExceptionModel conflict() {
         ExceptionModel exceptionModel = new ExceptionModel();
         exceptionModel.setStatus(409);
