@@ -12,4 +12,4 @@ jobs:
   - get: repository
     trigger: true
   - task: unit-test
-    file: concoure/unit-test.yml
+    file: repository/concourse/unit-test.yml

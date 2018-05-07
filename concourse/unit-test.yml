@@ -8,7 +8,7 @@ image_resource:
     tag: 'latest'
 
 inputs:
-- name: springboot-bestpractice
+- name: repository
 
 run:
-  path: springboot-bestpractice/unit-test.sh
+  path: repository/concourse/unit-test.sh
