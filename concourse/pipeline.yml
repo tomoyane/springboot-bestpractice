@@ -1,44 +1,16 @@
 resources:
-  - name: springboot-bestpractice
+  - name: repository
     type: git
     source:
-      uri: https://github.com/tomo0111/springboot-bestpractice.git
+      uri: git@github.com:tomo0111/springboot-bestpractice.git
       branch: master
-
-  - name: repo
-    type: git
-    source:
-      uri: https://github.com/tomo0111/springboot-bestpractice.git
+      private_key: ((github-private-key))
 
 jobs:
 - name: unit-test
+  public: true
   plan:
-  - get: repo
+  - get: repository
     trigger: true
   - task: unit-test
-    config:
-      platform: linux
-      image_resource:
-        type: docker-image
-        source:
-          repository: maven
-      inputs:
-      - name: repo
-      run:
-        path: bash
-        args:
-        - -c
-        - |
-          set -e
-          cd repo
-          mvn test
-
-#- name: build
-#  public: true
-#  plan:
-#  - get: springboot-bestpractice
-#    trigger: true
-#  - task: Build project
-#    file: spring-boot-concourse/concourse/tasks/build.yml
-#  - task: Deploy artifact
-#    file: spring-boot-concourse/concourse/tasks/deploy.yml
+    file: concoure/unit-test.yml
