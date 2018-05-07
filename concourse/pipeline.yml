@@ -1,5 +1,5 @@
 resources:
-  - name: repository
+  - name: repo
     type: git
     source:
       branch: master
@@ -10,7 +10,7 @@ jobs:
 - name: unit-test
   public: true
   plan:
-  - get: repository
+  - get: repo
     trigger: true
   - task: unit-test
-    file: repository/concourse/unit-test.yml
+    file: repo/concourse/unit-test.yml

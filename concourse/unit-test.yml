@@ -7,7 +7,7 @@ image_resource:
     repository: openjdk:8-jdk-alpine
 
 inputs:
-- name: repository
+- name: repo
 
 run:
-  path: repository/concourse/unit-test.sh
+  path: repo/concourse/unit-test.sh
