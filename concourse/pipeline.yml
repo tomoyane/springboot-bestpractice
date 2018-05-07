@@ -5,6 +5,7 @@ resources:
       branch: master
       uri: git@github.com:tomo0111/springboot-bestpractice.git
       private_key: ((github-private-key))
+
 jobs:
 - name: unit-test
   public: true
