@@ -4,7 +4,7 @@ platform: linux
 image_resource:
   type: docker-image
   source:
-    repository: openjdk:8-jdk-alpine
+    repository: java
     tag: latest
 
 inputs:
