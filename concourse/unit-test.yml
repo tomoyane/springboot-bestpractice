@@ -10,4 +10,5 @@ inputs:
 - name: repo
 
 run:
-  path: repo/concourse/unit-test
+  path: concourse/unit-test.sh
+  dir: repo
