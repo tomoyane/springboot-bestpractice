@@ -1,14 +1,6 @@
----
-platform: linux
+#!/bin/bash
 
-image_resource:
-  type: docker-image
-  source:
-    repository: ruby
-    tag: '2.1'
+set -e -u -x
 
-inputs:
-- name: my-app
-
-run:
-  path: my-app/scripts/test
+pwd
+ls -la

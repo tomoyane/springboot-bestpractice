@@ -2,4 +2,4 @@
 .gradle/
 out/
 build/
-credential.yml
+credentials.yml

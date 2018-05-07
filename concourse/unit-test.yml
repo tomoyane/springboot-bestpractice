@@ -1,0 +1,14 @@
+---
+platform: linux
+
+image_resource:
+  type: docker-image
+  source:
+    repository: openjdk:8-jdk-alpine
+    tag: 'latest'
+
+inputs:
+- name: springboot-bestpractice
+
+run:
+  path: concourse/unit  -test.sh
