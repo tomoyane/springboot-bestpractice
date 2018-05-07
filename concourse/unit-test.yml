@@ -11,4 +11,4 @@ inputs:
 - name: springboot-bestpractice
 
 run:
-  path: concourse/unit-test.sh
+  path: springboot-bestpractice/unit-test.sh
