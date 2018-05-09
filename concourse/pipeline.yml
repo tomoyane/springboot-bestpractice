@@ -13,4 +13,4 @@ jobs:
   - get: repository
     trigger: true
   - task: unit-test
-    file: repo/concourse/unit-test.yml
+    file: repository/concourse/unit-test.yml

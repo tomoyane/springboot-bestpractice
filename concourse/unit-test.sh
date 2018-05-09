@@ -2,4 +2,4 @@
 
 set -e -u -x
 
-pwd
+./gradlew test
