@@ -1,4 +1,7 @@
-## SpringBoot best practice
+
+[![Build Status](https://www.concourse.developer-tm.com/api/v1/teams/main/pipelines/springboot-bestpractice-pipeline/jobs/unit-test/badge)](https://www.concourse.developer-tm.com/teams/main/pipelines/springboot-bestpractice-pipeline/jobs/unit-test/builds/34)
+
+## SpringBoot best practice 
 Write to about Spring Boot best practice architecture.
 
 ## Build
