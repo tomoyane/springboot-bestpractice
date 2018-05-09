@@ -8,8 +8,8 @@ image_resource:
     tag: latest
 
 inputs:
-- name: repo
+- name: repository
 
 run:
   path: concourse/unit-test.sh
-  dir: repo
+  dir: repository
