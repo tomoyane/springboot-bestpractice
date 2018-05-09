@@ -1,16 +1,16 @@
 resources:
-  - name: repo
+  - name: repository
     type: git
     source:
       branch: master
       uri: git@github.com:tomo0111/springboot-bestpractice.git
-      private_key: ((github-private-key))
+      private_key: ((github-deploy-key))
 
 jobs:
 - name: unit-test
   public: true
   plan:
-  - get: repo
+  - get: repository
     trigger: true
   - task: unit-test
     file: repo/concourse/unit-test.yml
