@@ -1,5 +1,5 @@
 
-[![Build Status](http://www.concourse.developer-tm.com:8080/api/v1/teams/main/pipelines/springboot-bestpractice-pipeline/jobs/unit-test/badge)](https://www.concourse.developer-tm.com/teams/main/pipelines/springboot-bestpractice-pipeline/jobs/unit-test/builds/34)
+[![Build Status](http://www.concourse.developer-tm.com:8080/api/v1/teams/main/pipelines/springboot-bestpractice-pipeline/jobs/unit-test/badge)](https://www.concourse.developer-tm.com/teams/main/pipelines/springboot-bestpractice-pipeline)
 
 ## SpringBoot best practice 
 Write to about Spring Boot best practice architecture.
