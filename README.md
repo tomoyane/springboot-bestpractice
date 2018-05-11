@@ -31,20 +31,6 @@ Run container
 docker-compose -f docker-compose-local.yml up -d
 ```
 
-##  Pipeline
-
-set target
-```
-fly -t tomohito login -c http://www.concourse.developer-tm.com:8080
-```
-
-all delete target
-```
-fly logout -a
-```
-
-
-
 ## Environment
 ### Local environment
 
