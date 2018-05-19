@@ -19,10 +19,8 @@ ENV REDIS_DB_PASS="root"
 RUN mkdir /spring-boot-bestpractice
 WORKDIR /spring-boot-bestpractice
 
-RUN adduser -S sboot
-
-USER sboot
-
 COPY . /spring-boot-bestpractice
+
+RUN cd /spring-boot-bestpractice
 
 ENTRYPOINT ["sh","-c","java -jar -Dspring.profiles.active=${SPRING_PROFILES_ACTIVE} build/libs/${APP_NAME}-${VERSION}-SNAPSHOT.jar"]
