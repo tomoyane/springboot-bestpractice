@@ -1,7 +1,7 @@
 package com.bestpractice.api.controller.v1;
 
 import com.bestpractice.api.domain.entity.InfoEntity;
-import com.bestpractice.api.service.InfoService;
+import com.bestpractice.api.domain.service.InfoService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
