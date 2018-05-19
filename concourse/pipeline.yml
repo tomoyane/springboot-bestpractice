@@ -10,7 +10,17 @@ resources:
     type: pull-request
     source:
       uri: git@github.com:tomo0111/springboot-bestpractice.git
+      repo: tomo0111/springboot-bestpractice
+      access_token: ((github-access-token))
       private_key: ((github-deploy-key))
+      base: master
+
+  - name: springboot-bestpractice-image
+    type: docker-image
+    source:
+      repository: ((docker-hub-account))/springboot-bestpractice
+      username: ((docker-hub-user))
+      password: ((docker-hub-pass))
 
 resource_types:
   - name: pull-request
@@ -51,11 +61,17 @@ jobs:
           path: repository
           status: failure
 
-
-  - name: deploy
+  - name: deploy-image
+    serial: true
     public: true
     plan:
     - get: repository
       trigger: true
-    - task: unit-test
-      file: repository/concourse/build.yml
+    - do:
+      - task: unit-test
+        file: repository/concourse/unit-test.yml
+      - task: deploy-image
+        file: repository/concourse/deploy-image.yml
+      - put: springboot-bestpractice-image
+        params:
+          build: repository

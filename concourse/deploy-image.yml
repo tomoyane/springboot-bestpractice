@@ -9,7 +9,9 @@ image_resource:
 
 inputs:
 - name: repository
+outputs:
+- name: out
 
 run:
-  path: concourse/build.sh
+  path: concourse/deploy-image.sh
   dir: repository
