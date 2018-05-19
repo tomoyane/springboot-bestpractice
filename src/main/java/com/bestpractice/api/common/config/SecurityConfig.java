@@ -1,8 +1,8 @@
 package com.bestpractice.api.common.config;
 
-import com.bestpractice.api.common.filter.AuthEntryPoint;
-import com.bestpractice.api.common.filter.PreAuthenticatedProcessingFilter;
-import com.bestpractice.api.service.AuthenticationService;
+import com.bestpractice.api.security.filter.AuthEntryPoint;
+import com.bestpractice.api.security.filter.PreAuthenticatedProcessingFilter;
+import com.bestpractice.api.domain.service.AuthenticationService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AccountStatusUserDetailsChecker;
