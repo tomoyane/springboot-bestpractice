@@ -6,11 +6,56 @@ resources:
       uri: git@github.com:tomo0111/springboot-bestpractice.git
       private_key: ((github-deploy-key))
 
+  - name: pull-request
+    type: pull-request
+    source:
+      uri: git@github.com:tomo0111/springboot-bestpractice.git
+      private_key: ((github-deploy-key))
+
+resource_types:
+  - name: pull-request
+    type: docker-image
+    source:
+      repository: jtarchie/pr
+
+  - name: slack-notification
+    type: docker-image
+    source:
+      repository: cfcommunity/slack-notification-resource
+      tag: latest
+
 jobs:
-- name: unit-test
-  public: true
-  plan:
-  - get: repository
-    trigger: true
-  - task: unit-test
-    file: repository/concourse/unit-test.yml
+  - name: unit-test
+    serial: true
+    public: true
+    plan:
+    - get: repository
+      resource: pull-request
+      trigger: true
+      version: every
+    - do:
+      - put: pull-request
+        params:
+          path: repository
+          status: pending
+      - task: unit-test
+        file: repository/concourse/unit-test.yml
+      on_success:
+        put: pull-request
+        params:
+          path: repository
+          status: success
+      on_failure:
+        put: pull-request
+        params:
+          path: repository
+          status: failure
+
+
+  - name: deploy
+    public: true
+    plan:
+    - get: repository
+      trigger: true
+    - task: unit-test
+      file: repository/concourse/build.yml
