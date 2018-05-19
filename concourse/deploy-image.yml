@@ -9,6 +9,7 @@ image_resource:
 
 inputs:
 - name: repository
+
 outputs:
 - name: out
 
