@@ -3,13 +3,10 @@ package com.bestpractice.api.controller;
 import com.bestpractice.api.domain.model.ExceptionModel;
 import com.bestpractice.api.exception.*;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
-@ControllerAdvice
+@RestControllerAdvice
 @ResponseBody
 public class Advice {
 
