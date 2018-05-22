@@ -81,31 +81,32 @@ JWT.
 spring-boot-bestpracite
 ├── main
 │   ├── java
-│   │   └── com
-│   │       └── bestpractice
-│   │           └── api
-│   │               ├── App.java
-│   │               ├── common
-│   │               │   ├── config
-│   │               │   ├── filter
-│   │               │   ├── property
-│   │               │   └── util
-│   │               │
-│   │               ├── controller
-│   │               │   ├── Advice.java
-│   │               │   ├── v1
-│   │               │   └── v2
-│   │               │
-│   │               ├── domain
-│   │               │   ├── entity
-│   │               │   ├── model
-│   │               │   ├── repository
-│   │               │   └── role
-│   │               │
-│   │               ├── exception
-│   │               │
-│   │               └── service
-│   │
+│   │    └── com
+│   │        └── bestpractice
+│   │           └── api
+│   │               ├── App.java
+│   │               ├── common
+│   │               │   ├── config
+│   │               │   ├── property
+│   │               │   └── util
+│   │               │
+│   │               ├── controller
+│   │               │   ├── Advice.java
+│   │               │   ├── v1
+│   │               │   └── v2
+│   │               │
+│   │               ├── domain
+│   │               │   ├── entity
+│   │               │   ├── model
+│   │               │   ├── repository
+│   │               │   └── service
+│   │               │
+│   │               ├── exception
+│   │               │
+│   │               └── security
+│   │                   ├── filter
+│   │                   └── role
+│   │ 
 │   └── resources
 │       ├── application-dev.yml
 │       └── application-local.yml
