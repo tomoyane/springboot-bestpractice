@@ -12,10 +12,12 @@ buildscript {
 apply plugin: "java"
 apply plugin: "org.springframework.boot"
 
+version = "1.0.0"
+
 jar {
     group "spring-boot-bestpractice"
     baseName = "spring-boot-bestpractice"
-    version =  "0.0.1-SNAPSHOT"
+    version = "1.0.0-SNAPSHOT"
 }
 
 repositories {
