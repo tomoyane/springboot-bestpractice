@@ -29,6 +29,3 @@ services:
           - '8080:8080'
         volumes:
           - .:/spring-boot-bestpractice
-
-# mysql -h 127.0.0.1 -u root -p < sql/mysql_sample.sql
-# ./gradlew build && docker-compose -f docker-compose.local.yml up

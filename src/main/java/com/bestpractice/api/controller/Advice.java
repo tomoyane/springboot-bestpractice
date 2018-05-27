@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 @RestControllerAdvice
-@ResponseBody
 public class Advice {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
