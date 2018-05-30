@@ -74,5 +74,5 @@ jobs:
         file: repository/concourse/deploy-image.yml
       - put: springboot-bestpractice-image
         params:
-          tag:
+          tag: out/version.txt
           build: repository
