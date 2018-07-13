@@ -1,10 +1,10 @@
 package com.bestpractice.api.controller.v1;
 
-import com.bestpractice.api.domain.entity.InfoEntity;
+import com.bestpractice.api.domain.entity.Info;
 import com.bestpractice.api.domain.service.InfoService;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -19,40 +19,30 @@ public class RdbmsController {
     }
 
     @GetMapping()
-    public Map<String, List<InfoEntity>> getInfos() {
-        Map<String, List<InfoEntity>> map = new HashMap<>();
-        map.put("infos", infoService.getInfoList());
-        return map;
+    public Map<String, List<Info>> getInfos() {
+        return Collections.singletonMap("infos", this.infoService.getInfoList());
     }
 
     @GetMapping(value="/{id}")
-    public Map<String, InfoEntity> getInfo(@PathVariable("id") Long id) {
-        Map<String, InfoEntity> map = new HashMap<>();
-        map.put("info", infoService.getInfo(id));
-        return map;
+    public Map<String, Info> getInfo(@PathVariable("id") Long id) {
+        return Collections.singletonMap("info", this.infoService.getInfo(id));
     }
 
     @PostMapping
-    public Map<String, InfoEntity> postInfo(@RequestBody InfoEntity infoEntity) {
-        infoService.generateInfo(infoEntity);
-        Map<String, InfoEntity> map = new HashMap<>();
-        map.put("info", infoEntity);
-        return map;
+    public Map<String, Info> postInfo(@RequestBody Info info) {
+        this.infoService.generateInfo(info);
+        return Collections.singletonMap("info", info);
     }
 
     @PutMapping
-    public Map<String, InfoEntity> putInfo(@RequestBody InfoEntity infoEntity) {
-        infoService.generateInfo(infoEntity);
-        Map<String, InfoEntity> map = new HashMap<>();
-        map.put("info", infoEntity);
-        return map;
+    public Map<String, Info> putInfo(@RequestBody Info info) {
+        this.infoService.generateInfo(info);
+        return Collections.singletonMap("info", info);
     }
 
     @DeleteMapping(value = "/{id}")
     public Map<String, String> deleteInfo(@PathVariable("id") Long id) {
-        infoService.deleteInfo(id);
-        Map<String, String> map = new HashMap<>();
-        map.put("info", "success.");
-        return map;
+        this.infoService.deleteInfo(id);
+        return Collections.singletonMap("message", "success deleted.");
     }
 }
