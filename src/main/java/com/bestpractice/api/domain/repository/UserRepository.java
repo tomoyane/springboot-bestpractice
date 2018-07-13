@@ -1,19 +1,19 @@
 package com.bestpractice.api.domain.repository;
 
-import com.bestpractice.api.domain.entity.UserEntity;
+import com.bestpractice.api.domain.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 @Transactional
-public interface UserRepository extends JpaRepository<UserEntity, Long> {
+public interface UserRepository extends JpaRepository<User, Long> {
 
-    UserEntity findByEmail(String email);
+    User findByEmail(String email);
 
-    UserEntity findByIdAndUuid(Long id, String uuid);
+    User findByIdAndUuid(Long id, String uuid);
 
-    UserEntity save(UserEntity userEntity);
+    User save(User user);
 
-    UserEntity removeById(Long id);
+    User removeById(Long id);
 }

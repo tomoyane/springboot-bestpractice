@@ -1,6 +1,6 @@
 package com.bestpractice.api.domain.repository;
 
-import com.bestpractice.api.domain.entity.InfoEntity;
+import com.bestpractice.api.domain.entity.Info;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,12 +9,12 @@ import java.util.List;
 
 @Repository
 @Transactional
-public interface InfoRepository extends JpaRepository<InfoEntity, Long> {
-    List<InfoEntity> findAll();
+public interface InfoRepository extends JpaRepository<Info, Long> {
+    List<Info> findAll();
 
-    InfoEntity findById(Long id);
+    Info findById(Long id);
 
-    InfoEntity save(InfoEntity infoEntity);
+    Info save(Info info);
 
     void removeById(Long id);
 }
