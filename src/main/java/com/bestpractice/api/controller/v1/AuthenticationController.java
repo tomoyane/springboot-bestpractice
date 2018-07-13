@@ -2,8 +2,8 @@ package com.bestpractice.api.controller.v1;
 
 import com.bestpractice.api.common.config.PwEncoderConfig;
 import com.bestpractice.api.common.util.Util;
-import com.bestpractice.api.domain.entity.UserEntity;
-import com.bestpractice.api.domain.entity.UserKeyEntity;
+import com.bestpractice.api.domain.entity.User;
+import com.bestpractice.api.domain.entity.UserKey;
 import com.bestpractice.api.exception.BadRequest;
 import com.bestpractice.api.exception.Conflict;
 import com.bestpractice.api.domain.service.JsonWebTokenService;
@@ -13,7 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.Map;
 import java.util.UUID;
 
@@ -33,60 +33,52 @@ public class AuthenticationController {
 
     @PostMapping(value = "/registration")
     @ResponseStatus(HttpStatus.CREATED)
-    public Map<String, String> generateUser(@RequestBody @Validated UserEntity userEntity, BindingResult bdResult) {
+    public Map<String, String> generateUser(@RequestBody @Validated User user, BindingResult bdResult) {
 
         if (bdResult.hasErrors()) {
             throw new BadRequest();
         }
 
-        if (userService.getUserByEmail(userEntity.getEmail()) != null) {
+        if (this.userService.getUserByEmail(user.getEmail()) != null) {
             throw new Conflict();
         }
 
         String userUuid = UUID.randomUUID().toString();
 
-        userEntity.setPassword(pwEncoderConfig.passwordEncoder().encode(userEntity.getPassword()));
-        userEntity.setUuid(userUuid);
+        user.setPassword(this.pwEncoderConfig.passwordEncoder().encode(user.getPassword()));
+        user.setUuid(userUuid);
 
-        Long userId = userService.generateUser(userEntity).getId();
+        Long userId = this.userService.generateUser(user).getId();
 
-        UserKeyEntity userKeyEntity = new UserKeyEntity();
-        userKeyEntity.setTokenType("Bearer");
-        userKeyEntity.setToken(jwtService.generateJwt(userId, 365, userUuid));
-        userKeyEntity.setRefreshToken(jwtService.generateJwt(userId, 365, userUuid));
-        userKeyEntity.setExpiresAt(Util.calculateDate());
-        userKeyEntity.setUserId(userId);
+        UserKey userKey = new UserKey();
+        userKey.setTokenType("Bearer");
+        userKey.setToken(this.jwtService.generateJwt(userId, 365, userUuid));
+        userKey.setRefreshToken(this.jwtService.generateJwt(userId, 365, userUuid));
+        userKey.setExpiresAt(Util.calculateDate());
+        userKey.setUserId(userId);
 
-        userService.generateUserKey(userKeyEntity);
-
-        Map<String, String> map = new HashMap<>();
-        map.put("message", "OK");
-
-        return map;
+        this.userService.generateUserKey(userKey);
+        return Collections.singletonMap("message", "ok.");
     }
 
     @PostMapping(value = "/token")
     @ResponseStatus(HttpStatus.OK)
-    public Map<String, UserKeyEntity> issueToken(@RequestBody @Validated UserEntity userEntity, BindingResult bdResult) {
+    public Map<String, UserKey> issueToken(@RequestBody @Validated User userEntity, BindingResult bdResult) {
 
         if (bdResult.hasErrors()) {
             throw new BadRequest();
         }
 
-        UserEntity user = userService.getUserByEmail(userEntity.getEmail());
+        User user = this.userService.getUserByEmail(userEntity.getEmail());
         if (user == null) {
             throw new BadRequest();
         }
 
-        if (!pwEncoderConfig.passwordEncoder().matches(userEntity.getPassword(), user.getPassword())) {
+        if (!this.pwEncoderConfig.passwordEncoder().matches(userEntity.getPassword(), user.getPassword())) {
             throw new BadRequest();
         }
 
-        UserKeyEntity userKeyEntity = userService.getUserKey(user.getId());
-
-        Map<String, UserKeyEntity> map = new HashMap<>();
-        map.put("key", userKeyEntity);
-
-        return map;
+        UserKey userKey = this.userService.getUserKey(user.getId());
+        return Collections.singletonMap("key", userKey);
     }
 }
