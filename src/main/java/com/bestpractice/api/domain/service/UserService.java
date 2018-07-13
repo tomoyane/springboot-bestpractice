@@ -1,9 +1,10 @@
 package com.bestpractice.api.domain.service;
 
-import com.bestpractice.api.domain.entity.UserEntity;
-import com.bestpractice.api.domain.entity.UserKeyEntity;
+import com.bestpractice.api.domain.entity.User;
+import com.bestpractice.api.domain.entity.UserKey;
 import com.bestpractice.api.domain.repository.UserKeyRepository;
 import com.bestpractice.api.domain.repository.UserRepository;
+import com.bestpractice.api.exception.InternalServerError;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -19,27 +20,53 @@ public class UserService {
     }
 
     @Cacheable(cacheNames = "users",  key = "'users:' + #id")
-    public UserEntity getUserByIdAndUserUuid(Long id, String userUuid) {
-        UserEntity userEntity = userRepository.findByIdAndUuid(id, userUuid);
-        userEntity.setUsername("");
-        userEntity.setEmail("");
-        userEntity.setPassword("");
-        return userEntity;
+    public User getUserByIdAndUserUuid(Long id, String userUuid) {
+        User user = this.userRepository.findByIdAndUuid(id, userUuid);
+        user.setUsername("");
+        user.setEmail("");
+        user.setPassword("");
+        return user;
     }
 
-    public UserEntity getUserByEmail(String email) {
-        return userRepository.findByEmail(email);
+    public User getUserByEmail(String email) {
+        User user;
+
+        try {
+            user = this.userRepository.findByEmail(email);
+        } catch (Exception ex) {
+            throw new InternalServerError();
+        }
+
+        return user;
     }
 
-    public UserEntity generateUser(UserEntity userEntity) {
-        return userRepository.save(userEntity);
+    public User generateUser(User user) {
+        try {
+            user = this.userRepository.save(user);
+        } catch (Exception ex) {
+            throw new InternalServerError();
+        }
+
+        return user;
     }
 
-    public void generateUserKey(UserKeyEntity userKeyEntity) {
-        userKeyRepository.save(userKeyEntity);
+    public void generateUserKey(UserKey userKey) {
+        try {
+            this.userKeyRepository.save(userKey);
+        } catch (Exception ex) {
+            throw new InternalServerError();
+        }
     }
 
-    public UserKeyEntity getUserKey(Long userId) {
-        return userKeyRepository.findByUserId(userId);
+    public UserKey getUserKey(Long userId) {
+        UserKey userKey;
+
+        try {
+            userKey = this.userKeyRepository.findByUserId(userId);
+        } catch (Exception ex) {
+            throw new InternalServerError();
+        }
+
+        return userKey;
     }
 }

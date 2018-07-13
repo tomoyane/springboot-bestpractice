@@ -27,18 +27,18 @@ public class JsonWebTokenService {
         ZonedDateTime expirationDate = now.plusDays(period).atZone(ZoneId.systemDefault());
 
         return Jwts.builder()
-                .setIssuer(credentialProperty.getProvider())
+                .setIssuer(this.credentialProperty.getProvider())
                 .setSubject(String.valueOf(userId))
-                .setAudience(credentialProperty.getSubject())
+                .setAudience(this.credentialProperty.getSubject())
                 .setId(uuid)
                 .setExpiration(Date.from(expirationDate.toInstant()))
-                .signWith(SignatureAlgorithm.HS512, credentialProperty.getKey().getBytes())
+                .signWith(SignatureAlgorithm.HS512, this.credentialProperty.getKey().getBytes())
                 .compact();
     }
 
     public boolean verifyJwt(String jwt) {
         try {
-            Jwts.parser().setSigningKey(credentialProperty.getKey().getBytes()).parseClaimsJws(jwt);
+            Jwts.parser().setSigningKey(this.credentialProperty.getKey().getBytes()).parseClaimsJws(jwt);
 
             return true;
         } catch (Exception e) {

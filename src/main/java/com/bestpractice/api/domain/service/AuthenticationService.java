@@ -1,13 +1,12 @@
 package com.bestpractice.api.domain.service;
 
-import com.bestpractice.api.domain.entity.UserEntity;
+import com.bestpractice.api.domain.entity.User;
 import com.bestpractice.api.domain.model.CredentialModel;
 import com.bestpractice.api.security.role.UserAuthority;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.AuthenticationUserDetailsService;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
@@ -19,10 +18,13 @@ import java.util.HashSet;
 @Service
 public class AuthenticationService implements AuthenticationUserDetailsService<PreAuthenticatedAuthenticationToken> {
 
-    @Autowired
-    UserService userService;
-    @Autowired
-    JsonWebTokenService jsonWebTokenService;
+    private final UserService userService;
+    private final JsonWebTokenService jsonWebTokenService;
+
+    public AuthenticationService(UserService userService, JsonWebTokenService jsonWebTokenService) {
+        this.userService = userService;
+        this.jsonWebTokenService = jsonWebTokenService;
+    }
 
     @Override
     public UserDetails loadUserDetails(PreAuthenticatedAuthenticationToken token) throws UsernameNotFoundException {
@@ -32,11 +34,11 @@ public class AuthenticationService implements AuthenticationUserDetailsService<P
             throw new BadCredentialsException("Bad credential");
         }
 
-        if (!jsonWebTokenService.verifyJwt(credentials.toString())) {
+        if (!this.jsonWebTokenService.verifyJwt(credentials.toString())) {
             throw new BadCredentialsException("Bad credential");
         }
 
-        CredentialModel credentialModel = jsonWebTokenService.decodeJwt(credentials.toString());
+        CredentialModel credentialModel = this.jsonWebTokenService.decodeJwt(credentials.toString());
         if (credentialModel.getSub() == null || credentialModel.getJti() == null) {
             throw new BadCredentialsException("Bad credential");
         }
@@ -44,14 +46,14 @@ public class AuthenticationService implements AuthenticationUserDetailsService<P
         Long userId = credentialModel.getSub();
         String userUuid = credentialModel.getJti();
 
-        UserEntity userEntity = userService.getUserByIdAndUserUuid(userId, userUuid);
-        if (userEntity == null) {
+        User user = this.userService.getUserByIdAndUserUuid(userId, userUuid);
+        if (user == null) {
             throw new UsernameNotFoundException("Not found user");
         }
 
         Collection<GrantedAuthority> authorities = new HashSet<GrantedAuthority>() ;
         authorities.add(new UserAuthority());
 
-        return new User(userUuid,"", authorities);
+        return new org.springframework.security.core.userdetails.User(userUuid,"", authorities);
     }
 }
