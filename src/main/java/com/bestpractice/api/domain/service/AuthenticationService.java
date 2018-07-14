@@ -18,13 +18,10 @@ import java.util.HashSet;
 @Service
 public class AuthenticationService implements AuthenticationUserDetailsService<PreAuthenticatedAuthenticationToken> {
 
-    private final UserService userService;
-    private final JsonWebTokenService jsonWebTokenService;
-
-    public AuthenticationService(UserService userService, JsonWebTokenService jsonWebTokenService) {
-        this.userService = userService;
-        this.jsonWebTokenService = jsonWebTokenService;
-    }
+    @Autowired
+    UserService userService;
+    @Autowired
+    JsonWebTokenService jsonWebTokenService;
 
     @Override
     public UserDetails loadUserDetails(PreAuthenticatedAuthenticationToken token) throws UsernameNotFoundException {
