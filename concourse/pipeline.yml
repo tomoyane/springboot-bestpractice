@@ -3,14 +3,14 @@ resources:
     type: git
     source:
       branch: master
-      uri: git@github.com:tomo0111/springboot-bestpractice.git
+      uri: git@github.com:tomoyane/springboot-bestpractice.git
       private_key: ((github-deploy-key))
 
   - name: pull-request
     type: pull-request
     source:
-      uri: git@github.com:tomo0111/springboot-bestpractice.git
-      repo: tomo0111/springboot-bestpractice
+      uri: git@github.com:tomoyane/springboot-bestpractice.git
+      repo: tomoyane/springboot-bestpractice
       access_token: ((github-access-token))
       private_key: ((github-deploy-key))
       base: master

@@ -7,7 +7,7 @@ Write to about Spring Boot best practice architecture.
 ## Build
 Git clone
 ```bash
-git clone https://github.com/tomo0111/springboot-bestpractice.git
+git clone https://github.com/tomoyane/springboot-bestpractice.git
 ```
 
 Run test
