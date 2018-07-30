@@ -1,5 +1,5 @@
 # SpringBoot best practice
-[![Build Status](http://www.concourse.developer-tm.com:8080/api/v1/teams/main/pipelines/springboot-bestpractice-pipeline/jobs/test/badge)](https://www.concourse.developer-tm.com/teams/main/pipelines/springboot-bestpractice-pipeline)
+[![Build Status](http://www.concourse.developer-tm.com:8080/api/v1/teams/main/pipelines/springboot-bestpractice-pipeline/jobs/unit-test/badge)](https://www.concourse.developer-tm.com/teams/main/pipelines/springboot-bestpractice-pipeline)
 
 Write to about Spring Boot best practice architecture.
 
