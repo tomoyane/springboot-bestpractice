@@ -129,5 +129,5 @@ spring-boot-bestpracite
         └── application-test.yml
 ```
 
-## LICENSE
+## License
 [MIT](https://github.com/tomoyane/springboot-bestpractice/blob/master/LICENSE)
