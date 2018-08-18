@@ -2,7 +2,7 @@ package com.bestpractice.api.domain.model;
 
 import java.util.Date;
 
-public class CredentialModel {
+public class Credential {
     private String iss;
     private Long sub;
     private String aud;

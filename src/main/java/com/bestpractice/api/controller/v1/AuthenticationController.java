@@ -63,18 +63,18 @@ public class AuthenticationController {
 
     @PostMapping(value = "/token")
     @ResponseStatus(HttpStatus.OK)
-    public Map<String, UserKey> issueToken(@RequestBody @Validated User userEntity, BindingResult bdResult) {
+    public Map<String, UserKey> issueToken(@RequestBody @Validated User body, BindingResult bdResult) {
 
         if (bdResult.hasErrors()) {
             throw new BadRequest();
         }
 
-        User user = this.userService.getUserByEmail(userEntity.getEmail());
+        User user = this.userService.getUserByEmail(body.getEmail());
         if (user == null) {
             throw new BadRequest();
         }
 
-        if (!this.pwEncoderConfig.passwordEncoder().matches(userEntity.getPassword(), user.getPassword())) {
+        if (!this.pwEncoderConfig.passwordEncoder().matches(user.getPassword(), user.getPassword())) {
             throw new BadRequest();
         }
 

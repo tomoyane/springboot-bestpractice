@@ -1,6 +1,6 @@
 package com.bestpractice.api.domain.model;
 
-public class ExceptionModel {
+public class Exception {
     private int status;
     private String error;
     private String message;

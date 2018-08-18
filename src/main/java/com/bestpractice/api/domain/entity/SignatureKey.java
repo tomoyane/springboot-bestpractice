@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "signature_keys")
-public class SignatureKey extends AbstractEntity {
+public class SignatureKey extends Abstract {
 
     @Id
     @Column(name = "id")

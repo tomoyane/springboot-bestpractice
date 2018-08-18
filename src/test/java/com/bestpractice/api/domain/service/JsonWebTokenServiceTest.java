@@ -2,7 +2,7 @@ package com.bestpractice.api.domain.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.bestpractice.api.domain.model.CredentialModel;
+import com.bestpractice.api.domain.model.Credential;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,9 +51,9 @@ public class JsonWebTokenServiceTest {
     public void testDecodeJwt_Ok() {
         String jwt = jsonWebTokenService.generateJwt(userId, period, userUuid);
 
-        CredentialModel credentialModel = jsonWebTokenService.decodeJwt(jwt);
+        Credential credential = jsonWebTokenService.decodeJwt(jwt);
 
-        assertThat(credentialModel.getSub()).isEqualTo(userId);
-        assertThat(credentialModel.getJti()).isEqualTo(userUuid);
+        assertThat(credential.getSub()).isEqualTo(userId);
+        assertThat(credential.getJti()).isEqualTo(userUuid);
     }
 }
