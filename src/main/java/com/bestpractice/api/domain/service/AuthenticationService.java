@@ -1,7 +1,7 @@
 package com.bestpractice.api.domain.service;
 
 import com.bestpractice.api.domain.entity.User;
-import com.bestpractice.api.domain.model.CredentialModel;
+import com.bestpractice.api.domain.model.Credential;
 import com.bestpractice.api.security.role.UserAuthority;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -35,13 +35,13 @@ public class AuthenticationService implements AuthenticationUserDetailsService<P
             throw new BadCredentialsException("Bad credential");
         }
 
-        CredentialModel credentialModel = this.jsonWebTokenService.decodeJwt(credentials.toString());
-        if (credentialModel.getSub() == null || credentialModel.getJti() == null) {
+        Credential credential = this.jsonWebTokenService.decodeJwt(credentials.toString());
+        if (credential.getSub() == null || credential.getJti() == null) {
             throw new BadCredentialsException("Bad credential");
         }
 
-        Long userId = credentialModel.getSub();
-        String userUuid = credentialModel.getJti();
+        Long userId = credential.getSub();
+        String userUuid = credential.getJti();
 
         User user = this.userService.getUserByIdAndUserUuid(userId, userUuid);
         if (user == null) {

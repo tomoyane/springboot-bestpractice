@@ -4,37 +4,28 @@
 
 About Spring Boot best practice architecture.
 
-## Build
-Git clone
-```bash
-git clone https://github.com/tomoyane/springboot-bestpractice.git
-```
-
-Run test
-```bash
-./gradlew test
-```
-
-Docker image build
- * Build SpringBoot best practice application.
- * Use docker for local development.
-   * MySQL
-   * Redis
-   * OpenJDK 
-
-```bash
-docker-compose -f docker-compose-local.yml build
-```
-
-Run container
-```bash
-docker-compose -f docker-compose-local.yml up -d
-```
-
 ## Environment
+
+```bash
+$ SPRING_PROFILES_ACTIVE=""
+
+$ MYSQL_DB_HOST=""
+$ MYSQL_DB_NAME=""
+$ MYSQL_DB_USER=""
+$ MYSQL_DB_PASS=""
+
+$ REDIS_DB_HOST=""
+$ REDIS_DB_PORT=""
+$ REDIS_DB_PASS=""
+```
+
 ### Local environment
 
 Local development property file is application-loc.yml.
+
+```bash
+$ SPRING_PROFILES_ACTIVE="local"
+```
 
 Working on docker container.
  * Docker Image
@@ -61,15 +52,40 @@ Sample Class
 Sample Class
  * UserService
 
-#### Cassandra
-Sample Class
-
 ### Develop environment
 Develop development property file is application-dev.yml.
 
-Working on Heroku
-  * Gradle build pack
-  * Postgres SQL
+```bash
+$ SPRING_PROFILES_ACTIVE="dev"
+```
+
+## Build
+Git clone
+```bash
+$ git clone https://github.com/tomoyane/springboot-bestpractice.git
+```
+
+Run test
+```bash
+./gradlew test
+```
+
+### Using docker container
+Docker image build
+ * Build SpringBoot best practice application.
+ * Use docker for local development.
+   * MySQL
+   * Redis
+   * OpenJDK 
+
+```bash
+$ docker-compose -f docker-compose-local.yml build
+```
+
+Run container
+```bash
+$ docker-compose -f docker-compose-local.yml up -d
+```
 
 ## Authentication and Authorization
 Spring security.

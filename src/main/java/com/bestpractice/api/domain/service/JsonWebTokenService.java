@@ -1,7 +1,7 @@
 package com.bestpractice.api.domain.service;
 
 import com.bestpractice.api.common.property.CredentialProperty;
-import com.bestpractice.api.domain.model.CredentialModel;
+import com.bestpractice.api.domain.model.Credential;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -47,18 +47,18 @@ public class JsonWebTokenService {
         return false;
     }
 
-    public CredentialModel decodeJwt(String jwt) {
+    public Credential decodeJwt(String jwt) {
         try {
             ObjectMapper mapper = new ObjectMapper();
 
             String[] jwtSections = jwt.split("\\.");
             String claim = new String(Base64.getDecoder().decode(jwtSections[1]));
 
-            return mapper.<CredentialModel>readValue(claim, CredentialModel.class);
+            return mapper.<Credential>readValue(claim, Credential.class);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return new CredentialModel();
+        return new Credential();
     }
 }
