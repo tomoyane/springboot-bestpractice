@@ -52,9 +52,6 @@ Sample Class
 Sample Class
  * UserService
 
-#### Cassandra
-Sample Class
-
 ### Develop environment
 Develop development property file is application-dev.yml.
 
