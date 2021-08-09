@@ -8,7 +8,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "user_keys")
-public class UserKey extends Abstract {
+public class UserKey extends SharedAbstract {
 
     @Id
     @Column(name = "id")

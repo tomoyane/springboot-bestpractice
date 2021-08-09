@@ -4,27 +4,25 @@
 
 About Spring Boot best practice architecture.
 
-## Environment
+## Environment variable
+
+|Name|Description|
+|---|---|
+|SPRING_PROFILES_ACTIVE|Spring runtime environment|
+|MYSQL_DB_HOST|Database host|
+|MYSQL_DB_NAME|Database name|
+|MYSQL_DB_USER|Database username|
+|MYSQL_DB_PASS|Database password|
+|REDIS_DB_HOST|Redis host|
+|REDIS_DB_PORT|Redis port|
+|REDIS_DB_PASS|Redis password|
+
+### Spring Active Profiles (Local)
+
+Local development property file is application-local.yml.
 
 ```bash
-$ SPRING_PROFILES_ACTIVE=""
-
-$ MYSQL_DB_HOST=""
-$ MYSQL_DB_NAME=""
-$ MYSQL_DB_USER=""
-$ MYSQL_DB_PASS=""
-
-$ REDIS_DB_HOST=""
-$ REDIS_DB_PORT=""
-$ REDIS_DB_PASS=""
-```
-
-### Local environment
-
-Local development property file is application-loc.yml.
-
-```bash
-$ SPRING_PROFILES_ACTIVE="local"
+$ export SPRING_PROFILES_ACTIVE="local"
 ```
 
 Working on docker container.
@@ -37,7 +35,7 @@ Cassandra cluster.
  * CentOS7 virtual machine 
  * 3 nodes
 
-#### MySQL
+#### MySQL (5.5)
 Sample query is sql/mysql_sample.sql file.
 
 Sample Class
@@ -48,26 +46,31 @@ Sample Class
  * InfoService.java
  * InfoRepository.java
    
-#### Redis
+#### Redis 
 Sample Class
  * UserService
 
-### Develop environment
+### Spring Active Profiles (Develop)
 Develop development property file is application-dev.yml.
 
 ```bash
-$ SPRING_PROFILES_ACTIVE="dev"
+$ export SPRING_PROFILES_ACTIVE="dev"
 ```
 
 ## Build
-Git clone
+Git clone.
 ```bash
 $ git clone https://github.com/tomoyane/springboot-bestpractice.git
 ```
 
-Run test
+Run test.
 ```bash
 ./gradlew test
+```
+
+Rub build.
+```bash
+./gradlew build 
 ```
 
 ### Using docker container
@@ -79,12 +82,12 @@ Docker image build
    * OpenJDK 
 
 ```bash
-$ docker-compose -f docker-compose-local.yml build
+$ docker-compose build
 ```
 
 Run container
 ```bash
-$ docker-compose -f docker-compose-local.yml up -d
+$ docker-compose up -d
 ```
 
 ## Authentication and Authorization

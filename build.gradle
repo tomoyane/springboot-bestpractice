@@ -12,12 +12,12 @@ buildscript {
 apply plugin: "java"
 apply plugin: "org.springframework.boot"
 
-version = "1.0.0"
+version = "1.0.1"
 
 jar {
     group "spring-boot-bestpractice"
     baseName = "spring-boot-bestpractice"
-    version = "1.0.0-SNAPSHOT"
+    version = "1.0.1"
 }
 
 repositories {
@@ -40,6 +40,7 @@ dependencies {
     compile "org.postgresql:postgresql"
 
     testCompile "org.hsqldb:hsqldb"
+    testCompile "org.hibernate:hibernate-entitymanager"
     testCompile "org.springframework.boot:spring-boot-starter-test"
     testCompile "junit:junit"
 }
