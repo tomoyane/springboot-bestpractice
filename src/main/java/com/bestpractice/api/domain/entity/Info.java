@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "infos")
-public class Info extends Abstract {
+public class Info extends SharedAbstract {
 
     @Id
     @Column(name = "id")

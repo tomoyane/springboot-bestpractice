@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @MappedSuperclass
-public class Abstract {
+public class SharedAbstract {
     @Temporal(TemporalType.TIMESTAMP)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(nullable = false, name = "created_at")
