@@ -149,4 +149,4 @@ spring-boot-bestpracite
 ```
 
 ## License
-[MIT](https://github.com/tomoyane/springboot-bestpractice/blob/master/LICENSE)
+[Apache-2.0](https://github.com/tomoyane/springboot-bestpractice/blob/master/LICENSE)
