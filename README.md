@@ -1,6 +1,6 @@
 # SpringBoot best practice
 [![springboot-bestpractice](https://github.com/tomoyane/springboot-bestpractice/actions/workflows/ci.yml/badge.svg)](https://github.com/tomoyane/springboot-bestpractice/actions/workflows/ci.yml)
-[![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](https://github.com/tomoyane/springboot-bestpractice/blob/master/LICENSE.txt)
+[![Apache License](https://img.shields.io/badge/license-Apatch-mediumpurple.svg?style=flat)](https://github.com/herts-stack/herts/blob/master/LICENSE)
 
 About Spring Boot best practice architecture.
 

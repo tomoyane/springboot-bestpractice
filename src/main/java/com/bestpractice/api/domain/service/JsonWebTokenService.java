@@ -3,8 +3,10 @@ package com.bestpractice.api.domain.service;
 import com.bestpractice.api.common.property.CredentialProperty;
 import com.bestpractice.api.domain.model.Credential;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;

@@ -1,10 +1,11 @@
 package com.bestpractice.api.domain.service;
 
-import com.bestpractice.api.domain.entity.User;
-import com.bestpractice.api.domain.entity.UserKey;
-import com.bestpractice.api.domain.repository.UserKeyRepository;
-import com.bestpractice.api.domain.repository.UserRepository;
-import com.bestpractice.api.exception.InternalServerError;
+import com.bestpractice.api.infrastrucuture.entity.User;
+import com.bestpractice.api.infrastrucuture.entity.UserKey;
+import com.bestpractice.api.infrastrucuture.repository.UserKeyRepository;
+import com.bestpractice.api.infrastrucuture.repository.UserRepository;
+import com.bestpractice.api.common.exception.InternalServerError;
+
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 

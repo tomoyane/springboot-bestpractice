@@ -1,8 +1,8 @@
 package com.bestpractice.api.domain.service;
 
-import com.bestpractice.api.domain.entity.Info;
-import com.bestpractice.api.domain.repository.InfoRepository;
-import com.bestpractice.api.exception.InternalServerError;
+import com.bestpractice.api.infrastrucuture.entity.Info;
+import com.bestpractice.api.infrastrucuture.repository.InfoRepository;
+import com.bestpractice.api.common.exception.InternalServerError;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,7 +32,7 @@ public class InfoService {
         Info info;
 
         try {
-            info = this.infoRepository.findById(id);
+            info = this.infoRepository.findById(id).get();
         } catch (Exception ex) {
             throw new InternalServerError();
         }

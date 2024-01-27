@@ -1,46 +1,57 @@
-buildscript {
-    repositories {
-        jcenter()
-        maven { url "http://repo.spring.io/snapshot" }
-        maven { url "http://repo.spring.io/milestone" }
-    }
-    dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.10.RELEASE")
-    }
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '2.5.5'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 }
 
-apply plugin: "java"
-apply plugin: "org.springframework.boot"
+def pkgName = 'com.bestpractice.api'
+def pkgVersion = "1.0.0"
+def javaVersion = project.hasProperty('javaVersion') ? project.getProperty('javaVersion') : '17'
+def artifactId = 'spring-boot-bestpractice'
 
-version = "1.0.2"
-
-jar {
-    group "spring-boot-bestpractice"
-    baseName = "spring-boot-bestpractice"
-    version = "1.0.2"
-}
+sourceCompatibility = javaVersion
 
 repositories {
-    jcenter()
-    maven { url "http://repo.spring.io/snapshot" }
-    maven { url "http://repo.spring.io/milestone" }
+    mavenCentral()
 }
 
 dependencies {
-    compile "org.springframework.boot:spring-boot-starter-web"
-    compile "org.springframework.boot:spring-boot-starter-data-jpa"
-    compile "org.springframework.boot:spring-boot-configuration-processor"
-    compile "org.springframework.boot:spring-boot-starter-security"
-    compile "org.springframework.boot:spring-boot-starter-data-redis"
-    compile "io.springfox:springfox-swagger2:2.8.0"
-    compile "io.springfox:springfox-swagger-ui:2.8.0"
-    compile "io.jsonwebtoken:jjwt:0.9.0"
+    // Spring
+    implementation "org.springframework.boot:spring-boot-starter-web"
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa"
+    implementation "org.springframework.boot:spring-boot-configuration-processor"
+    implementation "org.springframework.boot:spring-boot-starter-security"
+    implementation "org.springframework.boot:spring-boot-starter-data-redis"
+    implementation "io.springfox:springfox-swagger2:2.8.0"
+    implementation "io.springfox:springfox-swagger-ui:2.8.0"
 
-    compile "mysql:mysql-connector-java"
-    compile "org.postgresql:postgresql"
+    // Token
+    implementation "io.jsonwebtoken:jjwt:0.9.0"
 
-    testCompile "org.hsqldb:hsqldb"
-    testCompile "org.hibernate:hibernate-entitymanager"
-    testCompile "org.springframework.boot:spring-boot-starter-test"
-    testCompile "junit:junit"
+    // Database
+    implementation "mysql:mysql-connector-java"
+    implementation "org.postgresql:postgresql"
+    implementation 'redis.clients:jedis:3.7.0'
+
+    // Third party
+    implementation 'javax.validation:validation-api:2.0.1.Final'
+    implementation 'org.hibernate.validator:hibernate-validator:6.2.0.Final'
+
+    testImplementation "org.hsqldb:hsqldb"
+    testImplementation "org.hibernate:hibernate-entitymanager"
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+}
+
+ext.profile = (!project.hasProperty('profile') || !profile) ? 'local' : profile
+sourceSets {
+    main {
+        resources {
+            srcDirs "src/main/resources", "src/main/resources-${profile}"
+        }
+    }
+}
+
+processResources {
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
 }
