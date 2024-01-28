@@ -20,7 +20,7 @@ import java.util.HashSet;
 public class AuthenticationService implements AuthenticationUserDetailsService<PreAuthenticatedAuthenticationToken> {
 
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userService;
     @Autowired
     private JsonWebTokenService jsonWebTokenService;
 

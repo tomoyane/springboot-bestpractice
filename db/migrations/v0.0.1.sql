@@ -16,20 +16,6 @@ CREATE TABLE users (
   UNIQUE (email)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- user_keys table
-CREATE TABLE user_keys (
-  id int(11) NOT NULL AUTO_INCREMENT,
-  token_type varchar(128) NOT NULL,
-  token varchar(512) NOT NULL,
-  refresh_token varchar(512) NOT NULL,
-  user_id int(11) NOT NULL,
-  expires_at datetime(6),
-  created_at datetime(6),
-  PRIMARY KEY (id),
-  UNIQUE (token),
-  FOREIGN KEY (user_id) REFERENCES users(id)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 -- signature_keys table
 CREATE TABLE signature_keys (
   id int(11) NOT NULL AUTO_INCREMENT,

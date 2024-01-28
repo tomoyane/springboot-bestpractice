@@ -21,12 +21,9 @@ public class User extends SharedAbstract implements Serializable {
     @Column(nullable = false, name = "uuid")
     private String uuid;
 
-    @NotNull
     @Column(nullable = false, name = "username")
     private String username;
 
-    @NotNull
-    @Email
     @Column(nullable = false, name = "email")
     private String email;
 

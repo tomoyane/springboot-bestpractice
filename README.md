@@ -2,7 +2,7 @@
 [![springboot-bestpractice](https://github.com/tomoyane/springboot-bestpractice/actions/workflows/ci.yml/badge.svg)](https://github.com/tomoyane/springboot-bestpractice/actions/workflows/ci.yml)
 [![Apache License](https://img.shields.io/badge/license-Apatch-mediumpurple.svg?style=flat)](https://github.com/herts-stack/herts/blob/master/LICENSE)
 
-About Spring Boot best practice architecture.
+About Spring Boot architecture.
 
 ## Environment variable
 
@@ -25,25 +25,32 @@ Local development property file is application-local.yml.
 $ export SPRING_PROFILES_ACTIVE="local"
 ```
 
+You can check start server for local.
+
+```bash
+# Data store
+$ cd docker
+$ docker-compose up
+
+# Application
+$ cd scripts
+$ ./start_local_server.sh 
+```
+
 Working on docker container.
  * Docker Image
    * MySQL
    * Redis
-   * OpenJDK
+   * OpenJDK 17
 
 Cassandra cluster.
  * CentOS7 virtual machine 
  * 3 nodes
 
-#### MySQL (5.5)
-Sample query is sql/mysql_sample.sql file.
+#### MySQL (8)
 
 Sample Class
- * UserEntity.java
- * UserService.java
  * UserRepository.java
- * InfoEntity.java
- * InfoService.java
  * InfoRepository.java
    
 #### Redis 
@@ -96,56 +103,80 @@ Spring security.
 JWT.
 
 ## Architecture
-```
+```bash
 spring-boot-bestpracite
-├── main
-│   ├── java
-│   │    └── com
-│   │        └── bestpractice
-│   │           └── api
-│   │               ├── App.java
-│   │               ├── common
-│   │               │   ├── config
-│   │               │   ├── property
-│   │               │   └── util
-│   │               │
-│   │               ├── controller
-│   │               │   ├── Advice.java
-│   │               │   ├── v1
-│   │               │   └── v2
-│   │               │
-│   │               ├── domain
-│   │               │   ├── entity
-│   │               │   ├── model
-│   │               │   ├── repository
-│   │               │   └── service
-│   │               │
-│   │               ├── exception
-│   │               │
-│   │               └── security
-│   │                   ├── filter
-│   │                   └── role
-│   │ 
-│   └── resources
-│       ├── application-dev.yml
-│       └── application-local.yml
-└── test
-    ├── java
-    │   └── com
-    │       └── bestpractice
-    │           └── api
-    │               ├── AppTests.java
-    │               │
-    │               ├── common
-    │               │
-    │               ├── controller
-    │               │
-    │               ├── repository
-    │               │
-    │               └── service
-    │
-    └── resources
-        └── application-test.yml
+├── LICENSE
+├── README.md
+├── build
+│   ├── bootRunMainClassName
+│   ├── classes
+│   │   └── java
+│   │       └── main
+│   │           └── com
+│   │               └── bestpractice
+│   │                   └── api
+│   │                       ├── Application.class
+│   │                       ├── app
+│   │                       │   ├── Advice.class
+│   │                       │   ├── AppBean$SwaggerConfig.class
+│   │                       │   ├── AppBean.class
+│   │                       │   ├── v1
+│   │                       │   │   ├── AuthenticationController.class
+│   │                       │   │   ├── HelloController.class
+│   │                       │   │   └── RdbmsController.class
+│   │                       │   └── v2
+│   │                       │       └── AuthorizationController.class
+│   │                       ├── common
+│   │                       │   ├── exception
+│   │                       │   │   ├── BadRequest.class
+│   │                       │   │   ├── Conflict.class
+│   │                       │   │   ├── Forbidden.class
+│   │                       │   │   ├── InternalServerError.class
+│   │                       │   │   ├── NotFound.class
+│   │                       │   │   ├── RequestTimeout.class
+│   │                       │   │   ├── ServiceUnavailable.class
+│   │                       │   │   └── UnAuthorized.class
+│   │                       │   ├── property
+│   │                       │   │   ├── CredentialProperty.class
+│   │                       │   │   └── RedisProperty.class
+│   │                       │   └── util
+│   │                       │       └── Util.class
+│   │                       ├── domain
+│   │                       │   ├── DomainBean.class
+│   │                       │   ├── model
+│   │                       │   │   ├── AuthRequest.class
+│   │                       │   │   ├── AuthResponse.class
+│   │                       │   │   ├── Credential.class
+│   │                       │   │   ├── Exception.class
+│   │                       │   │   ├── InfoRequest.class
+│   │                       │   │   ├── InfoResponse.class
+│   │                       │   │   ├── UserRequest.class
+│   │                       │   │   └── UserResponse.class
+│   │                       │   └── service
+│   │                       │       ├── AuthenticationService.class
+│   │                       │       ├── InfoService.class
+│   │                       │       ├── InfoServiceImpl.class
+│   │                       │       ├── JsonWebTokenService.class
+│   │                       │       ├── UserService.class
+│   │                       │       └── UserServiceImpl.class
+│   │                       ├── infrastrucuture
+│   │                       │   ├── InfrastructureBean.class
+│   │                       │   ├── entity
+│   │                       │   │   ├── Info.class
+│   │                       │   │   ├── SharedAbstract.class
+│   │                       │   │   ├── SignatureKey.class
+│   │                       │   │   └── User.class
+│   │                       │   └── repository
+│   │                       │       ├── InfoRepository.class
+│   │                       │       └── UserRepository.class
+│   │                       └── security
+│   │                           ├── SecurityBean.class
+│   │                           ├── filter
+│   │                           │   ├── AuthEntryPoint.class
+│   │                           │   └── PreAuthenticatedProcessingFilter.class
+│   │                           └── role
+│   │                               ├── AdminAuthority.class
+│   │                               └── UserAuthority.class```
 ```
 
 ## License

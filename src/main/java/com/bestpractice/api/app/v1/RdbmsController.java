@@ -1,7 +1,13 @@
 package com.bestpractice.api.app.v1;
 
+import com.bestpractice.api.domain.model.InfoRequest;
+import com.bestpractice.api.domain.model.InfoResponse;
+import com.bestpractice.api.domain.model.UserResponse;
 import com.bestpractice.api.infrastrucuture.entity.Info;
-import com.bestpractice.api.domain.service.InfoService;
+import com.bestpractice.api.domain.service.InfoServiceImpl;
+import java.net.URI;
+import java.net.URISyntaxException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
@@ -12,37 +18,44 @@ import java.util.Map;
 @RequestMapping("/api/v1/infos")
 public class RdbmsController {
 
-    private final InfoService infoService;
+    private final InfoServiceImpl infoService;
 
-    public RdbmsController(InfoService infoService) {
+    public RdbmsController(InfoServiceImpl infoService) {
         this.infoService = infoService;
     }
 
     @GetMapping()
-    public Map<String, List<Info>> getInfos() {
-        return Collections.singletonMap("infos", this.infoService.getInfoList());
+    public List<InfoResponse> getInfos() {
+        return this.infoService.getInfos();
     }
 
     @GetMapping(value="/{id}")
-    public Map<String, Info> getInfo(@PathVariable("id") Long id) {
-        return Collections.singletonMap("info", this.infoService.getInfo(id));
+    public InfoResponse getInfo(@PathVariable("id") Long id) {
+        return this.infoService.getInfo(id);
     }
 
     @PostMapping
-    public Map<String, Info> postInfo(@RequestBody Info info) {
-        this.infoService.generateInfo(info);
-        return Collections.singletonMap("info", info);
+    public ResponseEntity<InfoResponse> postInfo(
+        @RequestBody InfoRequest req)
+        throws URISyntaxException {
+
+        InfoResponse res = this.infoService.generateInfo(req);
+        return ResponseEntity
+            .created(new URI("/api/v1/infos/" + res.getId()))
+            .body(res);
     }
 
-    @PutMapping
-    public Map<String, Info> putInfo(@RequestBody Info info) {
-        this.infoService.generateInfo(info);
-        return Collections.singletonMap("info", info);
+    @PutMapping(value="/{id}")
+    public InfoResponse putInfo(
+        @PathVariable("id") Long id,
+        @RequestBody InfoRequest req) {
+
+        return this.infoService.updateInfo(id, req);
     }
 
     @DeleteMapping(value = "/{id}")
     public Map<String, String> deleteInfo(@PathVariable("id") Long id) {
         this.infoService.deleteInfo(id);
-        return Collections.singletonMap("message", "success deleted.");
+        return Collections.singletonMap("message", "ok");
     }
 }
