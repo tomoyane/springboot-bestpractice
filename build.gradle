@@ -5,7 +5,7 @@ plugins {
 }
 
 def pkgName = 'com.bestpractice.api'
-def pkgVersion = "1.0.0"
+def pkgVersion = "1.1.0"
 def javaVersion = project.hasProperty('javaVersion') ? project.getProperty('javaVersion') : '17'
 def artifactId = 'spring-boot-bestpractice'
 
