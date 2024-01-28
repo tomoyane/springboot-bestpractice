@@ -1,0 +1,22 @@
+version: '3.9'
+
+services:
+    mysql_db:
+        image: mysql:8
+        container_name: mysql_container
+        restart: always
+        ports:
+          - "3306:3306"
+        environment:
+          MYSQL_ROOT_PASSWORD: password
+          MYSQL_DATABASE: test
+          MYSQL_USER: user
+          MYSQL_PASSWORD: password
+        volumes:
+          - ../db/migrations:/docker-entrypoint-initdb.d
+
+    redis_db:
+        image: redis:6.2
+        container_name: redis_container
+        ports:
+          - '6379:6379'

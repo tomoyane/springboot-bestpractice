@@ -1,8 +1,9 @@
 package com.bestpractice.api.domain.service;
 
-import com.bestpractice.api.domain.entity.User;
+import com.bestpractice.api.infrastrucuture.entity.User;
 import com.bestpractice.api.domain.model.Credential;
 import com.bestpractice.api.security.role.UserAuthority;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.GrantedAuthority;
@@ -19,9 +20,9 @@ import java.util.HashSet;
 public class AuthenticationService implements AuthenticationUserDetailsService<PreAuthenticatedAuthenticationToken> {
 
     @Autowired
-    UserService userService;
+    private UserServiceImpl userService;
     @Autowired
-    JsonWebTokenService jsonWebTokenService;
+    private JsonWebTokenService jsonWebTokenService;
 
     @Override
     public UserDetails loadUserDetails(PreAuthenticatedAuthenticationToken token) throws UsernameNotFoundException {
