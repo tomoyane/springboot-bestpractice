@@ -19,16 +19,13 @@ public class UserServiceImpl implements UserService {
 
     private final UserPersistentRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final JsonWebTokenService jwtService;
 
     public UserServiceImpl(
         UserPersistentRepository userRepository,
-        PasswordEncoder passwordEncoder,
-        JsonWebTokenService jwtService) {
+        PasswordEncoder passwordEncoder) {
 
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
-        this.jwtService = jwtService;
     }
 
     @Override
@@ -56,16 +53,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public AuthResponse generateToken(Long userId, String userUid) {
-        String token = this.jwtService.generateJwt(userId, 365, userUid);
-        String rToken = this.jwtService.generateJwt(userId, 365, userUid);
 
-        return new AuthResponse(
-            "Bearer",
-            token,
-            rToken,
-            userId,
-            Util.calculateDate()
-        );
+        return null;
+//        return new AuthResponse(
+//            "Bearer",
+//            token,
+//            rToken,
+//            userId,
+//            Util.calculateDate()
+//        );
     }
 
     @Override

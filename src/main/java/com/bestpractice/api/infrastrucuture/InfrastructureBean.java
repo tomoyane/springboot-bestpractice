@@ -52,10 +52,13 @@ public class InfrastructureBean {
         public JdbcTemplate jdbcTemplate() {
             return new JdbcTemplate();
         }
-
         @Bean
         public UserPersistentRepository userRepository(JdbcTemplate jdbcTemplate) {
             return new RdbmsUserPersistentRepository(jdbcTemplate);
+        }
+        @Bean
+        public InfoPersistentRepository infoRepository() {
+            return new LocalInfoPersistentRepository();
         }
     }
 

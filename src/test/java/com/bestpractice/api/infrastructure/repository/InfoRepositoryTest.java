@@ -2,7 +2,6 @@ package com.bestpractice.api.infrastructure.repository;
 
 import com.bestpractice.api.infrastrucuture.entity.Info;
 import com.bestpractice.api.infrastrucuture.persistent.InfoPersistentRepository;
-import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -59,7 +58,7 @@ public class InfoRepositoryTest {
         info.setTitle("test");
         info.setDescription("test");
 
-        when(this.infoRepository.save(info)).thenReturn(info);
-        assertThat(this.infoRepository.save(info).getTitle()).isEqualTo("test");
+        when(this.infoRepository.insert(info)).thenReturn(info);
+        assertThat(this.infoRepository.insert(info).getTitle()).isEqualTo("test");
     }
 }

@@ -6,3 +6,5 @@ credentials:
     subject: localhost
     alg: HS512
     key: apikey
+    hmac-secret: test-secret
+    expires-hour-str: 1

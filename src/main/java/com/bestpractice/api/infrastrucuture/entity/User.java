@@ -1,7 +1,6 @@
 package com.bestpractice.api.infrastrucuture.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.validator.constraints.Email;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -9,7 +8,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "users")
-public class User extends SharedAbstract implements Serializable {
+public class User extends SharedData implements Serializable {
 
     @Id
     @Column(name = "id")

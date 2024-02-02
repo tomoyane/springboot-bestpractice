@@ -1,10 +1,8 @@
 package com.bestpractice.api.infrastrucuture.persistent.local;
 
-import com.bestpractice.api.common.util.Util;
 import com.bestpractice.api.infrastrucuture.entity.User;
 import com.bestpractice.api.infrastrucuture.persistent.UserPersistentRepository;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -35,12 +33,9 @@ public class LocalUserPersistentRepository implements UserPersistentRepository {
 
   @Override
   public User insert(User user) {
+    user.setId(this.users.size()+1);
     this.users.add(user);
-    try {
-      return Util.deepClone(user);
-    } catch (IOException | ClassNotFoundException ignored) {
-      return null;
-    }
+    return user;
   }
 
   @Override

@@ -4,30 +4,34 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class InfoResponse {
 
-    @JsonProperty("id")
-    private final Long id;
+  @JsonProperty("id")
+  private final Long id;
 
-    @JsonProperty("title")
-    private final String title;
+  @JsonProperty("uuid")
+  private final String uuid;
 
-    @JsonProperty("description")
-    private final String description;
+  @JsonProperty("title")
+  private final String title;
 
-    public InfoResponse(Long id, String title, String description) {
-        this.id = id;
-        this.title = title;
-        this.description = description;
-    }
+  @JsonProperty("description")
+  private final String description;
 
-    public Long getId() {
-        return id;
-    }
+  public InfoResponse(Long id, String uuid, String title, String description) {
+    this.id = id;
+    this.uuid = uuid;
+    this.title = title;
+    this.description = description;
+  }
 
-    public String getTitle() {
-        return title;
-    }
+  public Long getId() {
+    return id;
+  }
 
-    public String getDescription() {
-        return description;
-    }
+  public String getTitle() {
+    return title;
+  }
+
+  public String getDescription() {
+    return description;
+  }
 }

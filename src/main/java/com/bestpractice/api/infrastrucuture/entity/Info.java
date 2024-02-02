@@ -7,13 +7,17 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "infos")
-public class Info extends SharedAbstract {
+public class Info extends SharedData {
 
     @Id
     @Column(name = "id")
     @JsonIgnore
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @JsonIgnore
+    @Column(nullable = false, name = "uuid")
+    private String uuid;
 
     @NotNull
     @Column(nullable = false, name = "title")
@@ -29,6 +33,14 @@ public class Info extends SharedAbstract {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 
     public String getTitle() {
