@@ -1,7 +1,7 @@
 package com.bestpractice.api.infrastructure.repository;
 
 import com.bestpractice.api.infrastrucuture.entity.User;
-import com.bestpractice.api.infrastrucuture.repository.UserRepository;
+import com.bestpractice.api.infrastrucuture.persistent.UserPersistentRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -12,6 +12,7 @@ import org.springframework.test.context.ActiveProfiles;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
 @ActiveProfiles("test")
@@ -19,7 +20,7 @@ import static org.mockito.Mockito.when;
 public class UserRepositoryTest {
 
     @Mock
-    private UserRepository userRepository;
+    private UserPersistentRepository userRepository;
 
     private final Long correctId = 1L;
     private final String correctUuid = UUID.randomUUID().toString();
@@ -68,8 +69,8 @@ public class UserRepositoryTest {
         user.setUsername(this.correctUserName);
         user.setPassword(this.correctPassword);
 
-        when(this.userRepository.save(user)).thenReturn(user);
-        assertThat(this.userRepository.save(user).getEmail()).isEqualTo(this.correctEmail);
+        when(this.userRepository.insert(user)).thenReturn(user);
+        assertThat(this.userRepository.insert(user).getEmail()).isEqualTo(this.correctEmail);
     }
 
     @Test
@@ -81,7 +82,7 @@ public class UserRepositoryTest {
         user.setUsername(this.correctUserName);
         user.setPassword(this.correctPassword);
 
-        when(this.userRepository.removeById(this.correctId)).thenReturn(user);
-        assertThat(this.userRepository.removeById(this.correctId).getEmail()).isEqualTo(this.correctEmail);
+        when(this.userRepository.removeById(this.correctId)).thenReturn(true);
+        assertTrue(this.userRepository.removeById(this.correctId));
     }
 }

@@ -1,7 +1,7 @@
 package com.bestpractice.api.infrastructure.repository;
 
 import com.bestpractice.api.infrastrucuture.entity.Info;
-import com.bestpractice.api.infrastrucuture.repository.InfoRepository;
+import com.bestpractice.api.infrastrucuture.persistent.InfoPersistentRepository;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,7 +9,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Collections;
 
@@ -21,7 +20,7 @@ import static org.mockito.Mockito.when;
 public class InfoRepositoryTest {
 
     @Mock
-    private InfoRepository infoRepository;
+    private InfoPersistentRepository infoRepository;
 
     private final Long correctTestId = 1L;
 
@@ -49,8 +48,8 @@ public class InfoRepositoryTest {
         info.setTitle("test");
         info.setDescription("test");
 
-        when(this.infoRepository.findById(this.correctTestId)).thenReturn(Optional.of(info));
-        assertThat(this.infoRepository.findById(this.correctTestId).get().getTitle()).isEqualTo("test");
+        when(this.infoRepository.findById(this.correctTestId)).thenReturn(info);
+        assertThat(this.infoRepository.findById(this.correctTestId).getTitle()).isEqualTo("test");
     }
 
     @Test

@@ -4,7 +4,7 @@ import com.bestpractice.api.common.exception.BadRequest;
 import com.bestpractice.api.domain.model.InfoRequest;
 import com.bestpractice.api.domain.model.InfoResponse;
 import com.bestpractice.api.infrastrucuture.entity.Info;
-import com.bestpractice.api.infrastrucuture.repository.InfoRepository;
+import com.bestpractice.api.infrastrucuture.persistent.InfoPersistentRepository;
 import com.bestpractice.api.common.exception.InternalServerError;
 import java.util.ArrayList;
 import org.springframework.stereotype.Service;
@@ -14,9 +14,9 @@ import java.util.List;
 @Service
 public class InfoServiceImpl implements InfoService {
 
-    private final InfoRepository infoRepository;
+    private final InfoPersistentRepository infoRepository;
 
-    public InfoServiceImpl(InfoRepository infoRepository) {
+    public InfoServiceImpl(InfoPersistentRepository infoRepository) {
         this.infoRepository = infoRepository;
     }
 
@@ -40,7 +40,7 @@ public class InfoServiceImpl implements InfoService {
     public InfoResponse getInfo(Long id) {
         Info info;
         try {
-            info = this.infoRepository.findById(id).get();
+            info = this.infoRepository.findById(id);
         } catch (Exception ex) {
             throw new InternalServerError();
         }
@@ -51,7 +51,7 @@ public class InfoServiceImpl implements InfoService {
     public InfoResponse updateInfo(Long id, InfoRequest req) {
         Info info;
         try {
-            info = this.infoRepository.findById(id).get();
+            info = this.infoRepository.findById(id);
         } catch (Exception ex) {
             throw new BadRequest();
         }

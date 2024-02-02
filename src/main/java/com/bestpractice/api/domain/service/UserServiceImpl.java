@@ -7,7 +7,7 @@ import com.bestpractice.api.domain.model.AuthResponse;
 import com.bestpractice.api.domain.model.UserRequest;
 import com.bestpractice.api.domain.model.UserResponse;
 import com.bestpractice.api.infrastrucuture.entity.User;
-import com.bestpractice.api.infrastrucuture.repository.UserRepository;
+import com.bestpractice.api.infrastrucuture.persistent.UserPersistentRepository;
 import com.bestpractice.api.common.exception.InternalServerError;
 
 import org.springframework.cache.annotation.Cacheable;
@@ -17,12 +17,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserServiceImpl implements UserService {
 
-    private final UserRepository userRepository;
+    private final UserPersistentRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JsonWebTokenService jwtService;
 
     public UserServiceImpl(
-        UserRepository userRepository,
+        UserPersistentRepository userRepository,
         PasswordEncoder passwordEncoder,
         JsonWebTokenService jwtService) {
 
@@ -76,7 +76,7 @@ public class UserServiceImpl implements UserService {
 
         User user = request.convert(this.passwordEncoder.encode(request.getPassword()));
         try {
-            user = this.userRepository.save(user);
+            user = this.userRepository.insert(user);
         } catch (Exception ex) {
             throw new InternalServerError();
         }

@@ -2,7 +2,6 @@ package com.bestpractice.api.domain.service;
 
 import com.bestpractice.api.infrastrucuture.entity.User;
 import com.bestpractice.api.domain.model.Credential;
-import com.bestpractice.api.security.role.UserAuthority;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -50,8 +49,6 @@ public class AuthenticationService implements AuthenticationUserDetailsService<P
         }
 
         Collection<GrantedAuthority> authorities = new HashSet<GrantedAuthority>() ;
-        authorities.add(new UserAuthority());
-
         return new org.springframework.security.core.userdetails.User(userUuid,"", authorities);
     }
 }

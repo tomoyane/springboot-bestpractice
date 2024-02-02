@@ -1,57 +1,89 @@
 package com.bestpractice.api.infrastrucuture;
 
 import com.bestpractice.api.common.property.RedisProperty;
-import java.time.Duration;
+import com.bestpractice.api.infrastrucuture.persistent.InfoPersistentRepository;
+import com.bestpractice.api.infrastrucuture.persistent.UserPersistentRepository;
+import com.bestpractice.api.infrastrucuture.persistent.local.LocalInfoPersistentRepository;
+import com.bestpractice.api.infrastrucuture.persistent.local.LocalUserPersistentRepository;
+import com.bestpractice.api.infrastrucuture.persistent.rdbms.RdbmsUserPersistentRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import org.springframework.data.redis.cache.RedisCacheConfiguration;
-import org.springframework.data.redis.cache.RedisCacheManager;
-import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
-import org.springframework.data.redis.serializer.RedisSerializationContext;
-import org.springframework.data.redis.serializer.StringRedisSerializer;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 @Configuration
 @EnableCaching
 @Profile("!test")
 public class InfrastructureBean {
 
-    @Autowired
-    RedisProperty redisProperty;
+    @Configuration
+    @Profile("cache_local")
+    public static class LocalCacheRepository {
 
-    @Bean
-    public JedisConnectionFactory connectionFactory() {
-        JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory();
-        jedisConnectionFactory.setHostName(redisProperty.getHost());
-        jedisConnectionFactory.setPort(redisProperty.getPort());
-        jedisConnectionFactory.setUsePool(true);
-        return jedisConnectionFactory;
     }
 
-    @Bean
-    public RedisTemplate<String, Object> redisTemplate() {
-        RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
-        redisTemplate.setConnectionFactory(connectionFactory());
-        redisTemplate.setKeySerializer(new StringRedisSerializer());
-        redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());
-        redisTemplate.afterPropertiesSet();
-        return redisTemplate;
+    @Configuration
+    @Profile("cache_redis")
+    public static class RedisCacheRepository {
+        @Autowired
+        private RedisProperty redisProperty;
     }
 
-    @Bean
-    public RedisCacheManager redisCacheManager() {
-        return RedisCacheManager.builder(connectionFactory())
-            .cacheDefaults(redisCacheConfiguration())
-            .build();
+    @Configuration
+    @Profile("db_local")
+    public static class LocalDbRepository {
+        @Bean
+        public UserPersistentRepository userRepository() {
+            return new LocalUserPersistentRepository();
+        }
+        @Bean
+        public InfoPersistentRepository infoRepository() {
+            return new LocalInfoPersistentRepository();
+        }
     }
 
-    private RedisCacheConfiguration redisCacheConfiguration() {
-        return RedisCacheConfiguration.defaultCacheConfig()
-            .entryTtl(Duration.ofMinutes(10))
-            .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()))
-            .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer()));
-    }}
+    @Configuration
+    @Profile("db_rdbms")
+    public static class RdbmsDbRepository {
+        @Bean
+        public JdbcTemplate jdbcTemplate() {
+            return new JdbcTemplate();
+        }
+
+        @Bean
+        public UserPersistentRepository userRepository(JdbcTemplate jdbcTemplate) {
+            return new RdbmsUserPersistentRepository(jdbcTemplate);
+        }
+    }
+
+    @Configuration
+    @Profile("db_cassandra")
+    public static class CassandraDbRepository {
+        @Bean
+        public JdbcTemplate jdbcTemplate() {
+            return new JdbcTemplate();
+        }
+
+        @Bean
+        public UserPersistentRepository userRepository(JdbcTemplate jdbcTemplate) {
+            return new RdbmsUserPersistentRepository(jdbcTemplate);
+        }
+    }
+
+    @Configuration
+    @Profile("db_mongo")
+    public static class MongoDbRepository {
+        @Bean
+        public JdbcTemplate jdbcTemplate() {
+            return new JdbcTemplate();
+        }
+
+        @Bean
+        public UserPersistentRepository userRepository(JdbcTemplate jdbcTemplate) {
+            return new RdbmsUserPersistentRepository(jdbcTemplate);
+        }
+    }
+}

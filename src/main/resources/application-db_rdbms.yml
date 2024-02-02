@@ -1,0 +1,20 @@
+# Persistent database setting
+# RDBMS database
+
+spring:
+  jpa:
+    open-in-view: true
+  datasource:
+      url: jdbc:mysql://${MYSQL_DB_HOST}:3306/${MYSQL_DB_NAME}?useSSL=false&allowPublicKeyRetrieval=true
+      username: ${MYSQL_DB_USER}
+      password: ${MYSQL_DB_PASS}
+      driver-class-name: com.mysql.jdbc.Driver
+  redis:
+      host: ${REDIS_DB_HOST}
+      port: ${REDIS_DB_PORT}
+      password: ${REDIS_DB_PASS}
+  jackson:
+    property-naming-strategy: SNAKE_CASE
+  sql:
+    init:
+      encoding: UTF-8

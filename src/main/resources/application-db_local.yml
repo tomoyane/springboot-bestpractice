@@ -1,0 +1,9 @@
+# Persistent database setting
+# Local database so this is not use persistent oss
+
+spring:
+  jpa:
+    open-in-view: false
+  sql:
+    init:
+      mode: never

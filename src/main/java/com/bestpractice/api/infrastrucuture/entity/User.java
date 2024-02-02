@@ -15,7 +15,7 @@ public class User extends SharedAbstract implements Serializable {
     @Column(name = "id")
     @JsonIgnore
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private long id;
 
     @JsonIgnore
     @Column(nullable = false, name = "uuid")
@@ -31,11 +31,22 @@ public class User extends SharedAbstract implements Serializable {
     @Column(nullable = false, name = "password")
     private String password;
 
-    public Long getId() {
+    public User() {
+    }
+
+    public User(long id, String uuid, String username, String email, String password) {
+        this.id = id;
+        this.uuid = uuid;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+    }
+
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
