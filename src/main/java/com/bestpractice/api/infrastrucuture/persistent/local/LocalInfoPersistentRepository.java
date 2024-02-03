@@ -17,7 +17,7 @@ public class LocalInfoPersistentRepository implements InfoPersistentRepository {
   }
 
   @Override
-  public Info findById(Long id) {
+  public Info findById(String id) {
     try {
       var info = this.infos.stream().filter(u -> u.getId().equals(id)).findFirst();
       return info.get();
@@ -28,16 +28,15 @@ public class LocalInfoPersistentRepository implements InfoPersistentRepository {
 
   @Override
   public Info insert(Info info) {
-    info.setId((long) (this.infos.size() + 1));
     this.infos.add(info);
     return info;
   }
 
   @Override
-  public Info replace(long id, Info info) {
+  public Info replace(String id, Info info) {
     Integer removeIndex = null;
     for (int i = 0; i < this.infos.size(); i++) {
-      if (this.infos.get(i).getId() != id) {
+      if (this.infos.get(i).getId().equals(id)) {
         continue;
       }
       removeIndex = i;
@@ -52,7 +51,7 @@ public class LocalInfoPersistentRepository implements InfoPersistentRepository {
   }
 
   @Override
-  public boolean removeById(Long id) {
+  public boolean removeById(String id) {
     Integer removeIndex = null;
     for (int i = 0; i < this.infos.size(); i++) {
       if (!this.infos.get(i).getId().equals(id)) {

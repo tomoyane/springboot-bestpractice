@@ -3,8 +3,7 @@ DROP TABLE IF EXISTS users;
 
 -- users table
 CREATE TABLE users (
-  id int(11) NOT NULL AUTO_INCREMENT,
-  uuid varchar(128) NOT NULL,
+  id varchar(64) NOT NULL,
   username varchar(128) NOT NULL,
   email varchar(128) NOT NULL,
   password varchar(128) NOT NULL,
@@ -15,8 +14,7 @@ CREATE TABLE users (
 
 -- infos table
 CREATE TABLE infos (
-  id int(11) NOT NULL AUTO_INCREMENT,
-  uuid varchar(128) NOT NULL,
+  id varchar(64) NOT NULL,
   title varchar(128) NOT NULL,
   description varchar(128) NOT NULL,
   created_at datetime(6),

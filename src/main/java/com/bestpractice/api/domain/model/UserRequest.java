@@ -17,6 +17,7 @@ public class UserRequest {
   private String email;
 
   @NotNull
+  @JsonProperty("password")
   private String password;
 
   public String getUsername() {
@@ -45,7 +46,7 @@ public class UserRequest {
 
   public User convert(String encodePw) {
     User user = new User();
-    user.setUuid(UUID.randomUUID().toString());
+    user.setId(UUID.randomUUID().toString());
     user.setPassword(encodePw);
     user.setEmail(this.email);
     user.setUsername(this.username);

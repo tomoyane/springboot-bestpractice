@@ -1,6 +1,5 @@
 package com.bestpractice.api.app;
 
-import com.bestpractice.api.common.property.CredentialProperty;
 import com.bestpractice.api.domain.component.AuthComponent;
 import com.bestpractice.api.domain.component.RequestInfoComponent;
 import com.google.common.base.Predicates;
@@ -24,15 +23,13 @@ public class AppBean {
     @Configuration
     public static class WebMvcConfig implements WebMvcConfigurer {
       @Autowired
-      private CredentialProperty credentialProperty;
-      @Autowired
       private RequestInfoComponent requestInfo;
       @Autowired
       private AuthComponent authComponent;
 
       @Bean
       public InterceptorController interceptorController() {
-        return new InterceptorController(this.authComponent, this.credentialProperty, this.requestInfo);
+        return new InterceptorController(this.authComponent, this.requestInfo);
       }
 
       @Override

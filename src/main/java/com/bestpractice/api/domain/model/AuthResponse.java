@@ -5,6 +5,7 @@ import java.util.Date;
 import javax.validation.constraints.NotNull;
 
 public class AuthResponse {
+
   @NotNull
   @JsonProperty("token_type")
   private final String tokenType;
@@ -17,19 +18,13 @@ public class AuthResponse {
   @JsonProperty("refresh_token")
   private final String refreshToken;
 
-  @NotNull
-  @JsonProperty("user_id")
-  private final Long userId;
-
   @JsonProperty("expired_at")
   private final Date expiresAt;
 
-  public AuthResponse(String tokenType, String token, String refreshToken, Long userId,
-      Date expiresAt) {
+  public AuthResponse(String tokenType, String token, String refreshToken, Date expiresAt) {
     this.tokenType = tokenType;
     this.token = token;
     this.refreshToken = refreshToken;
-    this.userId = userId;
     this.expiresAt = expiresAt;
   }
 
@@ -43,10 +38,6 @@ public class AuthResponse {
 
   public String getRefreshToken() {
     return refreshToken;
-  }
-
-  public Long getUserId() {
-    return userId;
   }
 
   public Date getExpiresAt() {

@@ -28,4 +28,8 @@ public class Util {
         ObjectInputStream ois = new ObjectInputStream(bais);
         return (T) ois.readObject();
     }
+
+    public static String getSpringProfileActive() {
+        return System.getenv("SPRING_PROFILES_ACTIVE");
+    }
 }

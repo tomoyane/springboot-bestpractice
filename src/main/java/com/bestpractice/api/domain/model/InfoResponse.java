@@ -5,10 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class InfoResponse {
 
   @JsonProperty("id")
-  private final Long id;
-
-  @JsonProperty("uuid")
-  private final String uuid;
+  private final String id;
 
   @JsonProperty("title")
   private final String title;
@@ -16,14 +13,13 @@ public class InfoResponse {
   @JsonProperty("description")
   private final String description;
 
-  public InfoResponse(Long id, String uuid, String title, String description) {
+  public InfoResponse(String id, String title, String description) {
     this.id = id;
-    this.uuid = uuid;
     this.title = title;
     this.description = description;
   }
 
-  public Long getId() {
+  public String  getId() {
     return id;
   }
 

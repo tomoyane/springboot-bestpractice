@@ -5,14 +5,17 @@ import com.bestpractice.api.infrastrucuture.persistent.InfoPersistentRepository;
 import com.bestpractice.api.infrastrucuture.persistent.UserPersistentRepository;
 import com.bestpractice.api.infrastrucuture.persistent.local.LocalInfoPersistentRepository;
 import com.bestpractice.api.infrastrucuture.persistent.local.LocalUserPersistentRepository;
+import com.bestpractice.api.infrastrucuture.persistent.rdbms.RdbmsInfoPersistentRepository;
 import com.bestpractice.api.infrastrucuture.persistent.rdbms.RdbmsUserPersistentRepository;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 @Configuration
 @EnableCaching
@@ -48,9 +51,30 @@ public class InfrastructureBean {
     @Configuration
     @Profile("db_rdbms")
     public static class RdbmsDbRepository {
+        @Value("${spring.datasource.url}")
+        private String url;
+        @Value("${spring.datasource.username}")
+        private String username;
+        @Value("${spring.datasource.password}")
+        private String password;
+        @Value("${spring.datasource.driver-class-name}")
+        private String driverClassName;
+        @Bean
+        public DriverManagerDataSource dataSource() {
+            DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
+            driverManagerDataSource.setDriverClassName(driverClassName);
+            driverManagerDataSource.setUrl(url);
+            driverManagerDataSource.setUsername(username);
+            driverManagerDataSource.setPassword(password);
+            return driverManagerDataSource;
+        }
+        @Bean
+        public DataSourceTransactionManager transactionManager() {
+            return new DataSourceTransactionManager(dataSource());
+        }
         @Bean
         public JdbcTemplate jdbcTemplate() {
-            return new JdbcTemplate();
+            return new JdbcTemplate(dataSource());
         }
         @Bean
         public UserPersistentRepository userRepository(JdbcTemplate jdbcTemplate) {
@@ -58,7 +82,7 @@ public class InfrastructureBean {
         }
         @Bean
         public InfoPersistentRepository infoRepository() {
-            return new LocalInfoPersistentRepository();
+            return new RdbmsInfoPersistentRepository(jdbcTemplate());
         }
     }
 

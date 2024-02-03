@@ -6,8 +6,8 @@ import java.util.List;
 
 public interface InfoService {
   List<InfoResponse> getInfos();
-  InfoResponse getInfo(Long id);
-  InfoResponse updateInfo(Long id, InfoRequest req);
+  InfoResponse getInfo(String id);
+  InfoResponse updateInfo(String id, InfoRequest req);
   InfoResponse generateInfo(InfoRequest request);
-  void deleteInfo(Long id);
+  void deleteInfo(String id);
 }

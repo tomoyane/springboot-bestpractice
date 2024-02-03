@@ -12,6 +12,7 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.bestpractice.api.common.exception.InternalServerError;
 import com.bestpractice.api.common.exception.UnAuthorized;
 import com.bestpractice.api.common.property.CredentialProperty;
+import com.bestpractice.api.domain.model.Credential;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -47,7 +48,7 @@ public class AuthComponent {
   public static final String ClaimUserIdKey = "user_id";
   public static final String ClaimUserEmailKey = "user_email";
   public static final String ClaimRefreshKey = "refresh_token";
-  public String generateJwt(String userUuid, String email, boolean isRefresh) {
+  public Credential generateJwt(String userId, String email, boolean isRefresh) {
     Integer expiresHour = this.credentialProperty.convertToIntExpires();
 
     Map<String, Object> header = new HashMap<>();
@@ -59,19 +60,21 @@ public class AuthComponent {
         .withAudience("any")
         .withIssuedAt(new Date())
         .withHeader(header)
-        .withClaim(ClaimUserIdKey, userUuid)
+        .withClaim(ClaimUserIdKey, userId)
         .withClaim(ClaimUserEmailKey, email)
-        .withSubject(userUuid);
+        .withSubject(userId);
 
+    Date exp = null;
     if (expiresHour != null && !isRefresh) {
-      builder = builder.withExpiresAt(getExpiration(expiresHour));
+      exp = getExpiration(expiresHour);
+      builder = builder.withExpiresAt(exp);
     }
     if (isRefresh) {
       builder = builder.withClaim(ClaimRefreshKey, true);
     } else {
       builder = builder.withClaim(ClaimRefreshKey, false);
     }
-    return builder.sign(this.algorithm);
+    return new Credential(builder.sign(this.algorithm), "Bearer", exp, isRefresh);
   }
 
   private static Date getExpiration(int hour) {

@@ -1,24 +1,13 @@
 package com.bestpractice.api.infrastrucuture.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import javax.persistence.Column;
+import javax.validation.constraints.NotNull;
 
-@Entity
-@Table(name = "users")
 public class User extends SharedData implements Serializable {
 
-    @Id
     @Column(name = "id")
-    @JsonIgnore
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-
-    @JsonIgnore
-    @Column(nullable = false, name = "uuid")
-    private String uuid;
+    private String  id;
 
     @Column(nullable = false, name = "username")
     private String username;
@@ -33,28 +22,19 @@ public class User extends SharedData implements Serializable {
     public User() {
     }
 
-    public User(long id, String uuid, String username, String email, String password) {
+    public User(String id, String username, String email, String password) {
         this.id = id;
-        this.uuid = uuid;
         this.username = username;
         this.email = email;
         this.password = password;
     }
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
-    }
-
-    public String getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
     }
 
     public String getUsername() {

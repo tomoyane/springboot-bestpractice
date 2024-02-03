@@ -4,13 +4,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Email;
 
-public class AuthRequest {
-  @NotNull
+public class AuthByEmailRequest {
   @Email
+  @NotNull
   @JsonProperty("email")
   private String email;
 
   @NotNull
+  @JsonProperty("password")
   private String password;
 
   public String getEmail() {

@@ -1,5 +1,6 @@
 package com.bestpractice.api.infrastrucuture.persistent.rdbms;
 
+import com.bestpractice.api.common.exception.Conflict;
 import com.bestpractice.api.infrastrucuture.entity.User;
 import com.bestpractice.api.infrastrucuture.persistent.UserPersistentRepository;
 
@@ -20,26 +21,31 @@ public class RdbmsUserPersistentRepository implements UserPersistentRepository {
   }
 
   @Override
-  public User findByIdAndUuid(long id, String uuid) {
-    var sql = "SELECT * FROM users WHERE id = ? AND uuid = ?";
-    return jdbcTemplate.queryForObject(sql, new DataClassRowMapper<>(User.class), id, uuid);
+  public User findById(String id) {
+    var sql = "SELECT * FROM users WHERE id = ?";
+    return jdbcTemplate.queryForObject(sql, new DataClassRowMapper<>(User.class), id);
   }
 
   @Override
   public User insert(User user) {
-    String sql = "INSERT INTO users (uuid, username, email, password) VALUES (?, ?, ?, ?)";
-    jdbcTemplate.update(
-        sql,
-        user.getUuid(),
-        user.getUsername(),
-        user.getEmail(),
-        user.getPassword()
-    );
+    String sql = "INSERT INTO users (id, username, email, password) VALUES (?, ?, ?, ?)";
+
+    try {
+      jdbcTemplate.update(
+          sql,
+          user.getId(),
+          user.getUsername(),
+          user.getEmail(),
+          user.getPassword()
+      );
+    } catch (org.springframework.dao.DuplicateKeyException e) {
+      throw new Conflict(e);
+    }
     return user;
   }
 
   @Override
-  public User replace(long id, User user) {
+  public User replace(String id, User user) {
     String updateSql = "UPDATE users SET username = ?, email = ?, password = ? WHERE id = ?";
     jdbcTemplate.update(
         updateSql,
@@ -52,7 +58,7 @@ public class RdbmsUserPersistentRepository implements UserPersistentRepository {
   }
 
   @Override
-  public boolean removeById(long id) {
+  public boolean removeById(String id) {
     String deleteSql = "DELETE FROM users WHERE id = ?";
 
     try {

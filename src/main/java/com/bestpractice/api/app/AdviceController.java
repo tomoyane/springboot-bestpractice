@@ -61,7 +61,7 @@ public class AdviceController {
         ErrorResponse res = new ErrorResponse();
         res.setStatus(409);
         res.setError("Conflict");
-        res.setMessage("Already exist email");
+        res.setMessage("Already exist data");
         return res;
     }
 

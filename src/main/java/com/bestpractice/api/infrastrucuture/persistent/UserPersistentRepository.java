@@ -7,11 +7,11 @@ import org.springframework.context.annotation.Profile;
 public interface UserPersistentRepository {
     User findByEmail(String email);
 
-    User findByIdAndUuid(long id, String uuid);
+    User findById(String id);
 
     User insert(User user);
 
-    User replace(long id, User user);
+    User replace(String id, User user);
 
-    boolean removeById(long id);
+    boolean removeById(String id);
 }

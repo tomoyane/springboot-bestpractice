@@ -34,7 +34,7 @@ $ docker-compose up
 
 # Application
 $ cd scripts
-$ ./start_local_server.sh 
+$ ./start_server.sh 
 ```
 
 Working on docker container.

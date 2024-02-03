@@ -2,6 +2,7 @@ package com.bestpractice.api.domain.model;
 
 import com.bestpractice.api.infrastrucuture.entity.Info;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.UUID;
 import javax.validation.constraints.NotNull;
 
 public class InfoRequest  {
@@ -32,16 +33,20 @@ public class InfoRequest  {
 
     public Info convert() {
         Info info = new Info();
-        info.setTitle(this.title);
-        info.setDescription(this.description);
+        info.setId(UUID.randomUUID().toString());
+        setData(info);
         return info;
     }
 
-    public Info convert(Long id) {
+    public Info convert(String id) {
         Info info = new Info();
         info.setId(id);
+        setData(info);
+        return info;
+    }
+
+    private void setData(Info info) {
         info.setTitle(this.title);
         info.setDescription(this.description);
-        return info;
     }
 }

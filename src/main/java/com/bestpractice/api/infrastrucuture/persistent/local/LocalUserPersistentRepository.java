@@ -22,9 +22,9 @@ public class LocalUserPersistentRepository implements UserPersistentRepository {
   }
 
   @Override
-  public User findByIdAndUuid(long id, String uuid) {
+  public User findById(String id) {
     try {
-      var user = this.users.stream().filter(u -> u.getId() == id && u.getUuid().equals(uuid)).findFirst();
+      var user = this.users.stream().filter(u -> u.getId().equals(id)).findFirst();
       return user.get();
     } catch (NullPointerException | NoSuchElementException ignored) {
       return null;
@@ -33,16 +33,15 @@ public class LocalUserPersistentRepository implements UserPersistentRepository {
 
   @Override
   public User insert(User user) {
-    user.setId(this.users.size()+1);
     this.users.add(user);
     return user;
   }
 
   @Override
-  public User replace(long id, User user) {
+  public User replace(String id, User user) {
     Integer removeIndex = null;
     for (int i = 0; i < this.users.size(); i++) {
-      if (this.users.get(i).getId() != id) {
+      if (!this.users.get(i).getId().equals(id)) {
         continue;
       }
       removeIndex = i;
@@ -57,10 +56,10 @@ public class LocalUserPersistentRepository implements UserPersistentRepository {
   }
 
   @Override
-  public boolean removeById(long id) {
+  public boolean removeById(String id) {
     Integer removeIndex = null;
     for (int i = 0; i < this.users.size(); i++) {
-      if (this.users.get(i).getId() != id) {
+      if (!this.users.get(i).getId().equals(id)) {
         continue;
       }
       removeIndex = i;
