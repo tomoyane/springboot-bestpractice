@@ -4,27 +4,20 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class UserResponse {
   @JsonProperty("id")
-  private final Long id;
-  @JsonProperty("uid")
-  private final String uId;
+  private final String id;
   @JsonProperty("username")
   private final String username;
   @JsonProperty("email")
   private final String email;
 
-  public UserResponse(Long id, String uId, String username, String email) {
+  public UserResponse(String id, String username, String email) {
     this.id = id;
-    this.uId = uId;
     this.username = username;
     this.email = email;
   }
 
-  public Long getId() {
+  public String getId() {
     return id;
-  }
-
-  public String getuId() {
-    return uId;
   }
 
   public String getUsername() {

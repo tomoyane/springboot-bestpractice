@@ -1,0 +1,9 @@
+# Persistent database setting
+# Cassandra database
+
+cassandra:
+  hosts:
+    - 127.0.0.1:9042
+  keyspace: spring_boot
+  user: root
+  password: root_pw

@@ -6,7 +6,7 @@ plugins {
 
 def pkgName = 'com.bestpractice.api'
 def pkgVersion = "1.1.0"
-def javaVersion = project.hasProperty('javaVersion') ? project.getProperty('javaVersion') : '17'
+def javaVersion = !project.hasProperty('javaVersion') ? '17' : project.getProperty('javaVersion')
 def artifactId = 'spring-boot-bestpractice'
 
 sourceCompatibility = javaVersion
@@ -15,9 +15,13 @@ repositories {
     mavenCentral()
 }
 
+configurations.all {
+    exclude group: 'org.slf4j', module: 'slf4j-nop'
+}
+
 dependencies {
     // Spring
-    implementation "org.springframework.boot:spring-boot-starter-web"
+    implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation "org.springframework.boot:spring-boot-starter-data-jpa"
     implementation "org.springframework.boot:spring-boot-configuration-processor"
     implementation "org.springframework.boot:spring-boot-starter-security"
@@ -26,12 +30,15 @@ dependencies {
     implementation "io.springfox:springfox-swagger-ui:2.8.0"
 
     // Token
-    implementation "io.jsonwebtoken:jjwt:0.9.0"
+    implementation 'com.auth0:java-jwt:4.4.0'
 
     // Database
     implementation "mysql:mysql-connector-java"
     implementation "org.postgresql:postgresql"
     implementation 'redis.clients:jedis:3.7.0'
+    implementation 'org.mongodb:mongo-java-driver:3.12.14'
+    implementation 'com.datastax.oss:java-driver-core:4.17.0'
+    implementation 'com.datastax.oss:java-driver-query-builder:4.17.0'
 
     // Third party
     implementation 'javax.validation:validation-api:2.0.1.Final'

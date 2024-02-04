@@ -1,25 +1,13 @@
 package com.bestpractice.api.infrastrucuture.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.validator.constraints.Email;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import javax.persistence.Column;
+import javax.validation.constraints.NotNull;
 
-@Entity
-@Table(name = "users")
-public class User extends SharedAbstract implements Serializable {
+public class User extends SharedData implements Serializable {
 
-    @Id
     @Column(name = "id")
-    @JsonIgnore
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-
-    @JsonIgnore
-    @Column(nullable = false, name = "uuid")
-    private String uuid;
+    private String  id;
 
     @Column(nullable = false, name = "username")
     private String username;
@@ -31,20 +19,22 @@ public class User extends SharedAbstract implements Serializable {
     @Column(nullable = false, name = "password")
     private String password;
 
-    public Long getId() {
+    public User() {
+    }
+
+    public User(String id, String username, String email, String password) {
+        this.id = id;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
-    }
-
-    public String getUuid() {
-        return uuid;
-    }
-
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
     }
 
     public String getUsername() {

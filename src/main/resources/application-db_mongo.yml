@@ -1,0 +1,10 @@
+# Persistent database setting
+# Mongo database
+
+mongo:
+  host: localhost
+  port: 27017
+  auth-database: admin
+  platform-database: spring_boot
+  user: root
+  password: root_pw

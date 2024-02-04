@@ -2,7 +2,6 @@ package com.bestpractice.api.domain.model;
 
 import com.bestpractice.api.infrastrucuture.entity.User;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import java.util.UUID;
 import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Email;
 
@@ -17,6 +16,7 @@ public class UserRequest {
   private String email;
 
   @NotNull
+  @JsonProperty("password")
   private String password;
 
   public String getUsername() {
@@ -43,9 +43,9 @@ public class UserRequest {
     this.password = password;
   }
 
-  public User convert(String encodePw) {
+  public User convert(String id, String encodePw) {
     User user = new User();
-    user.setUuid(UUID.randomUUID().toString());
+    user.setId(id);
     user.setPassword(encodePw);
     user.setEmail(this.email);
     user.setUsername(this.username);

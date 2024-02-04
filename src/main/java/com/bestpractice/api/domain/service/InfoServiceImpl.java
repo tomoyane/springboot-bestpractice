@@ -1,11 +1,12 @@
 package com.bestpractice.api.domain.service;
 
 import com.bestpractice.api.common.exception.BadRequest;
+import com.bestpractice.api.common.exception.Conflict;
+import com.bestpractice.api.common.exception.InternalServerError;
 import com.bestpractice.api.domain.model.InfoRequest;
 import com.bestpractice.api.domain.model.InfoResponse;
 import com.bestpractice.api.infrastrucuture.entity.Info;
-import com.bestpractice.api.infrastrucuture.repository.InfoRepository;
-import com.bestpractice.api.common.exception.InternalServerError;
+import com.bestpractice.api.infrastrucuture.persistent.InfoPersistentRepository;
 import java.util.ArrayList;
 import org.springframework.stereotype.Service;
 
@@ -14,19 +15,19 @@ import java.util.List;
 @Service
 public class InfoServiceImpl implements InfoService {
 
-    private final InfoRepository infoRepository;
+    private final InfoPersistentRepository infoRepository;
 
-    public InfoServiceImpl(InfoRepository infoRepository) {
+    public InfoServiceImpl(InfoPersistentRepository infoRepository) {
         this.infoRepository = infoRepository;
     }
 
     @Override
     public List<InfoResponse> getInfos() {
-        List<Info> infoEntities = new ArrayList<>();
+        List<Info> infoEntities;
         try {
             infoEntities = this.infoRepository.findAll();
         } catch (Exception ex) {
-            throw new InternalServerError();
+            throw new InternalServerError(ex);
         }
 
         List<InfoResponse> res = new ArrayList<>();
@@ -37,53 +38,54 @@ public class InfoServiceImpl implements InfoService {
     }
 
     @Override
-    public InfoResponse getInfo(Long id) {
+    public InfoResponse getInfo(String id) {
         Info info;
         try {
-            info = this.infoRepository.findById(id).get();
+            info = this.infoRepository.findById(id);
         } catch (Exception ex) {
-            throw new InternalServerError();
+            throw new InternalServerError(ex);
         }
         return new InfoResponse(info.getId(), info.getTitle(), info.getDescription());
     }
 
     @Override
-    public InfoResponse updateInfo(Long id, InfoRequest req) {
+    public InfoResponse updateInfo(String id, InfoRequest req) {
         Info info;
         try {
-            info = this.infoRepository.findById(id).get();
+            info = this.infoRepository.findById(id);
         } catch (Exception ex) {
             throw new BadRequest();
         }
 
         info = req.convert(info.getId());
         try {
-            info = this.infoRepository.save(info);
+            info = this.infoRepository.insert(info);
         } catch (Exception ex) {
-            throw new InternalServerError();
+            throw new InternalServerError(ex);
         }
 
-        return new InfoResponse(info.getId(), info.getTitle(), info.getDescription());
+        return new InfoResponse(info.getId(),info.getTitle(), info.getDescription());
     }
 
     @Override
     public InfoResponse generateInfo(InfoRequest request) {
         Info info;
         try {
-            info = this.infoRepository.save(request.convert());
+            info = this.infoRepository.insert(request.convert(this.infoRepository.newId()));
+        } catch (Conflict ex) {
+            throw new Conflict(ex);
         } catch (Exception ex) {
-            throw new InternalServerError();
+            throw new InternalServerError(ex);
         }
-
         return new InfoResponse(info.getId(), info.getTitle(), info.getDescription());
     }
 
     @Override
-    public void deleteInfo(Long id) {
+    public void deleteInfo(String id) {
         try {
             this.infoRepository.removeById(id);
         } catch (Exception ex) {
-            throw new InternalServerError();
+            throw new InternalServerError(ex);
         }
     }
 }

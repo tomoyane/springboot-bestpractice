@@ -4,7 +4,7 @@ import com.bestpractice.api.infrastrucuture.entity.Info;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.validation.constraints.NotNull;
 
-public class InfoRequest  {
+public class InfoRequest {
 
     @NotNull
     @JsonProperty("title")
@@ -30,14 +30,7 @@ public class InfoRequest  {
         this.description = description;
     }
 
-    public Info convert() {
-        Info info = new Info();
-        info.setTitle(this.title);
-        info.setDescription(this.description);
-        return info;
-    }
-
-    public Info convert(Long id) {
+    public Info convert(String id) {
         Info info = new Info();
         info.setId(id);
         info.setTitle(this.title);
