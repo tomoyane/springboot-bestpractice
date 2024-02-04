@@ -7,9 +7,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.UUID;
 
 public class LocalUserPersistentRepository implements UserPersistentRepository {
   private final List<User> users = Collections.synchronizedList(new ArrayList<>());
+
+  @Override
+  public String newId() {
+    return UUID.randomUUID().toString();
+  }
 
   @Override
   public User findByEmail(String email) {

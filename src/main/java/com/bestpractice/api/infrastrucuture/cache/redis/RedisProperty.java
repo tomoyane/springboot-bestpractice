@@ -1,10 +1,10 @@
-package com.bestpractice.api.common.property;
+package com.bestpractice.api.infrastrucuture.cache.redis;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 @Component
-@ConfigurationProperties(prefix = "spring.redis")
+@Profile("cache_redis")
 public class RedisProperty {
     private String host;
     private int port;

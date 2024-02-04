@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
+import java.util.UUID;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.DataClassRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -20,6 +21,11 @@ public class RdbmsInfoPersistentRepository implements InfoPersistentRepository {
 
   public RdbmsInfoPersistentRepository(JdbcTemplate jdbcTemplate) {
     this.jdbcTemplate = jdbcTemplate;
+  }
+
+  @Override
+  public String newId() {
+    return UUID.randomUUID().toString();
   }
 
   @Override

@@ -4,3 +4,4 @@ out/
 build/
 credentials.yml
 .java-version
+docker/Cassandra/*

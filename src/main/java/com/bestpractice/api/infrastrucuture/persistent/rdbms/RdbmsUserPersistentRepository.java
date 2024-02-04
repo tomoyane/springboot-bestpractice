@@ -4,6 +4,7 @@ import com.bestpractice.api.common.exception.Conflict;
 import com.bestpractice.api.infrastrucuture.entity.User;
 import com.bestpractice.api.infrastrucuture.persistent.UserPersistentRepository;
 
+import java.util.UUID;
 import org.springframework.jdbc.core.DataClassRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -12,6 +13,11 @@ public class RdbmsUserPersistentRepository implements UserPersistentRepository {
 
   public RdbmsUserPersistentRepository(JdbcTemplate jdbcTemplate) {
     this.jdbcTemplate = jdbcTemplate;
+  }
+
+  @Override
+  public String newId() {
+    return UUID.randomUUID().toString();
   }
 
   @Override

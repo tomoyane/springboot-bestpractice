@@ -13,10 +13,74 @@ services:
           MYSQL_USER: user
           MYSQL_PASSWORD: password
         volumes:
-          - ../db/migrations:/docker-entrypoint-initdb.d
+          - ../db/mysql/migrations:/docker-entrypoint-initdb.d
 
     redis_db:
         image: redis:6.2
         container_name: redis_container
         ports:
           - '6379:6379'
+
+    mongo_db:
+      image: mongo:6.0
+      container_name: mongo_container
+      restart: always
+      environment:
+        MONGO_INITDB_ROOT_USERNAME: root
+        MONGO_INITDB_ROOT_PASSWORD: root_pw
+      ports:
+        - "27017:27017"
+      volumes:
+        - ../db/mongo/schema.js:/docker-entrypoint-initdb.d/schema.js:ro
+
+    cassandra_01:
+      container_name: cassandra01
+      image: cassandra
+      ports:
+        - 9042:9042
+      volumes:
+        - ./Cassandra/data01:/var/lib/cassandra
+      environment:
+        CASSANDRA_SEEDS: cassandra_01
+        CASSANDRA_CLUSTER_NAME: "TestCluster"
+        CASSANDRA_ENDPOINT_SNITCH: "GossipingPropertyFileSnitch"
+        CASSANDRA_DC: dc01
+        CASSANDRA_RACK: rack01
+        CASSANDRA_LISTEN_ADDRESS: cassandra_01
+      restart: always
+
+    cassandra_02:
+      container_name: cassandra02
+      image: cassandra
+      ports:
+        - 9043:9042
+      volumes:
+        - ./Cassandra/data02:/var/lib/cassandra
+      environment:
+        CASSANDRA_SEEDS: cassandra_01
+        CASSANDRA_ENDPOINT_SNITCH: "GossipingPropertyFileSnitch"
+        CASSANDRA_CLUSTER_NAME: "TestCluster"
+        CASSANDRA_DC: dc01
+        CASSANDRA_RACK: rack01
+        CASSANDRA_LISTEN_ADDRESS: cassandra_02
+      depends_on:
+        - cassandra_01
+      restart: always
+
+    cassandra_03:
+        container_name: cassandra03
+        image: cassandra
+        ports:
+          - 9044:9042
+        volumes:
+          - ./Cassandra/data03:/var/lib/cassandra
+        environment:
+          CASSANDRA_SEEDS: cassandra_01
+          CASSANDRA_CLUSTER_NAME: "TestCluster"
+          CASSANDRA_ENDPOINT_SNITCH: "GossipingPropertyFileSnitch"
+          CASSANDRA_DC: dc01
+          CASSANDRA_RACK: rack01
+          CASSANDRA_LISTEN_ADDRESS: cassandra_03
+        depends_on:
+          - cassandra_01
+        restart: always

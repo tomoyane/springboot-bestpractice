@@ -7,6 +7,11 @@ import java.util.List;
 public class CassandraInfoPersistentRepository implements InfoPersistentRepository {
 
   @Override
+  public String newId() {
+    return null;
+  }
+
+  @Override
   public List<Info> findAll() {
     return null;
   }

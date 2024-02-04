@@ -22,14 +22,21 @@ while [ "$#" -gt 0 ]; do
 done
 
 echo "SPRING_PROFILES_ACTIVE: $SPRING_PROFILE"
-
 export SPRING_PROFILES_ACTIVE=$SPRING_PROFILE
-export MYSQL_DB_HOST=localhost
-export MYSQL_DB_NAME=test
-export MYSQL_DB_USER=user
-export MYSQL_DB_PASS=password
-export REDIS_DB_HOST=localhost
-export REDIS_DB_PORT=6379
-export REDIS_DB_PASS=root
+
+if echo "$SPRING_PROFILE" | grep -q "db_rdbms"; then
+  echo "Using RDBMS"
+  export MYSQL_DB_HOST=localhost
+  export MYSQL_DB_NAME=test
+  export MYSQL_DB_USER=user
+  export MYSQL_DB_PASS=password
+  export REDIS_DB_HOST=localhost
+  export REDIS_DB_PORT=6379
+  export REDIS_DB_PASS=root
+fi
+
+if echo "$SPRING_PROFILE" | grep -q "db_mongo"; then
+  echo "Using Mongo"
+fi
 
 ./gradlew bootRun

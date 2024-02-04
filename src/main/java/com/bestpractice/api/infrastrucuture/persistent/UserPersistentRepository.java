@@ -5,6 +5,8 @@ import org.springframework.context.annotation.Profile;
 
 @Profile("!test")
 public interface UserPersistentRepository {
+    String newId();
+
     User findByEmail(String email);
 
     User findById(String id);

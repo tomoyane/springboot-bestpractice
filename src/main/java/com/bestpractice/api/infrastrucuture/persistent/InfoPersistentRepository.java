@@ -6,6 +6,8 @@ import org.springframework.context.annotation.Profile;
 
 @Profile("!test")
 public interface InfoPersistentRepository {
+  String newId();
+
   List<Info> findAll();
 
   Info findById(String id);

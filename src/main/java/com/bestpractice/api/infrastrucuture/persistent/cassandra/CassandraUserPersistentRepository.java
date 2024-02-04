@@ -6,6 +6,11 @@ import com.bestpractice.api.infrastrucuture.persistent.UserPersistentRepository;
 public class CassandraUserPersistentRepository implements UserPersistentRepository {
 
   @Override
+  public String newId() {
+    return null;
+  }
+
+  @Override
   public User findByEmail(String email) {
     return null;
   }

@@ -71,7 +71,7 @@ public class InfoServiceImpl implements InfoService {
     public InfoResponse generateInfo(InfoRequest request) {
         Info info;
         try {
-            info = this.infoRepository.insert(request.convert());
+            info = this.infoRepository.insert(request.convert(this.infoRepository.newId()));
         } catch (Conflict ex) {
             throw new Conflict(ex);
         } catch (Exception ex) {

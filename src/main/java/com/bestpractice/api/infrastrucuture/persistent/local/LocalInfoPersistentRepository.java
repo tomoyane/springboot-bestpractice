@@ -6,10 +6,16 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.UUID;
 
 public class LocalInfoPersistentRepository implements InfoPersistentRepository {
 
   private final List<Info> infos = Collections.synchronizedList(new ArrayList<>());
+
+  @Override
+  public String newId() {
+    return UUID.randomUUID().toString();
+  }
 
   @Override
   public List<Info> findAll() {

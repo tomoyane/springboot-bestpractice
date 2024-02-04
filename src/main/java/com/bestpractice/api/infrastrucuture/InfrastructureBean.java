@@ -1,12 +1,27 @@
 package com.bestpractice.api.infrastrucuture;
 
-import com.bestpractice.api.common.property.RedisProperty;
+import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
+import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
+
+import com.bestpractice.api.infrastrucuture.cache.redis.RedisProperty;
 import com.bestpractice.api.infrastrucuture.persistent.InfoPersistentRepository;
 import com.bestpractice.api.infrastrucuture.persistent.UserPersistentRepository;
 import com.bestpractice.api.infrastrucuture.persistent.local.LocalInfoPersistentRepository;
 import com.bestpractice.api.infrastrucuture.persistent.local.LocalUserPersistentRepository;
+import com.bestpractice.api.infrastrucuture.persistent.mongo.MongoInfoPersistentRepository;
+import com.bestpractice.api.infrastrucuture.persistent.mongo.MongoUserPersistentRepository;
+import com.bestpractice.api.infrastrucuture.persistent.mongo.property.MongoProperty;
 import com.bestpractice.api.infrastrucuture.persistent.rdbms.RdbmsInfoPersistentRepository;
 import com.bestpractice.api.infrastrucuture.persistent.rdbms.RdbmsUserPersistentRepository;
+import com.mongodb.MongoClientSettings;
+import com.mongodb.MongoCredential;
+import com.mongodb.ServerAddress;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoDatabase;
+import java.util.List;
+import org.bson.codecs.configuration.CodecRegistry;
+import org.bson.codecs.pojo.PojoCodecProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.EnableCaching;
@@ -103,14 +118,40 @@ public class InfrastructureBean {
     @Configuration
     @Profile("db_mongo")
     public static class MongoDbRepository {
-        @Bean
-        public JdbcTemplate jdbcTemplate() {
-            return new JdbcTemplate();
+        private final MongoProperty mongoProperty;
+
+        public MongoDbRepository(MongoProperty mongoProperty) {
+            this.mongoProperty = mongoProperty;
         }
 
         @Bean
-        public UserPersistentRepository userRepository(JdbcTemplate jdbcTemplate) {
-            return new RdbmsUserPersistentRepository(jdbcTemplate);
+        public MongoClient mongoClient() {
+            MongoCredential credential = MongoCredential.createCredential(
+                mongoProperty.getUser(),
+                mongoProperty.getAuthDatabase(),
+                mongoProperty.getPassword().toCharArray());
+
+            CodecRegistry pojoCodecRegistry = fromRegistries(MongoClientSettings.getDefaultCodecRegistry(),
+                fromProviders(PojoCodecProvider.builder().automatic(true).build()));
+
+            ServerAddress serverAddress = new ServerAddress(mongoProperty.getHost(), mongoProperty.getPort());
+            return MongoClients.create(MongoClientSettings.builder()
+                .codecRegistry(pojoCodecRegistry)
+                .applyToClusterSettings(builder -> builder.hosts(List.of(serverAddress)))
+                .credential(credential)
+                .build());
+        }
+        @Bean
+        public MongoDatabase mongoDatabase() {
+            return mongoClient().getDatabase(mongoProperty.getPlatformDatabase());
+        }
+        @Bean
+        public UserPersistentRepository userRepository() {
+            return new MongoUserPersistentRepository(mongoClient(), mongoDatabase());
+        }
+        @Bean
+        public InfoPersistentRepository infoRepository() {
+            return new MongoInfoPersistentRepository(mongoClient(), mongoDatabase());
         }
     }
 }

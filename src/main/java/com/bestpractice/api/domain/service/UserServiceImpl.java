@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserService {
   @Override
   public UserResponse generateUser(UserRequest request) {
     String encPw = this.encryptionComponent.encodePassword(request.getPassword());
-    User user = request.convert(encPw);
+    User user = request.convert(this.userRepository.newId(), encPw);
     try {
       user = this.userRepository.insert(user);
     } catch (Conflict ex) {
