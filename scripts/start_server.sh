@@ -39,4 +39,8 @@ if echo "$SPRING_PROFILE" | grep -q "db_mongo"; then
   echo "Using Mongo"
 fi
 
+if echo "$SPRING_PROFILE" | grep -q "db_cassandra"; then
+  echo "Using Cassandra"
+fi
+
 ./gradlew bootRun

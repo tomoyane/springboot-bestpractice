@@ -4,179 +4,180 @@
 
 About Spring Boot architecture.
 
-## Environment variable
+This repository support multiple database by SPRING_PROFILES_ACTIVE
+* RDBMS
+* MongoDB
+* Cassandra
+* Redis
 
-|Name|Description|
-|---|---|
-|SPRING_PROFILES_ACTIVE|Spring runtime environment|
-|MYSQL_DB_HOST|Database host|
-|MYSQL_DB_NAME|Database name|
-|MYSQL_DB_USER|Database username|
-|MYSQL_DB_PASS|Database password|
-|REDIS_DB_HOST|Redis host|
-|REDIS_DB_PORT|Redis port|
-|REDIS_DB_PASS|Redis password|
+## Requirements
+ * Docker engine
+ * Docker Compose
+ * OpenJDK 17
+ * Spring Boot 2
 
-### Spring Active Profiles (Local)
+### Docker database
+MySQL8
+* **Standalone**
 
-Local development property file is application-local.yml.
-
-```bash
-$ export SPRING_PROFILES_ACTIVE="local"
-```
-
-You can check start server for local.
-
-```bash
-# Data store
-$ cd docker
-$ docker-compose up
-
-# Application
-$ cd scripts
-$ ./start_server.sh 
-```
-
-Working on docker container.
- * Docker Image
-   * MySQL
-   * Redis
-   * OpenJDK 17
+MongoDB
+* **Standalone**
 
 Cassandra cluster.
- * CentOS7 virtual machine 
- * 3 nodes
-
-#### MySQL (8)
-
-Sample Class
- * UserRepository.java
- * InfoRepository.java
-   
-#### Redis 
-Sample Class
- * UserService
-
-### Spring Active Profiles (Develop)
-Develop development property file is application-dev.yml.
-
-```bash
-$ export SPRING_PROFILES_ACTIVE="dev"
-```
-
-## Build
-Git clone.
-```bash
-$ git clone https://github.com/tomoyane/springboot-bestpractice.git
-```
-
-Run test.
-```bash
-./gradlew test
-```
-
-Rub build.
-```bash
-./gradlew build 
-```
-
-### Using docker container
-Docker image build
- * Build SpringBoot best practice application.
- * Use docker for local development.
-   * MySQL
-   * Redis
-   * OpenJDK 
-
-```bash
-$ docker-compose build
-```
-
-Run container
-```bash
-$ docker-compose up -d
-```
-
-## Authentication and Authorization
-Spring security.
-
-JWT.
+* **3 Nodes**
 
 ## Architecture
+The "app" package holds controllers for API endpoints and provides interception. The "app" package can depend on the "domain" package.
+
+The "domain" package provides business logic and holds Spring Component Beans or Service Beans. It cannot depend on the "app" package but relies on the "infrastructure" package.
+
+The "infrastructure" package provides data storage by holding Spring Repository Beans. It is independent and cannot depend on the "app" and "domain" packages.
+
+The "common" package offers generic functions.
+
+Initialization processes during server startup depend on "SPRING_PROFILES_ACTIVE" and assume the specified data store's Bean as a prerequisite for the initial startup.
+
+
+### Directory structure
+
 ```bash
-spring-boot-bestpracite
-├── LICENSE
-├── README.md
-├── build
-│   ├── bootRunMainClassName
-│   ├── classes
-│   │   └── java
-│   │       └── main
-│   │           └── com
-│   │               └── bestpractice
-│   │                   └── api
-│   │                       ├── Application.class
-│   │                       ├── app
-│   │                       │   ├── Advice.class
-│   │                       │   ├── AppBean$SwaggerConfig.class
-│   │                       │   ├── AppBean.class
-│   │                       │   ├── v1
-│   │                       │   │   ├── AuthenticationController.class
-│   │                       │   │   ├── HelloController.class
-│   │                       │   │   └── RdbmsController.class
-│   │                       │   └── v2
-│   │                       │       └── AuthorizationController.class
-│   │                       ├── common
-│   │                       │   ├── exception
-│   │                       │   │   ├── BadRequest.class
-│   │                       │   │   ├── Conflict.class
-│   │                       │   │   ├── Forbidden.class
-│   │                       │   │   ├── InternalServerError.class
-│   │                       │   │   ├── NotFound.class
-│   │                       │   │   ├── RequestTimeout.class
-│   │                       │   │   ├── ServiceUnavailable.class
-│   │                       │   │   └── UnAuthorized.class
-│   │                       │   ├── property
-│   │                       │   │   ├── CredentialProperty.class
-│   │                       │   │   └── RedisProperty.class
-│   │                       │   └── util
-│   │                       │       └── Util.class
-│   │                       ├── domain
-│   │                       │   ├── DomainBean.class
-│   │                       │   ├── model
-│   │                       │   │   ├── AuthRequest.class
-│   │                       │   │   ├── AuthResponse.class
-│   │                       │   │   ├── Credential.class
-│   │                       │   │   ├── Exception.class
-│   │                       │   │   ├── InfoRequest.class
-│   │                       │   │   ├── InfoResponse.class
-│   │                       │   │   ├── UserRequest.class
-│   │                       │   │   └── UserResponse.class
-│   │                       │   └── service
-│   │                       │       ├── AuthenticationService.class
-│   │                       │       ├── InfoService.class
-│   │                       │       ├── InfoServiceImpl.class
-│   │                       │       ├── JsonWebTokenService.class
-│   │                       │       ├── UserService.class
-│   │                       │       └── UserServiceImpl.class
-│   │                       ├── infrastrucuture
-│   │                       │   ├── InfrastructureBean.class
-│   │                       │   ├── entity
-│   │                       │   │   ├── Info.class
-│   │                       │   │   ├── SharedAbstract.class
-│   │                       │   │   ├── SignatureKey.class
-│   │                       │   │   └── User.class
-│   │                       │   └── repository
-│   │                       │       ├── InfoRepository.class
-│   │                       │       └── UserRepository.class
-│   │                       └── security
-│   │                           ├── SecurityBean.class
-│   │                           ├── filter
-│   │                           │   ├── AuthEntryPoint.class
-│   │                           │   └── PreAuthenticatedProcessingFilter.class
-│   │                           └── role
-│   │                               ├── AdminAuthority.class
-│   │                               └── UserAuthority.class```
+java
+    │   │   └── com
+    │   │       └── bestpractice
+    │   │           └── api
+    │   │               ├── Application.java
+    │   │               ├── app
+    │   │               │   ├── AdviceController.java
+    │   │               │   ├── AppBean.java
+    │   │               │   ├── InterceptorController.java
+    │   │               │   ├── v1
+    │   │               │   │   ├── AuthController.java
+    │   │               │   │   ├── HelloController.java
+    │   │               │   │   ├── RdbmsController.java
+    │   │               │   │   └── UserController.java
+    │   │               │   └── v2
+    │   │               │       └── AuthorizationController.java
+    │   │               ├── common
+    │   │               │   ├── exception
+    │   │               │   │   ├── BadRequest.java
+    │   │               │   │   ├── Conflict.java
+    │   │               │   │   ├── Forbidden.java
+    │   │               │   │   ├── InternalServerError.java
+    │   │               │   │   ├── NotFound.java
+    │   │               │   │   ├── RequestTimeout.java
+    │   │               │   │   ├── ServiceUnavailable.java
+    │   │               │   │   └── UnAuthorized.java
+    │   │               │   ├── property
+    │   │               │   │   └── CredentialProperty.java
+    │   │               │   └── util
+    │   │               │       └── Util.java
+    │   │               ├── domain
+    │   │               │   ├── DomainBean.java
+    │   │               │   ├── component
+    │   │               │   │   ├── AuthComponent.java
+    │   │               │   │   ├── BCryptPasswordEncryptionComponent.java
+    │   │               │   │   └── RequestInfoComponent.java
+    │   │               │   ├── model
+    │   │               │   │   ├── AuthByEmailRequest.java
+    │   │               │   │   ├── AuthByRefreshTokenRequest.java
+    │   │               │   │   ├── AuthResponse.java
+    │   │               │   │   ├── Credential.java
+    │   │               │   │   ├── ErrorResponse.java
+    │   │               │   │   ├── InfoRequest.java
+    │   │               │   │   ├── InfoResponse.java
+    │   │               │   │   ├── UserRequest.java
+    │   │               │   │   └── UserResponse.java
+    │   │               │   └── service
+    │   │               │       ├── AuthService.java
+    │   │               │       ├── AuthServiceImpl.java
+    │   │               │       ├── InfoService.java
+    │   │               │       ├── InfoServiceImpl.java
+    │   │               │       ├── UserService.java
+    │   │               │       └── UserServiceImpl.java
+    │   │               └── infrastrucuture
+    │   │                   ├── InfrastructureBean.java
+    │   │                   ├── cache
+    │   │                   │   ├── CacheRepository.java
+    │   │                   │   ├── local
+    │   │                   │   │   └── LocalCacheRepository.java
+    │   │                   │   └── redis
+    │   │                   │       ├── RedisCacheRepository.java
+    │   │                   │       └── RedisProperty.java
+    │   │                   ├── entity
+    │   │                   │   ├── Info.java
+    │   │                   │   ├── SharedData.java
+    │   │                   │   └── User.java
+    │   │                   └── persistent
+    │   │                       ├── InfoPersistentRepository.java
+    │   │                       ├── UserPersistentRepository.java
+    │   │                       ├── cassandra
+    │   │                       │   ├── CassandraInfoPersistentRepository.java
+    │   │                       │   ├── CassandraUserPersistentRepository.java
+    │   │                       │   └── property
+    │   │                       │       └── CassandraProperty.java
+    │   │                       ├── local
+    │   │                       │   ├── LocalInfoPersistentRepository.java
+    │   │                       │   └── LocalUserPersistentRepository.java
+    │   │                       ├── mongo
+    │   │                       │   ├── MongoInfoPersistentRepository.java
+    │   │                       │   ├── MongoUserPersistentRepository.java
+    │   │                       │   ├── entity
+    │   │                       │   │   ├── MongoInfoEntity.java
+    │   │                       │   │   └── MongoUserEntity.java
+    │   │                       │   └── property
+    │   │                       │       └── MongoProperty.java
+    │   │                       └── rdbms
+    │   │                           ├── RdbmsInfoPersistentRepository.java
+    │   │                           └── RdbmsUserPersistentRepository.java
+```
+
+### Interceptor JWT verification
+
+* app/InterceptorController.java
+
+### MySQL Repository injection
+
+* infrastructure/persistent/rdbms/RdbmsUserPersistentRepository.java
+* infrastructure/persistent/rdbms/RdbmsInfoPersistentRepository.java
+
+### MongoDB Repository injection
+
+* infrastructure/persistent/mongo/RdbmsUserPersistentRepository.java
+* infrastructure/persistent/mongo/RdbmsInfoPersistentRepository.java
+
+### Cassandra Repository injection
+
+* infrastructure/persistent/cassandra/RdbmsUserPersistentRepository.java
+* infrastructure/persistent/cassandra/RdbmsInfoPersistentRepository.java
+
+### Redis Repository injection
+
+* infrastructure/cache/redis/RedisCacheRepository.java
+
+## Getting Started
+
+Start database process
+```bash
+# RDBMS
+docker-compose run -p 3306:3306 mysql_db
+
+# Mongo
+docker-compose run -p 27017:27017 mongo_db
+
+# Cassandra
+docker-compose up cassandra_01 cassandra_02 cassandra_03
+```
+
+Start api server via script
+```bash
+# RDBMS
+./scripts/start_server.sh --spring_profile=local,db_rdbms
+
+# Mongo
+./scripts/start_server.sh --spring_profile=local,db_mongo
+
+# Cassandra
+./scripts/start_server.sh --spring_profile=local,db_cassandra
 ```
 
 ## License

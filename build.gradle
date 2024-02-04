@@ -37,6 +37,8 @@ dependencies {
     implementation "org.postgresql:postgresql"
     implementation 'redis.clients:jedis:3.7.0'
     implementation 'org.mongodb:mongo-java-driver:3.12.14'
+    implementation 'com.datastax.oss:java-driver-core:4.17.0'
+    implementation 'com.datastax.oss:java-driver-query-builder:4.17.0'
 
     // Third party
     implementation 'javax.validation:validation-api:2.0.1.Final'
